@@ -1,2 +1,2 @@
 # Project1
-Nick, Will, Bill, Brett - Project 1
+Nick, Will, Bill, Bret - Project 1
