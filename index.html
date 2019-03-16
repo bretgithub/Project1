@@ -19,34 +19,57 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Which emoji are you feeling today?</h5>
+          <h5 class="modal-title" id="exampleModalLongTitle">Which are you feeling today?</h5>
           <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
           <!-- <span aria-hidden="true">&times;</span> -->
           </button>
         </div>
 
         <div class="modal-body">
-          <!-- Emoji select -->
-          <div class="row justify-content-center" id="pick-emoji">
+          <div class="row" id="pick-emoji">
             <div class="col-sm" id="sushi-emoji">
               <img src="images/sushi2.png" width="75%">
+              <div class="form-check">
+                <input class="form-check-input position-static" type="radio" name="blankRadio" id="sushi-radio"
+                  value="sushi" aria-label="sushi-radio">
+              </div>
             </div>
+            <!-- Cocktail/Beer/Wine -->
             <div class="col-sm" id="cocktail-emoji">
               <img src="images/cocktail2.png" width="75%">
+              <div class="form-check">
+                <input class="form-check-input position-static" type="radio" name="blankRadio" id="cocktail-radio"
+                  value="cocktail" aria-label="cocktail-radio">
+              </div>
             </div>
+            <!-- Cake/Dessert -->
             <div class="col-sm" id="cake-emoji">
               <img src="images/cake2.png" width="75%">
+              <div class="form-check">
+                <input class="form-check-input position-static" type="radio" name="blankRadio" id="cake-radio"
+                  value="cake" aria-label="cake-radio">
+              </div>
             </div>
+            <!-- Pasta/Italian -->
             <div class="col-sm" id="pasta-emoji">
               <img src="images/pasta2.png" width="75%">
+              <div class="form-check">
+                <input class="form-check-input position-static" type="radio" name="blankRadio" id="pasta-radio"
+                  value="pasta" aria-label="pasta-radio">
+              </div>
             </div>
+            <!-- Salad/Healthy -->
             <div class="col-sm" id="salad-emoji">
               <img src="images/salad2.png" width="75%">
+              <div class="form-check">
+                <input class="form-check-input position-static" type="radio" name="blankRadio" id="salad-radio"
+                  value="salad" aria-label="salad-radio">
+              </div>
             </div>
           </div>
-          <hr>
+          </form>
           <!-- /Emoji select -->
-
+          <hr>
           <!-- City select -->
           <form>
             <div class="row justify-content-center" id="city-select">

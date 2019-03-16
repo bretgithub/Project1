@@ -27,3 +27,8 @@ footer {
 select.form-control {
     display: inline-block;
   }
+
+.form-check-input {
+    align-content: center;
+    margin: 0 auto;
+}

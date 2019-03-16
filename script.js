@@ -5,6 +5,13 @@ $(window).on('load', function () {
     $('#exampleModalCenter').modal('show')
 });
 
+// grabs values from emojis and city and stores them in variables to pass into API call
+// does not grab any value right now logs undefined
+// $("#emoji-picker").on("click", function () {
+//     var state = $("#form-check").val();
+//     console.log(state);
+// });
+
 // loads on load
 $(document).ready(function () {
 
