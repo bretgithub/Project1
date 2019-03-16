@@ -52,7 +52,7 @@ $(document).ready(function () {
             method: "GET"
         }).done(function (response) {
             console.log(response);
-            $("#recipes").empty();
+            $("#recipes-container").empty();
 
             // go through results and add attr to display on DOM
             for (let i = 0; i < response.hits.length; i++) {
@@ -65,7 +65,7 @@ $(document).ready(function () {
                 let recipeImage = $("<img>").attr("src", image);
                 let recipeLabel = $("<p>").text(label).addClass("recipe-label p-2");
                 imageDiv.append(recipeImage).append(recipeLabel);
-                $("#recipes").append(imageDiv);
+                $("#recipes-container").append(imageDiv);
             }
         });
     };
