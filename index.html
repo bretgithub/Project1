@@ -20,8 +20,6 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLongTitle">Which are you feeling today?</h5>
-          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-          <!-- <span aria-hidden="true">&times;</span> -->
           </button>
         </div>
 
@@ -30,7 +28,7 @@
             <div class="col-sm" id="sushi-emoji">
               <img src="images/sushi2.png" width="75%">
               <div class="form-check">
-                <input class="form-check-input position-static" type="radio" name="blankRadio" id="sushi-radio"
+                <input class="form-check-input position-static radio" type="radio" name="blankRadio" id="sushi-radio"
                   value="sushi" aria-label="sushi-radio">
               </div>
             </div>
@@ -38,7 +36,7 @@
             <div class="col-sm" id="cocktail-emoji">
               <img src="images/cocktail2.png" width="75%">
               <div class="form-check">
-                <input class="form-check-input position-static" type="radio" name="blankRadio" id="cocktail-radio"
+                <input class="form-check-input position-static radio" type="radio" name="blankRadio" id="cocktail-radio"
                   value="cocktail" aria-label="cocktail-radio">
               </div>
             </div>
@@ -46,7 +44,7 @@
             <div class="col-sm" id="cake-emoji">
               <img src="images/cake2.png" width="75%">
               <div class="form-check">
-                <input class="form-check-input position-static" type="radio" name="blankRadio" id="cake-radio"
+                <input class="form-check-input position-static radio" type="radio" name="blankRadio" id="cake-radio"
                   value="cake" aria-label="cake-radio">
               </div>
             </div>
@@ -54,7 +52,7 @@
             <div class="col-sm" id="pasta-emoji">
               <img src="images/pasta2.png" width="75%">
               <div class="form-check">
-                <input class="form-check-input position-static" type="radio" name="blankRadio" id="pasta-radio"
+                <input class="form-check-input position-static radio" type="radio" name="blankRadio" id="pasta-radio"
                   value="pasta" aria-label="pasta-radio">
               </div>
             </div>
@@ -62,7 +60,7 @@
             <div class="col-sm" id="salad-emoji">
               <img src="images/salad2.png" width="75%">
               <div class="form-check">
-                <input class="form-check-input position-static" type="radio" name="blankRadio" id="salad-radio"
+                <input class="form-check-input position-static radio" type="radio" name="blankRadio" id="salad-radio"
                   value="salad" aria-label="salad-radio">
               </div>
             </div>
@@ -72,11 +70,12 @@
           <hr>
           <!-- City select -->
           <form>
-            <div class="row justify-content-center" id="city-select">
+            <div class="row" id="city-select">
               <div class="form-group">
-                <span style="white-space: nowrap">
-                  <label for=" select-city">Select City</label>
-                  <select class="form-control" id="select-city">
+                <span class="select-city" style="white-space: nowrap">
+                  <label for="select-city">City</label>
+                  <select class="form-control w-75" id="select-city">
+                    <option value="" disabled selected>City Select</option>
                     <option>Seattle, WA</option>
                     <option>San Francisco, CA</option>
                     <option>Portland, OR</option>
@@ -87,14 +86,13 @@
               </div>
           </form>
           <!-- /City select -->
-
         </div>
         <!-- /Modal body -->
-
+        <br>
         <!-- Modal footer -->
         <div class="modal-footer">
           <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-          <button type="button" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-primary" id="save-button">Save</button>
         </div>
         <!-- /Modal footer -->
       </div>
