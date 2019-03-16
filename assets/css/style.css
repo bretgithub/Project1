@@ -16,3 +16,14 @@ footer {
     max-height: 150px;
     width: auto;
 }
+
+/* below is specifically for index.html to be changed later when styling is made uniform across pages */
+#footer {
+    color: white;
+    /* inherits border from footer above - border-top: 10px solid #4aaaa5; */
+  }
+
+/* MODAL CSS, lione below puts the text Select City on same line as dropdown to select city */
+select.form-control {
+    display: inline-block;
+  }

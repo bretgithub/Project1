@@ -11,6 +11,75 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Which emoji are you feeling today?</h5>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+          <!-- <span aria-hidden="true">&times;</span> -->
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <!-- Emoji select -->
+          <div class="row justify-content-center" id="pick-emoji">
+            <div class="col-sm" id="sushi-emoji">
+              <img src="images/sushi2.png" width="75%">
+            </div>
+            <div class="col-sm" id="cocktail-emoji">
+              <img src="images/cocktail2.png" width="75%">
+            </div>
+            <div class="col-sm" id="cake-emoji">
+              <img src="images/cake2.png" width="75%">
+            </div>
+            <div class="col-sm" id="pasta-emoji">
+              <img src="images/pasta2.png" width="75%">
+            </div>
+            <div class="col-sm" id="salad-emoji">
+              <img src="images/salad2.png" width="75%">
+            </div>
+          </div>
+          <hr>
+          <!-- /Emoji select -->
+
+          <!-- City select -->
+          <form>
+            <div class="row justify-content-center" id="city-select">
+              <div class="form-group">
+                <span style="white-space: nowrap">
+                  <label for=" select-city">Select City</label>
+                  <select class="form-control" id="select-city">
+                    <option>Seattle, WA</option>
+                    <option>San Francisco, CA</option>
+                    <option>Portland, OR</option>
+                    <option>New York, NY</option>
+                    <option>Chicago, IL</option>
+                  </select>
+                </span>
+              </div>
+          </form>
+          <!-- /City select -->
+
+        </div>
+        <!-- /Modal body -->
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+          <button type="button" class="btn btn-primary">Save</button>
+        </div>
+        <!-- /Modal footer -->
+      </div>
+    </div>
+  </div>
+  </div>
+  <!-- /Modal -->
+
 </head>
 
 <body>
@@ -117,9 +186,3 @@
 </body>
 
 </html>
-
-<style>
-  #footer {
-    color: white;
-  }
-</style>

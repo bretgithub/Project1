@@ -1,4 +1,10 @@
 "use strict";
+
+// on window load show modal
+$(window).on('load', function () {
+    $('#exampleModalCenter').modal('show')
+});
+
 // loads on load
 $(document).ready(function () {
 
