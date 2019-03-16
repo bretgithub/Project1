@@ -1,18 +1,48 @@
 "use strict";
-// loads on load
+
+// loads modal on page load
+$(window).on('load', function () {
+    $('#exampleModalCenter').modal('show')
+});
+
+// global variables to be set when user selects values in modal
+let searchName;
+let searchCity;
+
+// functiomn run after DOM loads
 $(document).ready(function () {
 
-    let search = {
-        name: "comfort food",
-        calories: "1000-1200",
-        health: "alcohol-free",
-    }
+    // grabs values from emojis and city and stores them in variables to pass into API call
+    $(".radio").on("click", function () {
+        searchName = this.value;
+        return searchName;
+    });
 
+    // "change" fires for iunput, select, textarea - need blank city to force a change to grab value for city
+    $("#select-city").on("change", function () {
+        searchCity = this.value;
+        return searchCity;
+    });
+
+    // close the save button only if searchName and searchCity are truthy
+    $("#save-button").on("click", function () {
+        if (searchCity && searchName) {
+            console.log(searchName);
+            $("#exampleModalCenter").modal("hide");
+            // run displayRecipes function
+            displayRecipes();
+        }
+    });
+
+    // function to call Edamam API
     function displayRecipes() {
 
-        // let recipes = $(this).attr("data-name");
+        let search = {
+            name: searchName,
+            calories: "1000-1200",
+            health: "alcohol-free",
+        }
 
-        // let search = "comfort food"
         let queryURL = `https://api.edamam.com/search?q=${search.name}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=0&to=3&calories=${search.calories}&health=${search.health}`
 
         // plug in URL and modify the search terms like comfort food or calories to validate response in browser
@@ -25,9 +55,6 @@ $(document).ready(function () {
             method: "GET"
         }).done(function (response) {
             console.log(response);
-            // let results = response.data;
-            // console.log(results);
-
             $("#recipes").empty();
 
             for (let i = 0; i < response.hits.length; i++) {
@@ -44,11 +71,8 @@ $(document).ready(function () {
                 imageDiv.append(recipeImage).append(recipeLabel);
 
                 $("#recipes").append(imageDiv);
-                // console.log(imageDiv);
-
             }
         });
     };
-    displayRecipes();
 });
 
