@@ -4,20 +4,18 @@
 let searchName;
 let searchCity;
 
-
-
-
+// loads modal on page load
+$(window).on('load', function () {
+    $('#exampleModalCenter').modal('show')
+});
 
 // load modal on button click 
-$("#modal-button").on('click', function(event) {
+$("#modal-button").on('click', function (event) {
     $("#login-modal").modal('show')
 });
 
 // function run after DOM loads
 $(document).ready(function () {
-
-
-
 
     // checking if there is a user logged in
     var email, uid;
@@ -79,12 +77,6 @@ $(document).ready(function () {
         }
     });
 
-
-
-
-
-
-
     // load emoji/city modal
     $('#exampleModalCenter').modal('show')
 
@@ -132,6 +124,7 @@ firebase.initializeApp(config);
 
 // function for login info submit button
 // sign up button function
+
 // Sign in button function
 $("#login-button").on("click", function (event) {
     event.preventDefault();
@@ -163,13 +156,6 @@ $("#logout-button").on("click", function (event) {
     console.log("user signed out");
 });
 
-
-
-
-
-
-
-
 // API Calls
 // function to call Edamam API, call is on eatin.html
 function displayRecipes() {
@@ -177,6 +163,7 @@ function displayRecipes() {
     // retrieve from local storage
     searchName = localStorage.getItem("searchName");
     searchCity = localStorage.getItem("searchCity");
+
 
 
         //for API call
@@ -205,6 +192,7 @@ function displayRecipes() {
         }
     });
 };
+
 
 // run displayRecipes function
 let search = {
@@ -249,6 +237,7 @@ $.ajax({
 
 
 
+
 // Restaurant API call
 let numberOfDisplays = 3;
 let limit;
@@ -278,3 +267,4 @@ $.ajax(settings).done(function (response) {
     }
     console.log(response);
 });
+
