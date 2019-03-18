@@ -23,12 +23,12 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Which are you feeling today?</h5>
-          </button>
+          <h5 class="modal-title" id="exampleModalLongTitle">What are you feeling today?</h5>
         </div>
 
         <div class="modal-body">
           <div class="row" id="pick-emoji">
+            <!-- Sushi/Asian -->
             <div class="col-sm" id="sushi-emoji">
               <img src="images/sushi2.png" width="75%">
               <div class="form-check">
@@ -151,8 +151,10 @@
 
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-0">
-    <span class="navbar-brand mb-0 h1">Navbar</span>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-info py-0">
+    <a class="navbar-brand d-flex justify-content-center align-items-center" href="index.html">
+      <img src="images\logoFinal11.png" width="50px" height="50px" class="d-inline-block align-top" alt="Logo Image">
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -160,28 +162,28 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link active" href="#">Login</a>
         </li>
 
         <li class="nav-item">
           <a class="nav-link" href="#">Create Account</a>
-        </li>
+        </li> -->
+
 
         <li class="nav-item">
-          <a class="nav-link" href="#">Link 3</a>
+          <a class="nav-link" id="modal-button" href="#">Login/Create Accounts</a>
         </li>
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          <a class="nav-link dropdown-toggle" href="#" id="account" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            Dropdown Links
+            Account
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-            <a class="dropdown-item" id="modal-button" href="#">Login/Create Account</a>
+            <a class="dropdown-item"  href="#"></a>
             <a class="dropdown-item" id="logout-button" href="#">Logout</a>
-            <a class="dropdown-itme hidden" id="favorites-button" href="#">Favorites</a>
+            <a class="dropdown-item hidden" id="favorites-button" href="#">Favorites</a>
 
           </div>
         </li>
@@ -193,7 +195,7 @@
   <!-- Title -->
   <div class="container" id="body_container">
     <div class="jumbotron text-center col-md-10 offset-1">
-      <h1 class="display-3">Working Title</h1>
+      <h1 class="display-3">In or Out</h1>
     </div>
   </div>
   <!-- /Title -->
@@ -231,7 +233,7 @@
   </div>
 
   <!-- Footer -->
-  <footer class="footer fixed-bottom bg-dark footer" id="footer">
+  <footer class="footer fixed-bottom bg-info footer" id="footer">
     <div class="container text-center">
       <span class="Copyright">Copyright ©</span>
     </div>
