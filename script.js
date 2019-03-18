@@ -215,4 +215,3 @@ $.ajax({
         $("#recipes").append(imageDiv);
     }
 });
-};
