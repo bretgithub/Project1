@@ -1,13 +1,24 @@
 "use strict";
 
-// global variables to be set when user selects values in modal
-let searchName;
-let searchCity;
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyAtSkxYOaVlS4XMUa2Ja2zsU-Q9Z2hbEg0",
+    authDomain: "project-1-7fdb3.firebaseapp.com",
+    databaseURL: "https://project-1-7fdb3.firebaseio.com",
+    projectId: "project-1-7fdb3",
+    storageBucket: "project-1-7fdb3.appspot.com",
+    messagingSenderId: "926155997785"
+};
+firebase.initializeApp(config);
+let database = firebase.database();
+// TODO: store selected emoji, user email, city
 
-// loads modal on page load
-$(window).on('load', function () {
-    $('#exampleModalCenter').modal('show')
-});
+
+// global variables to be set when user selects values in modal
+let searchName; // stores emoji info selected in modal on page load
+let searchCity; // stores city info in modal on page load
+let email;      // this will be the user email used to sign in 
+let uid;        // user ID of the account that's signed in
 
 // load modal on button click 
 $("#modal-button").on('click', function (event) {
@@ -16,30 +27,34 @@ $("#modal-button").on('click', function (event) {
 
 // function run after DOM loads
 $(document).ready(function () {
+    // load emoji/location modal option first
+    $('#exampleModalCenter').modal('show');
 
     // checking if there is a user logged in
-    var email, uid;
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
-            // User is signed in.
-            email = user.email;
-            uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
-            // this value to authenticate with your backend server, if
-            // you have one. Use User.getToken() instead.
-            console.log(email, uid);
-            console.log("you're logged in");
             // hide the login modal
             $("#modal-button").hide();
 
             // show account info/setting dropdown in Navbar if logged in
             $("#account").show();
+            
+            // User is signed in.
+            email = user.email;
+            uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
+            // this value to authenticate with your backend server, if
+            // you have one. Use User.getToken() instead.
+            $("#account").text(email); // use user's email for tab's name
+
+            console.log(email, uid);
+            
+            
+            
 
         } else {
             // No user is signed in.
-            console.log("No user signed in");
             $("#create-button").on("click", function (event) {
                 event.preventDefault();
-
                 // Grabs user input
                 var signUpEmail = $("#userEmail").val().trim();
                 var signUpPassword = $("#userPassword").val().trim();
@@ -83,9 +98,7 @@ $(document).ready(function () {
     // hides the account info dropdown
     $("#account").hide();
 
-    // see if there is a user logged in as page loads
-    var user = firebase.auth().currentUser;
-    console.log(user);
+    
     // grabs values from emojis and city and stores them in variables to pass into API call
     $(".radio").on("click", function () {
         searchName = this.value;
@@ -107,20 +120,23 @@ $(document).ready(function () {
             localStorage.setItem("searchCity", searchCity);
             // hide modal
             $("#exampleModalCenter").modal("hide");
+            // saves user's filter inputs to firebase database
+            database.ref(uid).set({
+                email: email,
+                city: searchCity,
+                emoji: searchName,
+            });
         }
     });
 });
 
-// Initialize Firebase
-var config = {
-    apiKey: "AIzaSyAtSkxYOaVlS4XMUa2Ja2zsU-Q9Z2hbEg0",
-    authDomain: "project-1-7fdb3.firebaseapp.com",
-    databaseURL: "https://project-1-7fdb3.firebaseio.com",
-    projectId: "project-1-7fdb3",
-    storageBucket: "project-1-7fdb3.appspot.com",
-    messagingSenderId: "926155997785"
-};
-firebase.initializeApp(config);
+
+
+
+
+
+
+
 
 // function for login info submit button
 // sign up button function
@@ -151,6 +167,7 @@ $("#logout-button").on("click", function (event) {
     event.preventDefault();
     // use Firebase function to add userEmail/password combo
     firebase.auth().signOut();
+    uid = null;
     $("#account").hide();
     $("#modal-button").show();
     console.log("user signed out");
