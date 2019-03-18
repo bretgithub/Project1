@@ -186,13 +186,16 @@ function displayRecipes() {
         for (let i = 0; i < response.hits.length; i++) {
             let image = response.hits[i].recipe.image;
             let label = response.hits[i].recipe.label;
+            let recipeLink = response.hits[i].recipe.url;
             console.log(image);
             console.log(label);
 
-            let imageDiv = $("<div>").addClass("recipe-pictures m-2");
-            let recipeImage = $("<img>").attr("src", image);
-            let recipeLabel = $("<p>").text(label).addClass("recipe-label p-2");
-            imageDiv.append(recipeImage).append(recipeLabel);
+            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 col-3");
+            let recipeImage = $("<img>").addClass("card-top-img mt-2").attr("src", image).attr("style", 'width: 100%;height:auto;');
+            let cardBlock = $("<div>").addClass("card-block")
+            let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'white-space:nowrap; overflow:hidden;')
+            let link = $("<a>").attr("href", recipeLink).text("See the full recipe here!").addClass("text-center")
+            imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel).append("<hr>").append(link);
             $("#recipes-container").append(imageDiv);
         }
     });
