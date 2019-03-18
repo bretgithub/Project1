@@ -1,7 +1,6 @@
 let numberOfDisplays = 3;
 
 let term;
-let categories;
 let city;
 let limit;
 
@@ -9,7 +8,7 @@ let limit;
 var settings = {
     "async": true,
     "crossDomain": true,
-    "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=thai&location=bellevue,WA",
+    "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term="+term+"&location="+city,
     "method": "GET",
     "headers": {
         // "accept": "application/json",
