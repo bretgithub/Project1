@@ -27,6 +27,7 @@ $("#modal-button").on('click', function (event) {
 
 // function run after DOM loads
 $(document).ready(function () {
+    console.log("")
     // load emoji/location modal option first
     $('#exampleModalCenter').modal('show');
 
