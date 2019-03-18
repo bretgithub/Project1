@@ -16,6 +16,9 @@ $("#modal-button").on('click', function (event) {
 
 // function run after DOM loads
 $(document).ready(function () {
+    // load emoji/location modal option first
+    $('#exampleModalCenter').modal('show');
+
 
     // checking if there is a user logged in
     var email, uid;
