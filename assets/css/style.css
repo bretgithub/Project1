@@ -41,3 +41,12 @@ select.form-control {
 .form-control {
     overflow: auto;
 }
+
+a:hover {
+    text-decoration: none;
+
+}
+
+#eatin {
+    background-image: url("../../images/background.png")
+}

@@ -1,5 +1,15 @@
 "use strict";
 
+<<<<<<< HEAD
+// global variables to be set when user selects values in modal
+let searchName;
+let searchCity;
+
+// loads modal on page load
+$(window).on('load', function () {
+    $('#exampleModalCenter').modal('show')
+});
+=======
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyAtSkxYOaVlS4XMUa2Ja2zsU-Q9Z2hbEg0",
@@ -16,6 +26,7 @@ database = firebase.database();
 // global variables to be set when user selects values in modal
 let searchName;
 let searchCity;
+>>>>>>> b310be228d3aa5cf5a03ad7668869e9374b61324
 
 // grabs values from emojis and city and stores them in variables to pass into API call
 $(".radio").on("click", function () {
@@ -23,11 +34,16 @@ $(".radio").on("click", function () {
     return searchName;
 });
 
+<<<<<<< HEAD
+// function run after DOM loads
+$(document).ready(function () {
+=======
 // "change" fires for input, select, textarea - need blank city to force a change to grab value for city
 $("#select-city").on("change", function () {
     searchCity = this.value;
     return searchCity;
 });
+>>>>>>> b310be228d3aa5cf5a03ad7668869e9374b61324
 
     // checking if there is a user logged in
     var email, uid;
@@ -41,6 +57,8 @@ $("#select-city").on("change", function () {
             // you have one. Use User.getToken() instead.
             console.log(email, uid);
             console.log("you're logged in");
+<<<<<<< HEAD
+=======
 
             // store user's email and user ID in firebase database
             // using user ID as key to store all necessary information in that key
@@ -48,6 +66,7 @@ $("#select-city").on("change", function () {
                 email: email,
             });
 
+>>>>>>> b310be228d3aa5cf5a03ad7668869e9374b61324
             // hide the login modal
             $("#modal-button").hide();
 
@@ -84,7 +103,13 @@ $("#select-city").on("change", function () {
     // hides the account info dropdown
     $("#account").hide();
 
+<<<<<<< HEAD
+    // see if there is a user logged in as page loads
+    var user = firebase.auth().currentUser;
+    console.log(user);
+=======
 
+>>>>>>> b310be228d3aa5cf5a03ad7668869e9374b61324
     // grabs values from emojis and city and stores them in variables to pass into API call
     $(".radio").on("click", function () {
         searchName = this.value;
@@ -114,6 +139,22 @@ $("#select-city").on("change", function () {
             });
             // hide modal
             $("#exampleModalCenter").modal("hide");
+<<<<<<< HEAD
+        }
+    });
+});
+
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyAtSkxYOaVlS4XMUa2Ja2zsU-Q9Z2hbEg0",
+    authDomain: "project-1-7fdb3.firebaseapp.com",
+    databaseURL: "https://project-1-7fdb3.firebaseio.com",
+    projectId: "project-1-7fdb3",
+    storageBucket: "project-1-7fdb3.appspot.com",
+    messagingSenderId: "926155997785"
+};
+firebase.initializeApp(config);
+=======
         }   
     });
 
@@ -172,6 +213,7 @@ $("#create-button").on("click", function (event) {
     // $("#userEmail").val("");
     // $("#userPassword").val("");
 });
+>>>>>>> b310be228d3aa5cf5a03ad7668869e9374b61324
 
 // login 
 
@@ -297,6 +339,8 @@ function displayRecipes() {
     // retrieve from local storage
     searchName = localStorage.getItem("searchName");
     searchCity = localStorage.getItem("searchCity");
+    let rand = Math.floor(Math.random() * 50);
+    let otherRand = rand + 3;
 
     // run displayRecipes function
     let search = {
@@ -306,8 +350,14 @@ function displayRecipes() {
     }
 
     //for API call
+<<<<<<< HEAD
+    let queryURL = `https://api.edamam.com/search?q=${search.name}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&calories=${search.calories}&health=${search.health}`
+=======
     let queryURL = `https://api.edamam.com/search?q=${search.name}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=0&to=3&calories=${search.calories}`
+>>>>>>> b310be228d3aa5cf5a03ad7668869e9374b61324
     // note: calories returned in JSON response is yield, need to divide by yield: to get calories per serving - for future calculation calories / yield of the recipe
+
+    console.log(queryURL)
 
     $.ajax({
         url: queryURL,
@@ -323,11 +373,20 @@ function displayRecipes() {
             console.log(image);
             console.log(label);
 
+<<<<<<< HEAD
+            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 col-3");
+            let recipeImage = $("<img>").addClass("card-top-img mt-2").attr("src", image).attr("style", 'width: 100%;height:auto;');
+            let cardBlock = $("<div>").addClass("card-block")
+            let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
+            imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel);
+=======
             let imageDiv = $("<div>").addClass("recipe-pictures m-2");
             let recipeImage = $("<img>").attr("src", image);
             let recipeLabel = $("<p>").text(label).addClass("recipe-label p-2");
             imageDiv.append(recipeImage).append(recipeLabel);
+>>>>>>> b310be228d3aa5cf5a03ad7668869e9374b61324
             $("#recipes-container").append(imageDiv);
+            $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none; color: black;');
         }
     });
 };
