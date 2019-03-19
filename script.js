@@ -1,5 +1,6 @@
 "use strict";
 
+
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyAtSkxYOaVlS4XMUa2Ja2zsU-Q9Z2hbEg0",
@@ -10,15 +11,17 @@ var config = {
     messagingSenderId: "926155997785"
 };
 firebase.initializeApp(config);
-let database = firebase.database();
-// TODO: store selected emoji, user email, city
+database = firebase.database();
 
 
 // global variables to be set when user selects values in modal
-let searchName; // stores emoji info selected in modal on page load
-let searchCity; // stores city info in modal on page load
-let email;      // this will be the user email used to sign in 
-let uid;        // user ID of the account that's signed in
+let searchName;
+let searchCity;
+
+// loads modal on page load
+$(window).on('load', function () {
+    $('#exampleModalCenter').modal('show')
+});
 
 // load modal on button click 
 $("#modal-button").on('click', function (event) {
@@ -27,65 +30,51 @@ $("#modal-button").on('click', function (event) {
 
 // function run after DOM loads
 $(document).ready(function () {
-    console.log("")
     // load emoji/location modal option first
     $('#exampleModalCenter').modal('show');
 
     // checking if there is a user logged in
+    var email, uid;
     firebase.auth().onAuthStateChanged(function (user) {
+        $('#exampleModalCenter').modal('show');
         if (user) {
-            // hide the login modal
-            $("#modal-button").hide();
-
-            // show account info/setting dropdown in Navbar if logged in
-            $("#account").show();
-            
             // User is signed in.
             email = user.email;
             uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
             // this value to authenticate with your backend server, if
             // you have one. Use User.getToken() instead.
-            $("#account").text(email); // use user's email for tab's name
-
             console.log(email, uid);
-            
-            
-            
+            console.log("you're logged in");
+
+            // store user's email and user ID in firebase database
+            // using user ID as key to store all necessary information in that key
+            database.ref(uid).set({
+                email: email,
+            });
+
+            // hide the login modal
+            $("#modal-button").hide();
+
+            // show account info/setting dropdown in Navbar if logged in
+            $("#account").show();
 
         } else {
             // No user is signed in.
+            console.log("No user signed in");
             $("#create-button").on("click", function (event) {
                 event.preventDefault();
+
                 // Grabs user input
                 var signUpEmail = $("#userEmail").val().trim();
                 var signUpPassword = $("#userPassword").val().trim();
 
-                // Creates local obj for train data
-                // var loginObject = {
-                //     email: emailLogin,
-                //     password: passwordLogin,
-                // };
-                // var loginObject = {
-                //     email: emailLogin,
-                //     password: passwordLogin,
-                // };
+               
                 //   use Firebase function to add userEmail/password combo
-
                 firebase.auth().createUserWithEmailAndPassword(signUpEmail, signUpPassword);
-                // catch(function(error) {
-                //     // Handle Errors here.
-                //     var errorCode = error.code;
-                //     var errorMessage = error.message;
-                //     // ...
 
 
                 $("#userEmail").val("");
                 $("#userPassword").val("");
-
-                // checking for if user logged into firebase 
-
-
-
 
                 // TODO add logic to only hide modal after succesful login/sign up
                 $("#login-modal").modal("hide");
@@ -94,12 +83,12 @@ $(document).ready(function () {
     });
 
     // load emoji/city modal
-    $('#exampleModalCenter').modal('show')
+    $('#exampleModalCenter').modal('show');
 
     // hides the account info dropdown
     $("#account").hide();
 
-    
+
     // grabs values from emojis and city and stores them in variables to pass into API call
     $(".radio").on("click", function () {
         searchName = this.value;
@@ -116,32 +105,31 @@ $(document).ready(function () {
     $("#save-button").on("click", function () {
         if (searchCity && searchName) {
             console.log(searchName);
-            // set variables to local storage
-            localStorage.setItem("searchName", searchName);
-            localStorage.setItem("searchCity", searchCity);
+
+            // if user is signed in save location and cuisine type to firebase
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    database.ref(uid).set({
+                        location: searchName,
+                        categories: searchName,
+                    });
+                } 
+                // if user is not signed in save data to local storage
+                else {
+                    localStorage.setItem("searchName", searchName);
+                    localStorage.setItem("searchCity", searchCity);
+                }
+        
+                
+            });
             // hide modal
             $("#exampleModalCenter").modal("hide");
-            // saves user's filter inputs to firebase database
-            database.ref(uid).set({
-                email: email,
-                city: searchCity,
-                emoji: searchName,
-            });
-        }
+        }   
     });
-});
-
-
-
-
-
-
 
 
 
 // function for login info submit button
-// sign up button function
-
 // Sign in button function
 $("#login-button").on("click", function (event) {
     event.preventDefault();
@@ -156,19 +144,14 @@ $("#login-button").on("click", function (event) {
     $("#userEmail").val("");
     $("#userPassword").val("");
 
-    // TODO set up with promise and then display message in navbar if user is logged in
-
     // TODO add logic to only hide modal after succesful login/sign up
     $("#login-modal").modal("hide");
 });
-
-
 
 $("#logout-button").on("click", function (event) {
     event.preventDefault();
     // use Firebase function to add userEmail/password combo
     firebase.auth().signOut();
-    uid = null;
     $("#account").hide();
     $("#modal-button").show();
     console.log("user signed out");
@@ -216,13 +199,9 @@ function displayRecipes() {
     });
 };
 
-
-
-
 // Restaurant API call
 let numberOfDisplays = 3;
 let limit;
-
 
 var settings = {
     "async": true,
@@ -238,6 +217,7 @@ var settings = {
     }
 }
 
+
 $.ajax(settings).done(function (response) {
     let businesses = response.businesses;
     for (let i = 0; i < numberOfDisplays; i++) {
@@ -245,7 +225,4 @@ $.ajax(settings).done(function (response) {
         $("#image-" + i).attr("src", businesses[i].image_url);
         $("#rating-" + i).text("Rating: " + businesses[i].rating);
         $("#price-" + i).text("Price: " + businesses[i].price);
-    }
-    console.log(response);
 });
-
