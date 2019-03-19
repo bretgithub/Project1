@@ -437,7 +437,7 @@ $("#gluten-free-check").on("change", function () {
 
 // submit button for eatin.html, at least cuisine, prep, and calories need to be truthy
 $("#submit-recipe-filters").on("click", function () {
-    if (recipeCuisine & recipePrep & recipeCalories || isVegetarian || isVegan || isGlutenFree) {
+    if (recipeCuisine & recipePrep & recipeCalories) {
         console.log(recipeCuisine);
         console.log(recipePrep);
         console.log(recipeCalories);
