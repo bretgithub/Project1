@@ -32,6 +32,10 @@ $("#modal-button").on('click', function (event) {
 $(document).ready(function () {
     // load emoji/location modal option first
     $('#exampleModalCenter').modal('show');
+<<<<<<< HEAD
+=======
+
+>>>>>>> ea4051807e38b47e9f097622ef77e239d8d3456b
 
     // checking if there is a user logged in
     var email, uid;
