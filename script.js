@@ -11,6 +11,8 @@ var config = {
 };
 firebase.initializeApp(config);
 
+database = firebase.database();
+
 // global variables to be set when user selects values in modal
 let searchName;
 let searchCity;
@@ -27,21 +29,101 @@ $("#select-city").on("change", function () {
     return searchCity;
 });
 
-// close the save button only if searchName and searchCity are truthy
-$("#save-button").on("click", function () {
-    if (searchCity && searchName) {
-        console.log(searchName);
-        // set variables to local storage
-        localStorage.setItem("searchName", searchName);
-        localStorage.setItem("searchCity", searchCity);
-        // hide modal
-        $("#exampleModalCenter").modal("hide");
-    }
-});
+    // checking if there is a user logged in
+    var email, uid;
+    firebase.auth().onAuthStateChanged(function (user) {
+        $('#exampleModalCenter').modal('show');
+        if (user) {
+            // User is signed in.
+            email = user.email;
+            uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
+            // this value to authenticate with your backend server, if
+            // you have one. Use User.getToken() instead.
+            console.log(email, uid);
+            console.log("you're logged in");
+
+            // store user's email and user ID in firebase database
+            // using user ID as key to store all necessary information in that key
+            database.ref(uid).set({
+                email: email,
+            });
+
+            // hide the login modal
+            $("#modal-button").hide();
+
+            // show account info/setting dropdown in Navbar if logged in
+            $("#account").show();
+
+        } else {
+            // No user is signed in.
+            console.log("No user signed in");
+            $("#create-button").on("click", function (event) {
+                event.preventDefault();
+
+                // Grabs user input
+                var signUpEmail = $("#userEmail").val().trim();
+                var signUpPassword = $("#userPassword").val().trim();
+
+               
+                //   use Firebase function to add userEmail/password combo
+                firebase.auth().createUserWithEmailAndPassword(signUpEmail, signUpPassword);
+
+
+                $("#userEmail").val("");
+                $("#userPassword").val("");
+
+                // TODO add logic to only hide modal after succesful login/sign up
+                $("#login-modal").modal("hide");
+            });
+        }
+    });
+
+    // load emoji/city modal
+    $('#exampleModalCenter').modal('show');
+
+    // hides the account info dropdown
+    $("#account").hide();
+
+
+    // grabs values from emojis and city and stores them in variables to pass into API call
+    $(".radio").on("click", function () {
+        searchName = this.value;
+        return searchName;
+    });
+
+// save to firebase if logged in else local
+    $("#save-button").on("click", function () {
+        if (searchCity && searchName) {
+            console.log(searchName);
+
+            // if user is signed in save location and cuisine type to firebase
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    database.ref(uid).set({
+                        location: searchName,
+                        categories: searchName,
+                    });
+                } 
+                // if user is not signed in save data to local storage
+                else {
+                    localStorage.setItem("searchName", searchName);
+                    localStorage.setItem("searchCity", searchCity);
+                }
+        
+                
+            });
+            // hide modal
+            $("#exampleModalCenter").modal("hide");
+        }   
+    });
+
 
 // see if there is a user logged in as page loads
 var user = firebase.auth().currentUser;
 console.log(user);
+
+// function for login info submit button
+// Sign in button function
 
 // load modal on button click 
 $("#modal-button").on("click", function () {
@@ -92,6 +174,7 @@ $("#create-button").on("click", function (event) {
 });
 
 // login 
+
 $("#login-button").on("click", function (event) {
     event.preventDefault();
 
@@ -110,6 +193,7 @@ $("#login-button").on("click", function (event) {
     // Clears it out
     // $("#userEmail").val("");
     // $("#userPassword").val("");
+
 });
 
 // hides the account info dropdown
@@ -266,7 +350,7 @@ function displayRestaurants() {
             "cache-control": "no-cache",
         }
     }
-
+    
     $.ajax(settings).done(function (response) {
         console.log(response);
         $("#recipes-container").empty();
@@ -301,16 +385,4 @@ function displayRestaurants() {
         }
     });
 };
-        // let image = response.hits[i].recipe.image;
-        // let label = response.hits[i].recipe.label;
-        // console.log(image);
-        // console.log(label);
-
-        // let imageDiv = $("<div>").addClass("recipe-pictures m-2");
-        // let recipeImage = $("<img>").attr("src", image);
-        // let recipeLabel = $("<p>").text(label).addClass("recipe-label p-2");
-        // imageDiv.append(recipeImage).append(recipeLabel);
-        // $("#recipes-container").append(imageDiv);
-
-
-
+      
