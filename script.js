@@ -11,7 +11,7 @@ var config = {
 };
 firebase.initializeApp(config);
 
-database = firebase.database();
+let database = firebase.database();
 
 // global variables to be set when user selects values in modal
 let searchName;
@@ -307,7 +307,7 @@ function displayRecipes() {
     }
 
     //for API call
-    let queryURL = `https://api.edamam.com/search?q=${search.name}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&calories=${search.calories}&health=${search.health}`
+    let queryURL = `https://api.edamam.com/search?q=${search.name}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&calories=${search.calories}`
     // note: calories returned in JSON response is yield, need to divide by yield: to get calories per serving - for future calculation calories / yield of the recipe
 
     console.log(queryURL)
@@ -369,11 +369,6 @@ function displayRestaurants() {
             let businessPhone = response.businesses[i].phone;
             let businessAddress = response.businesses[i].location.address1;
             let businessCity = response.businesses[i].location.city;
-
-            // $("#restaurant-name-" + i).text(businesses[i].name);
-            // $("#image-" + i).attr("src", businesses[i].image_url);
-            // $("#rating-" + i).text("Rating: " + businesses[i].rating);
-            // $("#price-" + i).text("Price: " + businesses[i].price);
 
             let imageDiv = $("<div>").addClass("restaurant-image m-2");
             let restaurantImage = $("<img>").attr("src", businessImage);
