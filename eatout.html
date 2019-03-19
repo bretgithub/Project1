@@ -71,37 +71,37 @@
                         </label>
                         <select class="custom-select my-1 mr-sm-4" id="restaurant-cuisine">
                             <option value="" disabled selected>Choose...</option>
-                            <option value="1" id="middle-eastern">Middle Eastern</option>
-                            <option value="2" id="sushi">Sushi</option>
-                            <option value="3" id="asian">Asian</option>
-                            <option value="4" id="african">African</option>
-                            <option value="5" id="persian">Persian</option>
-                            <option value="6" id="comfort">Comfort</option>
-                            <option value="7" id="dessert">Dessert</option>
-                            <option value="8" id="cocktails">Cocktails</option>
-                            <option value="9" id="latin-american">Latin American</option>
-                            <option value="10" id="salad">Healthy</option>
+                            <option value="middle-eastern">Middle Eastern</option>
+                            <option value="sushi">Sushi</option>
+                            <option value="asian">Asian</option>
+                            <option value="african">African</option>
+                            <option value="persian">Persian</option>
+                            <option value="comfort">Comfort</option>
+                            <option value="dessert">Dessert</option>
+                            <option value="cocktails">Cocktails</option>
+                            <option value="latin-american">Latin American</option>
+                            <option value="salad">Healthy</option>
                         </select>
                     </form>
                 </div>
                 <div class="col-md-4">
                     <form class="form-inline">
-                        <label class="my-1 mr-4" for="inlineFormCustomSelectPref" style="color: white">Price Range
+                        <label class="my-1 mr-4" for="restaurant-price" style="color: white">Price Range
                         </label>
-                        <select class="custom-select my-1 mr-sm-4" id="inlineFormCustomSelectPref">
+                        <select class="custom-select my-1 mr-sm-4" id="restaurant-price">
                             <option value="" disabled selected>Choose...</option>
                             <option value="1" id="cheap"> $ </option>
-                            <option value="2" id="reasonable"> $$ </option>
-                            <option value="3" id="moderate"> $$$ </option>
-                            <option value="4" id="expensive"> $$$$ </option>
+                            <option value="1,2" id="reasonable"> $$ </option>
+                            <option value="1,2,3" id="moderate"> $$$ </option>
+                            <option value="1,2,3,4" id="expensive"> $$$$ </option>
                         </select>
                     </form>
                 </div>
                 <div class="col-md-4">
                     <form class="form-inline">
-                        <label class="my-1 mr-4" for="inlineFormCustomSelectPref" style="color: white">Rating
+                        <label class="my-1 mr-4" for="restaurant-rating" style="color: white">Rating
                         </label>
-                        <select class="custom-select my-1 mr-sm-4" id="inlineFormCustomSelectPref">
+                        <select class="custom-select my-1 mr-sm-4" id="restaurant-rating">
                             <option value="" disabled selected>Choose...</option>
                             <option value="1 - 2.9">Decent</option>
                             <option value="3 - 3.9">Good</option>
@@ -110,39 +110,13 @@
                     </form>
                 </div>
             </div>
-            <!-- checkboxes these need unique IDs that make sense to pull the values and plug into our queryURL for new APi call when user clicks submit -->
             <div class="row">
-                <!-- <div class="col-md-4">
-                    <div class="form-check-inline mr-3">
-                        <input class="form-check-input" type="checkbox" value="true" id="is-open">
-                        <label class="form-check-label" for="is-open" style="color: white">
-                            Is Open
-                        </label>
-                    </div>
-                </div> -->
 
-                <!-- <div class="col-md-4">
-                    <div class="form-check-inline mr-3">
-                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                        <label class="form-check-label" for="gridCheck1" style="color: white">
-                            Example checkbox
-                        </label>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="form-check-inline mr-3">
-                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                        <label class="form-check-label" for="gridCheck1" style="color: white">
-                            Example checkbox
-                        </label>
-                    </div>
-                </div> -->
             </div>
             <!-- submit button where our function will listen to gather values from above and new api call -->
             <div class="row my-3">
                 <div class="col">
-                    <button type="submit" class="btn btn-dark mb-2" id="submit--restaurant-filters">Submit</button>
+                    <button type="submit" class="btn btn-dark mb-2" id="submit-restaurant-filters">Submit</button>
                 </div>
             </div>
         </div>
