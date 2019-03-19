@@ -1,24 +1,13 @@
 "use strict";
 
-// Initialize Firebase
-var config = {
-    apiKey: "AIzaSyAtSkxYOaVlS4XMUa2Ja2zsU-Q9Z2hbEg0",
-    authDomain: "project-1-7fdb3.firebaseapp.com",
-    databaseURL: "https://project-1-7fdb3.firebaseio.com",
-    projectId: "project-1-7fdb3",
-    storageBucket: "project-1-7fdb3.appspot.com",
-    messagingSenderId: "926155997785"
-};
-firebase.initializeApp(config);
-let database = firebase.database();
-// TODO: store selected emoji, user email, city
-
-
 // global variables to be set when user selects values in modal
-let searchName; // stores emoji info selected in modal on page load
-let searchCity; // stores city info in modal on page load
-let email;      // this will be the user email used to sign in 
-let uid;        // user ID of the account that's signed in
+let searchName;
+let searchCity;
+
+// loads modal on page load
+$(window).on('load', function () {
+    $('#exampleModalCenter').modal('show')
+});
 
 // load modal on button click 
 $("#modal-button").on('click', function (event) {
@@ -27,34 +16,30 @@ $("#modal-button").on('click', function (event) {
 
 // function run after DOM loads
 $(document).ready(function () {
-    // load emoji/location modal option first
-    $('#exampleModalCenter').modal('show');
 
     // checking if there is a user logged in
+    var email, uid;
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
-            // hide the login modal
-            $("#modal-button").hide();
-
-            // show account info/setting dropdown in Navbar if logged in
-            $("#account").show();
-            
             // User is signed in.
             email = user.email;
             uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
             // this value to authenticate with your backend server, if
             // you have one. Use User.getToken() instead.
-            $("#account").text(email); // use user's email for tab's name
-
             console.log(email, uid);
-            
-            
-            
+            console.log("you're logged in");
+            // hide the login modal
+            $("#modal-button").hide();
+
+            // show account info/setting dropdown in Navbar if logged in
+            $("#account").show();
 
         } else {
             // No user is signed in.
+            console.log("No user signed in");
             $("#create-button").on("click", function (event) {
                 event.preventDefault();
+
                 // Grabs user input
                 var signUpEmail = $("#userEmail").val().trim();
                 var signUpPassword = $("#userPassword").val().trim();
@@ -98,7 +83,9 @@ $(document).ready(function () {
     // hides the account info dropdown
     $("#account").hide();
 
-    
+    // see if there is a user logged in as page loads
+    var user = firebase.auth().currentUser;
+    console.log(user);
     // grabs values from emojis and city and stores them in variables to pass into API call
     $(".radio").on("click", function () {
         searchName = this.value;
@@ -120,23 +107,20 @@ $(document).ready(function () {
             localStorage.setItem("searchCity", searchCity);
             // hide modal
             $("#exampleModalCenter").modal("hide");
-            // saves user's filter inputs to firebase database
-            database.ref(uid).set({
-                email: email,
-                city: searchCity,
-                emoji: searchName,
-            });
         }
     });
 });
 
-
-
-
-
-
-
-
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyAtSkxYOaVlS4XMUa2Ja2zsU-Q9Z2hbEg0",
+    authDomain: "project-1-7fdb3.firebaseapp.com",
+    databaseURL: "https://project-1-7fdb3.firebaseio.com",
+    projectId: "project-1-7fdb3",
+    storageBucket: "project-1-7fdb3.appspot.com",
+    messagingSenderId: "926155997785"
+};
+firebase.initializeApp(config);
 
 // function for login info submit button
 // sign up button function
@@ -167,7 +151,6 @@ $("#logout-button").on("click", function (event) {
     event.preventDefault();
     // use Firebase function to add userEmail/password combo
     firebase.auth().signOut();
-    uid = null;
     $("#account").hide();
     $("#modal-button").show();
     console.log("user signed out");
@@ -180,6 +163,8 @@ function displayRecipes() {
     // retrieve from local storage
     searchName = localStorage.getItem("searchName");
     searchCity = localStorage.getItem("searchCity");
+    let rand = Math.floor(Math.random() * 50);
+    let otherRand = rand + 3;
 
     // run displayRecipes function
     let search = {
@@ -189,8 +174,10 @@ function displayRecipes() {
     }
 
     //for API call
-    let queryURL = `https://api.edamam.com/search?q=${search.name}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=0&to=3&calories=${search.calories}&health=${search.health}`
+    let queryURL = `https://api.edamam.com/search?q=${search.name}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&calories=${search.calories}&health=${search.health}`
     // note: calories returned in JSON response is yield, need to divide by yield: to get calories per serving - for future calculation calories / yield of the recipe
+
+    console.log(queryURL)
 
     $.ajax({
         url: queryURL,
@@ -210,10 +197,10 @@ function displayRecipes() {
             let imageDiv = $("<div>").addClass("card recipe-pictures m-2 col-3");
             let recipeImage = $("<img>").addClass("card-top-img mt-2").attr("src", image).attr("style", 'width: 100%;height:auto;');
             let cardBlock = $("<div>").addClass("card-block")
-            let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'white-space:nowrap; overflow:hidden;')
-            let link = $("<a>").attr("href", recipeLink).text("See the full recipe here!").addClass("text-center")
-            imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel).append("<hr>").append(link);
+            let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
+            imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel);
             $("#recipes-container").append(imageDiv);
+            $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none; color: black;');
         }
     });
 };
