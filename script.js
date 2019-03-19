@@ -66,7 +66,8 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 
             //   use Firebase function to add userEmail/password combo
-            firebase.auth().createUserWithEmailAndPassword(signUpEmail, signUpPassword);
+            firebase.auth().createUserWithEmailAndPassword(signUpEmail, signUpPassword)
+            ;
 
 
             $("#userEmail").val("");
@@ -330,9 +331,12 @@ function displayRecipes() {
             let recipeImage = $("<img>").addClass("card-top-img mt-2").attr("src", image).attr("style", 'width: 100%;height:auto;');
             let cardBlock = $("<div>").addClass("card-block")
             let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
+            let favoriteBtn = $("<button>").addClass("favorite");
+
             imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel);
-            $("#recipes-container").append(imageDiv);
+            $("#recipes-container").append(favoriteBtn);
             $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none; color: black;');
+            
         }
     });
 };
@@ -379,9 +383,17 @@ function displayRestaurants() {
             let restaurantPhone = $("<p>").text(businessPhone).addClass("restaurant-phone p-2");
             let restaurantAddress = $("<p>").text(businessAddress).addClass("restaurant-address p-2");
             let restaurantCity = $("<p>").text(businessCity).addClass("restaurant-city p-2");
+            // adds a favorite button to each card
+            let favoriteBtn = $("<button>").addClass("favorite");
 
-            imageDiv.append(restaurantImage).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity);
+
+
+            imageDiv.append(restaurantImage).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity).append(favoriteBtn);
             $("#restaurants-container").append(imageDiv);
         }
     });
 };
+
+$(document).on("click", ".favorite", function() {
+    
+})
