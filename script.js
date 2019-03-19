@@ -87,7 +87,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 // load emoji/city modal
-$('#exampleModalCenter').modal('show');
+// $('#exampleModalCenter').modal('show');
 
 // hides the account info dropdown
 $("#account").hide();
@@ -311,6 +311,7 @@ function displayRecipes() {
 
     //for API call
     let queryURL = `https://api.edamam.com/search?q=${search.name}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&calories=${search.calories}`
+
     // note: calories returned in JSON response is yield, need to divide by yield: to get calories per serving - for future calculation calories / yield of the recipe
 
     console.log(queryURL)
@@ -326,23 +327,163 @@ function displayRecipes() {
         for (let i = 0; i < response.hits.length; i++) {
             let image = response.hits[i].recipe.image;
             let label = response.hits[i].recipe.label;
+            let recipeLink = response.hits[i].recipe.url;
             console.log(image);
             console.log(label);
 
-            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 col-3");
-            let recipeImage = $("<img>").addClass("card-top-img mt-2").attr("src", image).attr("style", 'width: 100%;height:auto;');
+            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3");
+            let recipeImage = $("<img>").addClass("card-top-img").attr("src", image).attr("style", 'width: 100%;height:auto;overflow:auto;');
             let cardBlock = $("<div>").addClass("card-block")
             let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
             let favoriteBtn = $("<button>").addClass("favorite");
 
-            imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel);
-            $("#recipes-container").append(favoriteBtn);
-            $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none; color: black;');
-            
+            imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel);
+          
+            $("#recipes-container").append(imageDiv);
+            $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
         }
     });
 };
 
+let restaurantCuisine;
+let restaurantPrice;
+let restaurantRating;
+let isVegetarian;
+let isVegan;
+let isGlutenFree;
+
+$("#restaurant-cuisine").on("change", function () {
+    restaurantCuisine = this.value;
+    console.log("cuisine: " + restaurantCuisine);
+    return restaurantCuisine;
+});
+
+$("#restaurant-price").on("change", function () {
+    restaurantPrice = this.value;
+    console.log("price: " + restaurantPrice);
+    return restaurantPrice;
+});
+
+$("#restaurant-rating").on("change", function () {
+    restaurantRating = this.value;
+    console.log("rating" + restaurantRating);
+    return restaurantRating;
+});
+
+$("#restaurant-city").on("change", function () {
+    searchCity = this.value;
+    console.log("city" + searchCity);
+    return searchCity;
+});
+
+$("#vegetarian-check").on("change", function () {
+    isVegetarian = this.value;
+    console.log("Is Veggie?" + isVegetarian);
+    return isVegetarian;
+});
+
+$("#vegan-check").on("change", function () {
+    isVegan = this.value;
+    console.log("Is Vegan?" + isVegan);
+    return isVegan;
+});
+
+$("#gluten-free-check").on("change", function () {
+    isGlutenFree = this.value;
+    console.log("Is GF?" + isGlutenFree);
+    return isGlutenFree;
+});
+
+$("#submit-restaurant-filters").on("click", function () {
+    if (restaurantCuisine || restaurantPrice || restaurantRating || searchCity || isVegetarian) {
+        console.log(restaurantCuisine);
+        console.log(restaurantPrice);
+        console.log(restaurantRating);
+        console.log(searchCity);
+        console.log(isVegetarian);
+        console.log(isVegan);
+        console.log(isGlutenFree);
+        // set variables to local storage
+        localStorage.setItem("restaurantCuisine", restaurantCuisine);
+        localStorage.setItem("restaurantPrice", restaurantPrice);
+        localStorage.setItem("restaurantRating", restaurantRating);
+        localStorage.setItem("searchCity", searchCity);
+        localStorage.setItem("isVegetarian", isVegetarian);
+        localStorage.setItem("isVegan", isVegan);
+        localStorage.setItem("isGlutenFree", isGlutenFree);
+
+        $("#restaurant-cuisine").val("");
+        $("#restaurant-price").val("");
+        $("#restaurant-rating").val("");
+        $("#restaurant-city").val("");
+        $("#vegetarian-check").prop("checked", false);
+        $("#vegan-check").prop("checked", false);
+        $("#gluten-free-check").prop("checked", false);
+
+        newRestaurantDisplay();
+    }
+});
+
+function newRestaurantDisplay() {
+
+    // retrieve from local storage
+    if (restaurantCuisine && isVegetarian && isVegan && isGlutenFree) {
+        restaurantCuisine = localStorage.getItem("restaurantCuisine") + ", " + localStorage.getItem("isVegetarian") + ", " + localStorage.getItem("isVegan") + ", " + localStorage.getItem("isGlutenFree");
+    } else if (restaurantCuisine && isVegetarian && isVegan) {
+        restaurantCuisine = localStorage.getItem("restaurantCuisine") + ", " + localStorage.getItem("isVegetarian") + ", " + localStorage.getItem("isVegan");
+    } else if (restaurantCuisine && isVegetarian && isVegan) {
+        restaurantCuisine = localStorage.getItem("restaurantCuisine") + ", " + localStorage.getItem("isVegetarian");
+    } else if (restaurantCuisine && isVegetarian) {
+        restaurantCuisine = localStorage.getItem("restaurantCuisine") + ", " + localStorage.getItem("isVegetarian");
+    } else {
+        restaurantCuisine = localStorage.getItem("restaurantCuisine");
+    }
+    restaurantPrice = localStorage.getItem("restaurantPrice");
+    restaurantRating = localStorage.getItem("restaurantRating");
+    searchCity = localStorage.getItem("searchCity");
+
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=" + restaurantCuisine + "&location=" + searchCity + "$price=" + restaurantPrice + "&rating=" + restaurantRating + "&limit=10",
+        "method": "GET",
+        "headers": {
+            // "accept": "application/json",
+            // "Access-Control-Allow-Origin": "*",
+            "Authorization": "Bearer SDAEnMNqSOPl9_I9468qC_1PDuSvS67-h-HCkR6lPtwoYMA1bqU1yVT5pP1SUh_Cr3j4GucEh32EuhxxdUXZn7vBtrJ7V7zaD3ZgWmFIxsIDR0B3BY9ix3QxmeyLXHYx",
+            "cache-control": "no-cache",
+        }
+    }
+
+    $.ajax(settings).done(function (response) {
+        console.log(response);
+        $("#restaurants-container").empty();
+        // let businesses = response.businesses;
+        for (let i = 0; i < response.businesses.length; i++) {
+            let businessName = response.businesses[i].name;
+            let businessImage = response.businesses[i].image_url;
+            let businessRating = response.businesses[i].rating;
+            let businessReviewCount = response.businesses[i].review_count;
+            let businessPrice = response.businesses[i].price;
+            let businessPhone = response.businesses[i].phone;
+            let businessAddress = response.businesses[i].location.address1;
+            let businessCity = response.businesses[i].location.city;
+
+            let imageDiv = $("<div>").addClass("restaurant-image m-2");
+            let restaurantImage = $("<img>").attr("src", businessImage);
+            let restaurantName = $("<p>").text(businessName).addClass("restaurant-name p-2");
+            let restaurantRating = $("<p>").text(businessRating).addClass("restaurant-rating p-2");
+            let restaurantPrice = $("<p>").text(businessPrice).addClass("restaurant-price p-2");
+            let restaurantReviewCount = $("<p>").text(businessReviewCount).addClass("restaurant-review-count p-2");
+            let restaurantPhone = $("<p>").text(businessPhone).addClass("restaurant-phone p-2");
+            let restaurantAddress = $("<p>").text(businessAddress).addClass("restaurant-address p-2");
+            let restaurantCity = $("<p>").text(businessCity).addClass("restaurant-city p-2");
+
+            imageDiv.append(restaurantImage).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity);
+            $("#restaurants-container").append(imageDiv);
+        }
+    });
+}
 // Restaurant API call
 function displayRestaurants() {
     // retrieve from local storage

@@ -7,6 +7,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png" />
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -17,9 +20,9 @@
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-info py-0">
+    <nav class="navbar navbar-expand-lg navbar-dark py-0">
         <a class="navbar-brand d-flex justify-content-center align-items-center" href="index.html">
-            <img src="images\logoFinal123.png" width="50px" height="50px" class="d-inline-block align-top"
+            <img src="images/board logo.png" width="50px" height="50px" class="d-inline-block align-top"
                 alt="Logo Image">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -71,37 +74,37 @@
                         </label>
                         <select class="custom-select my-1 mr-sm-4" id="restaurant-cuisine">
                             <option value="" disabled selected>Choose...</option>
-                            <option value="1" id="middle-eastern">Middle Eastern</option>
-                            <option value="2" id="sushi">Sushi</option>
-                            <option value="3" id="asian">Asian</option>
-                            <option value="4" id="african">African</option>
-                            <option value="5" id="persian">Persian</option>
-                            <option value="6" id="comfort">Comfort</option>
-                            <option value="7" id="dessert">Dessert</option>
-                            <option value="8" id="cocktails">Cocktails</option>
-                            <option value="9" id="latin-american">Latin American</option>
-                            <option value="10" id="salad">Healthy</option>
+                            <option value="middle eastern">Middle Eastern</option>
+                            <option value="sushi">Sushi</option>
+                            <option value="asian">Asian</option>
+                            <option value="african">African</option>
+                            <option value="persian">Persian</option>
+                            <option value="comfort">Comfort</option>
+                            <option value="dessert">Dessert</option>
+                            <option value="cocktails">Cocktails</option>
+                            <option value="latin american">Latin American</option>
+                            <option value="salad">Healthy</option>
                         </select>
                     </form>
                 </div>
                 <div class="col-md-4">
                     <form class="form-inline">
-                        <label class="my-1 mr-4" for="inlineFormCustomSelectPref" style="color: white">Price Range
+                        <label class="my-1 mr-4" for="restaurant-price" style="color: white">Price Range
                         </label>
-                        <select class="custom-select my-1 mr-sm-4" id="inlineFormCustomSelectPref">
+                        <select class="custom-select my-1 mr-sm-4" id="restaurant-price">
                             <option value="" disabled selected>Choose...</option>
                             <option value="1" id="cheap"> $ </option>
-                            <option value="2" id="reasonable"> $$ </option>
-                            <option value="3" id="moderate"> $$$ </option>
-                            <option value="4" id="expensive"> $$$$ </option>
+                            <option value="1,2" id="reasonable"> $$ </option>
+                            <option value="1,2,3" id="moderate"> $$$ </option>
+                            <option value="1,2,3,4" id="expensive"> $$$$ </option>
                         </select>
                     </form>
                 </div>
                 <div class="col-md-4">
                     <form class="form-inline">
-                        <label class="my-1 mr-4" for="inlineFormCustomSelectPref" style="color: white">Rating
+                        <label class="my-1 mr-4" for="restaurant-rating" style="color: white">Rating
                         </label>
-                        <select class="custom-select my-1 mr-sm-4" id="inlineFormCustomSelectPref">
+                        <select class="custom-select my-1 mr-sm-4" id="restaurant-rating">
                             <option value="" disabled selected>Choose...</option>
                             <option value="1 - 2.9">Decent</option>
                             <option value="3 - 3.9">Good</option>
@@ -109,40 +112,55 @@
                         </select>
                     </form>
                 </div>
-            </div>
-            <!-- checkboxes these need unique IDs that make sense to pull the values and plug into our queryURL for new APi call when user clicks submit -->
-            <div class="row">
-                <!-- <div class="col-md-4">
-                    <div class="form-check-inline mr-3">
-                        <input class="form-check-input" type="checkbox" value="true" id="is-open">
-                        <label class="form-check-label" for="is-open" style="color: white">
-                            Is Open
+                <div class="col-md-4">
+                    <form class="form-inline">
+                        <label class="my-1 mr-4" for="restaurant-city" style="color: white">City
                         </label>
-                    </div>
-                </div> -->
-
-                <!-- <div class="col-md-4">
+                        <select class="custom-select my-1 mr-sm-4" id="restaurant-city">
+                            <option value="" disabled selected>Choose...</option>
+                            <option value="Seattle, WA">Seattle, WA</option>
+                            <option value="San Francisco, CA">San Francisco, CA</option>
+                            <option value="Portland, OR">Portland, OR</option>
+                            <option value="New York, NY">New York, NY</option>
+                            <option value="Chicago, IL">Chicago, IL</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
                     <div class="form-check-inline mr-3">
-                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                        <label class="form-check-label" for="gridCheck1" style="color: white">
-                            Example checkbox
+                        <input class="form-check-input" type="checkbox" id="vegetarian-check" value="vegetarian">
+                        <label class="form-check-label" for="vegetarian-check" style="color: white">
+                            Vegetarian
                         </label>
                     </div>
                 </div>
-
+            </div>
+            <div class="row">
                 <div class="col-md-4">
                     <div class="form-check-inline mr-3">
-                        <input class="form-check-input" type="checkbox" id="gridCheck1">
-                        <label class="form-check-label" for="gridCheck1" style="color: white">
-                            Example checkbox
+                        <input class="form-check-input" type="checkbox" id="vegan-check" value="vegan">
+                        <label class="form-check-label" for="vegan-check" style="color: white">
+                            Vegan
                         </label>
                     </div>
-                </div> -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-check-inline mr-3">
+                        <input class="form-check-input" type="checkbox" id="gluten-free-check" value="gluten free">
+                        <label class="form-check-label" for="guten-free-check" style="color: white">
+                            Gluten Free
+                        </label>
+                    </div>
+                </div>
             </div>
             <!-- submit button where our function will listen to gather values from above and new api call -->
             <div class="row my-3">
                 <div class="col">
-                    <button type="submit" class="btn btn-dark mb-2" id="submit--restaurant-filters">Submit</button>
+                    <button type="submit" class="btn btn-dark mb-2" id="submit-restaurant-filters">Submit</button>
                 </div>
             </div>
         </div>
@@ -158,7 +176,7 @@
 
 
     <!-- footer -->
-    <footer class="site-footer">
+    <footer class="footer">
         <p id="copyright">copyright ©</p>
     </footer>
 
