@@ -79,7 +79,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 // load emoji/city modal
-$('#exampleModalCenter').modal('show');
+// $('#exampleModalCenter').modal('show');
 
 // hides the account info dropdown
 $("#account").hide();
@@ -308,7 +308,10 @@ function displayRecipes() {
 
     //for API call
     let queryURL = `https://api.edamam.com/search?q=${search.name}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&calories=${search.calories}`
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9c26e92aca7eb4d64728de586b05c9888b2079d0
     // note: calories returned in JSON response is yield, need to divide by yield: to get calories per serving - for future calculation calories / yield of the recipe
 
     console.log(queryURL)
@@ -339,6 +342,96 @@ function displayRecipes() {
     });
 };
 
+let restaurantCuisine;
+let restaurantPrice;
+let restaurantRating;
+
+$("#restaurant-cuisine").on("change", function () {
+    restaurantCuisine = this.value;
+    console.log("cuisine: " + restaurantCuisine);
+    return restaurantCuisine;
+});
+
+$("#restaurant-price").on("change", function () {
+    restaurantPrice = this.value;
+    console.log("price: " + restaurantPrice);
+    return restaurantPrice;
+});
+
+$("#restaurant-rating").on("change", function () {
+    restaurantRating = this.value;
+    console.log("rating" + restaurantRating);
+    return restaurantRating;
+});
+
+$("#submit-restaurant-filters").on("click", function () {
+    if (restaurantCuisine && restaurantPrice) {
+        console.log(restaurantCuisine);
+        console.log(restaurantPrice);
+        console.log(restaurantRating);
+        // set variables to local storage
+        localStorage.setItem("restaurantCuisine", restaurantCuisine);
+        localStorage.setItem("restaurantPrice", restaurantPrice);
+        localStorage.setItem("restaurantRating", restaurantRating);
+
+        $("#restaurant-cuisine").val("");
+        $("#restaurant-price").val("");
+        $("#restaurant-rating").val("");
+
+        newRestaurantDisplay();
+    }
+});
+
+function newRestaurantDisplay() {
+
+    // retrieve from local storage
+    restaurantCuisine = localStorage.getItem("restaurantCuisine");
+    restaurantPrice = localStorage.getItem("restaurantPrice");
+    restaurantRating = localStorage.getItem("restaurantRating");
+    searchCity = localStorage.getItem("searchCity");
+
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=" + restaurantCuisine + "&location=" + searchCity + "$price=" + restaurantPrice + "&rating=" + restaurantRating + "&limit=2",
+        "method": "GET",
+        "headers": {
+            // "accept": "application/json",
+            // "Access-Control-Allow-Origin": "*",
+            "Authorization": "Bearer SDAEnMNqSOPl9_I9468qC_1PDuSvS67-h-HCkR6lPtwoYMA1bqU1yVT5pP1SUh_Cr3j4GucEh32EuhxxdUXZn7vBtrJ7V7zaD3ZgWmFIxsIDR0B3BY9ix3QxmeyLXHYx",
+            "cache-control": "no-cache",
+        }
+    }
+
+    $.ajax(settings).done(function (response) {
+        console.log(response);
+        $("#restaurants-container").empty();
+        // let businesses = response.businesses;
+        for (let i = 0; i < response.businesses.length; i++) {
+            let businessName = response.businesses[i].name;
+            let businessImage = response.businesses[i].image_url;
+            let businessRating = response.businesses[i].rating;
+            let businessReviewCount = response.businesses[i].review_count;
+            let businessPrice = response.businesses[i].price;
+            let businessPhone = response.businesses[i].phone;
+            let businessAddress = response.businesses[i].location.address1;
+            let businessCity = response.businesses[i].location.city;
+
+            let imageDiv = $("<div>").addClass("restaurant-image m-2");
+            let restaurantImage = $("<img>").attr("src", businessImage);
+            let restaurantName = $("<p>").text(businessName).addClass("restaurant-name p-2");
+            let restaurantRating = $("<p>").text(businessRating).addClass("restaurant-rating p-2");
+            let restaurantPrice = $("<p>").text(businessPrice).addClass("restaurant-price p-2");
+            let restaurantReviewCount = $("<p>").text(businessReviewCount).addClass("restaurant-review-count p-2");
+            let restaurantPhone = $("<p>").text(businessPhone).addClass("restaurant-phone p-2");
+            let restaurantAddress = $("<p>").text(businessAddress).addClass("restaurant-address p-2");
+            let restaurantCity = $("<p>").text(businessCity).addClass("restaurant-city p-2");
+
+            imageDiv.append(restaurantImage).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity);
+            $("#restaurants-container").append(imageDiv);
+        }
+    });
+}
 // Restaurant API call
 function displayRestaurants() {
     // retrieve from local storage
@@ -371,11 +464,6 @@ function displayRestaurants() {
             let businessPhone = response.businesses[i].phone;
             let businessAddress = response.businesses[i].location.address1;
             let businessCity = response.businesses[i].location.city;
-
-            // $("#restaurant-name-" + i).text(businesses[i].name);
-            // $("#image-" + i).attr("src", businesses[i].image_url);
-            // $("#rating-" + i).text("Rating: " + businesses[i].rating);
-            // $("#price-" + i).text("Price: " + businesses[i].price);
 
             let imageDiv = $("<div>").addClass("restaurant-image m-2");
             let restaurantImage = $("<img>").attr("src", businessImage);
