@@ -340,6 +340,9 @@ function displayRecipes() {
 let restaurantCuisine;
 let restaurantPrice;
 let restaurantRating;
+let isVegetarian;
+let isVegan;
+let isGlutenFree;
 
 $("#restaurant-cuisine").on("change", function () {
     restaurantCuisine = this.value;
@@ -359,19 +362,55 @@ $("#restaurant-rating").on("change", function () {
     return restaurantRating;
 });
 
+$("#restaurant-city").on("change", function () {
+    searchCity = this.value;
+    console.log("city" + searchCity);
+    return searchCity;
+});
+
+$("#vegetarian-check").on("change", function () {
+    isVegetarian = this.value;
+    console.log("Is Veggie?" + isVegetarian);
+    return isVegetarian;
+});
+
+$("#vegan-check").on("change", function () {
+    isVegan = this.value;
+    console.log("Is Vegan?" + isVegan);
+    return isVegan;
+});
+
+$("#gluten-free-check").on("change", function () {
+    isGlutenFree = this.value;
+    console.log("Is GF?" + isGlutenFree);
+    return isGlutenFree;
+});
+
 $("#submit-restaurant-filters").on("click", function () {
-    if (restaurantCuisine && restaurantPrice) {
+    if (restaurantCuisine || restaurantPrice || restaurantRating || searchCity || isVegetarian) {
         console.log(restaurantCuisine);
         console.log(restaurantPrice);
         console.log(restaurantRating);
+        console.log(searchCity);
+        console.log(isVegetarian);
+        console.log(isVegan);
+        console.log(isGlutenFree);
         // set variables to local storage
         localStorage.setItem("restaurantCuisine", restaurantCuisine);
         localStorage.setItem("restaurantPrice", restaurantPrice);
         localStorage.setItem("restaurantRating", restaurantRating);
+        localStorage.setItem("searchCity", searchCity);
+        localStorage.setItem("isVegetarian", isVegetarian);
+        localStorage.setItem("isVegan", isVegan);
+        localStorage.setItem("isGlutenFree", isGlutenFree);
 
         $("#restaurant-cuisine").val("");
         $("#restaurant-price").val("");
         $("#restaurant-rating").val("");
+        $("#restaurant-city").val("");
+        $("#vegetarian-check").prop("checked", false);
+        $("#vegan-check").prop("checked", false);
+        $("#gluten-free-check").prop("checked", false);
 
         newRestaurantDisplay();
     }
@@ -380,7 +419,17 @@ $("#submit-restaurant-filters").on("click", function () {
 function newRestaurantDisplay() {
 
     // retrieve from local storage
-    restaurantCuisine = localStorage.getItem("restaurantCuisine");
+    if (restaurantCuisine && isVegetarian && isVegan && isGlutenFree) {
+        restaurantCuisine = localStorage.getItem("restaurantCuisine") + ", " + localStorage.getItem("isVegetarian") + ", " + localStorage.getItem("isVegan") + ", " + localStorage.getItem("isGlutenFree");
+    } else if (restaurantCuisine && isVegetarian && isVegan) {
+        restaurantCuisine = localStorage.getItem("restaurantCuisine") + ", " + localStorage.getItem("isVegetarian") + ", " + localStorage.getItem("isVegan");
+    } else if (restaurantCuisine && isVegetarian && isVegan) {
+        restaurantCuisine = localStorage.getItem("restaurantCuisine") + ", " + localStorage.getItem("isVegetarian");
+    } else if (restaurantCuisine && isVegetarian) {
+        restaurantCuisine = localStorage.getItem("restaurantCuisine") + ", " + localStorage.getItem("isVegetarian");
+    } else {
+        restaurantCuisine = localStorage.getItem("restaurantCuisine");
+    }
     restaurantPrice = localStorage.getItem("restaurantPrice");
     restaurantRating = localStorage.getItem("restaurantRating");
     searchCity = localStorage.getItem("searchCity");
@@ -388,7 +437,7 @@ function newRestaurantDisplay() {
     var settings = {
         "async": true,
         "crossDomain": true,
-        "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=" + restaurantCuisine + "&location=" + searchCity + "$price=" + restaurantPrice + "&rating=" + restaurantRating + "&limit=2",
+        "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=" + restaurantCuisine + "&location=" + searchCity + "$price=" + restaurantPrice + "&rating=" + restaurantRating + "&limit=10",
         "method": "GET",
         "headers": {
             // "accept": "application/json",

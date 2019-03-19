@@ -71,7 +71,7 @@
                         </label>
                         <select class="custom-select my-1 mr-sm-4" id="restaurant-cuisine">
                             <option value="" disabled selected>Choose...</option>
-                            <option value="middle-eastern">Middle Eastern</option>
+                            <option value="middle eastern">Middle Eastern</option>
                             <option value="sushi">Sushi</option>
                             <option value="asian">Asian</option>
                             <option value="african">African</option>
@@ -79,7 +79,7 @@
                             <option value="comfort">Comfort</option>
                             <option value="dessert">Dessert</option>
                             <option value="cocktails">Cocktails</option>
-                            <option value="latin-american">Latin American</option>
+                            <option value="latin american">Latin American</option>
                             <option value="salad">Healthy</option>
                         </select>
                     </form>
@@ -109,9 +109,50 @@
                         </select>
                     </form>
                 </div>
+                <div class="col-md-4">
+                    <form class="form-inline">
+                        <label class="my-1 mr-4" for="restaurant-city" style="color: white">City
+                        </label>
+                        <select class="custom-select my-1 mr-sm-4" id="restaurant-city">
+                            <option value="" disabled selected>Choose...</option>
+                            <option value="Seattle, WA">Seattle, WA</option>
+                            <option value="San Francisco, CA">San Francisco, CA</option>
+                            <option value="Portland, OR">Portland, OR</option>
+                            <option value="New York, NY">New York, NY</option>
+                            <option value="Chicago, IL">Chicago, IL</option>
+                        </select>
+                    </form>
+                </div>
             </div>
             <div class="row">
-
+                <div class="col-md-4">
+                    <div class="form-check-inline mr-3">
+                        <input class="form-check-input" type="checkbox" id="vegetarian-check" value="vegetarian">
+                        <label class="form-check-label" for="vegetarian-check" style="color: white">
+                            Vegetarian
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-check-inline mr-3">
+                        <input class="form-check-input" type="checkbox" id="vegan-check" value="vegan">
+                        <label class="form-check-label" for="vegan-check" style="color: white">
+                            Vegan
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-check-inline mr-3">
+                        <input class="form-check-input" type="checkbox" id="gluten-free-check" value="gluten free">
+                        <label class="form-check-label" for="guten-free-check" style="color: white">
+                            Gluten Free
+                        </label>
+                    </div>
+                </div>
             </div>
             <!-- submit button where our function will listen to gather values from above and new api call -->
             <div class="row my-3">
