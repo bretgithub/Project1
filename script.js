@@ -308,6 +308,10 @@ function displayRecipes() {
 
     //for API call
     let queryURL = `https://api.edamam.com/search?q=${search.name}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&calories=${search.calories}`
+<<<<<<< HEAD
+
+=======
+>>>>>>> 9c26e92aca7eb4d64728de586b05c9888b2079d0
     // note: calories returned in JSON response is yield, need to divide by yield: to get calories per serving - for future calculation calories / yield of the recipe
 
     console.log(queryURL)
@@ -323,16 +327,17 @@ function displayRecipes() {
         for (let i = 0; i < response.hits.length; i++) {
             let image = response.hits[i].recipe.image;
             let label = response.hits[i].recipe.label;
+            let recipeLink = response.hits[i].recipe.url;
             console.log(image);
             console.log(label);
 
-            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 col-3");
-            let recipeImage = $("<img>").addClass("card-top-img mt-2").attr("src", image).attr("style", 'width: 100%;height:auto;');
+            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3");
+            let recipeImage = $("<img>").addClass("card-top-img").attr("src", image).attr("style", 'width: 100%;height:auto;overflow:auto;');
             let cardBlock = $("<div>").addClass("card-block")
             let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
             imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel);
             $("#recipes-container").append(imageDiv);
-            $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none; color: black;');
+            $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
         }
     });
 };
