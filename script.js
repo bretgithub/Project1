@@ -16,6 +16,9 @@ let database = firebase.database();
 // global variables to be set when user selects values in modal
 let searchName;
 let searchCity;
+let restaurantArr = []; // here is where we'll store the info of favorited restaurants
+let recipeArr = []; // here is where we'll store the info of favorited recipes
+
 
 // grabs values from emojis and city and stores them in variables to pass into API call
 $(".radio").on("click", function () {
@@ -32,7 +35,9 @@ $("#select-city").on("change", function () {
 // checking if there is a user logged in
 var email, uid;
 firebase.auth().onAuthStateChanged(function (user) {
+    // When User is logged in allow the user to change 
     $('#exampleModalCenter').modal('show');
+
     if (user) {
         // User is signed in.
         email = user.email;
@@ -46,6 +51,8 @@ firebase.auth().onAuthStateChanged(function (user) {
         // using user ID as key to store all necessary information in that key
         database.ref(uid).set({
             email: email,
+            favRestaurants: JSON.stringify(restaurantArr),
+            favRecipes: JSON.stringify(recipeArr)
         });
 
         // hide the login modal
@@ -66,7 +73,8 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 
             //   use Firebase function to add userEmail/password combo
-            firebase.auth().createUserWithEmailAndPassword(signUpEmail, signUpPassword);
+            firebase.auth().createUserWithEmailAndPassword(signUpEmail, signUpPassword)
+            ;
 
 
             $("#userEmail").val("");
@@ -115,11 +123,6 @@ $("#save-button").on("click", function () {
         $("#exampleModalCenter").modal("hide");
     }
 });
-
-
-// see if there is a user logged in as page loads
-var user = firebase.auth().currentUser;
-console.log(user);
 
 // function for login info submit button
 // Sign in button function
@@ -226,6 +229,7 @@ function displayRecipes() {
 
     //for API call
     let queryURL = `https://api.edamam.com/search?q=${search.name}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&calories=${search.calories}`
+
     // note: calories returned in JSON response is yield, need to divide by yield: to get calories per serving - for future calculation calories / yield of the recipe
 
     console.log(queryURL)
@@ -245,13 +249,16 @@ function displayRecipes() {
             console.log(image);
             console.log(label);
 
-            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 col-3");
-            let recipeImage = $("<img>").addClass("card-top-img mt-2").attr("src", image).attr("style", 'width: 100%;height:auto;');
+            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3");
+            let recipeImage = $("<img>").addClass("card-top-img").attr("src", image).attr("style", 'width: 100%;height:auto;overflow:auto;');
             let cardBlock = $("<div>").addClass("card-block")
             let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
-            imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel);
+            let favoriteBtn = $("<button>").addClass("favorite");
+
+            imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel);
+          
             $("#recipes-container").append(imageDiv);
-            $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none; color: black;');
+            $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
         }
     });
 };
@@ -288,9 +295,9 @@ function displayRestaurants() {
             let businessPhone = response.businesses[i].phone;
             let businessAddress = response.businesses[i].location.address1;
             let businessCity = response.businesses[i].location.city;
-
-            let imageDiv = $("<div>").addClass("restaurant-image m-2");
-            let restaurantImage = $("<img>").attr("src", businessImage);
+    
+            let imageDiv = $("<div>").addClass("restaurant m-2").attr("id", "restaurant_" + i);
+            let restaurantImage = $("<img>").attr("src", businessImage).addClass("restaurant-img");
             let restaurantName = $("<p>").text(businessName).addClass("restaurant-name p-2");
             let restaurantRating = $("<p>").text(businessRating).addClass("restaurant-rating p-2");
             let restaurantPrice = $("<p>").text(businessPrice).addClass("restaurant-price p-2");
@@ -298,8 +305,10 @@ function displayRestaurants() {
             let restaurantPhone = $("<p>").text(businessPhone).addClass("restaurant-phone p-2");
             let restaurantAddress = $("<p>").text(businessAddress).addClass("restaurant-address p-2");
             let restaurantCity = $("<p>").text(businessCity).addClass("restaurant-city p-2");
+            // adds a favorite button to each card. perhaps add to the top right corner of the card
+            let favoriteBtn = $("<button>").addClass("favoriteRestaurants").attr("id", i);
 
-            imageDiv.append(restaurantImage).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity);
+            imageDiv.append(restaurantImage).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity).append(favoriteBtn);
             $("#restaurants-container").append(imageDiv);
         }
     });
@@ -560,3 +569,49 @@ function newDisplayRecipes() {
         }
     });
 };
+
+// enables all favorite buttons to be clicked
+// currently only applicable to restaurants
+$(document).on("click", ".favoriteRestaurants", function() {
+
+    // get the id of the button first to know which card was favorited
+    let num = this.id;
+
+    // grab all the information from cards
+    let placeImg = $(`#restaurant_${num} > .restaurant-img`).attr("src");
+    let placeName = $(`#restaurant_${num} > .restaurant-name`).text();
+    let placeRating = $(`#restaurant_${num} > .restaurant-rating`).text;
+    let placePrice = $(`#restaurant_${num} > .restaurant-price`).text();
+    let placeReviewCnt = $(`#restaurant_${num} > .restaurant-review-count`).text();
+    let placePhone = $(`#restaurant_${num} > .restaurant-phone`).text();
+    let placeAddress = $(`#restaurant_${num} > .restaurant-address`).text();
+    let placeCity = $(`#restaurant_${num} > .restaurant-city`).text();
+
+    // first grab the already existing favorite restaurants from firebase
+    // this uid should be firebase.auth().currentUser.uid if not replace it
+    database.ref(uid).once("value").then(function(snapshot) {
+        // this should update the empty arr in js with 
+        restaurantArr = JSON.parse(snapshot.val().favRestaurants); 
+    });
+
+    // store the information in an array
+    restaurantArr.push({
+        image: placeImg,
+        name: placeName, 
+        rating: placeRating, 
+        price: placePrice, 
+        reviewCount: placeReviewCnt, 
+        phone: placePhone, 
+        address: placeAddress, 
+        city: placeCity
+    });
+
+    // stringify the array
+    stringedArr = JSON.stringify(restaurantArr);
+
+    // update the array in firebase data
+    database.ref(uid).update({favRestaurants: stringedArr});
+    
+})
+
+
