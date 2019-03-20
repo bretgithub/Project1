@@ -74,7 +74,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
             //   use Firebase function to add userEmail/password combo
             firebase.auth().createUserWithEmailAndPassword(signUpEmail, signUpPassword)
-            ;
+                ;
 
 
             $("#userEmail").val("");
@@ -338,7 +338,7 @@ function displayRecipes() {
             let favoriteBtn = $("<button>").addClass("favorite");
 
             imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel);
-          
+
             $("#recipes-container").append(imageDiv);
             $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
         }
@@ -538,7 +538,7 @@ function displayRestaurants() {
 
 // enables all favorite buttons to be clicked
 // currently only applicable to restaurants
-$(document).on("click", ".favoriteRestaurants", function() {
+$(document).on("click", ".favoriteRestaurants", function () {
 
     // get the id of the button first to know which card was favorited
     let num = this.id;
@@ -555,20 +555,20 @@ $(document).on("click", ".favoriteRestaurants", function() {
 
     // first grab the already existing favorite restaurants from firebase
     // this uid should be firebase.auth().currentUser.uid if not replace it
-    database.ref(uid).once("value").then(function(snapshot) {
+    database.ref(uid).once("value").then(function (snapshot) {
         // this should update the empty arr in js with 
-        restaurantArr = JSON.parse(snapshot.val().favRestaurants); 
+        restaurantArr = JSON.parse(snapshot.val().favRestaurants);
     });
 
     // store the information in an array
     restaurantArr.push({
         image: placeImg,
-        name: placeName, 
-        rating: placeRating, 
-        price: placePrice, 
-        reviewCount: placeReviewCnt, 
-        phone: placePhone, 
-        address: placeAddress, 
+        name: placeName,
+        rating: placeRating,
+        price: placePrice,
+        reviewCount: placeReviewCnt,
+        phone: placePhone,
+        address: placeAddress,
         city: placeCity
     });
 
@@ -576,8 +576,7 @@ $(document).on("click", ".favoriteRestaurants", function() {
     stringedArr = JSON.stringify(restaurantArr);
 
     // update the array in firebase data
-    database.ref(uid).update({favRestaurants: stringedArr});
-    
-})
+    database.ref(uid).update({ favRestaurants: stringedArr });
 
+})
 
