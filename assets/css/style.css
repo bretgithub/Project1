@@ -42,12 +42,21 @@ a:hover {
 
 }
 
+.indexCard {
+    display:none;
+}
+
 body {
     background-image: url("../../images/background.png")
 }
 
 .jumbotron {
     height: 40vh;
+    width: 100%;
+}
+
+#main-page-jumbo {
+    height: 20vh;
     width: 100%;
 }
 
