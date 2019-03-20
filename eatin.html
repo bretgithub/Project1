@@ -102,9 +102,15 @@
             style="background-image: url(images/eatin3.png); background-size: cover; background-position: center; opacity: 1">
             <h1 style="color: white">So you've decided to Eat In!</h1>
             <!-- drop down param inpute, need unique IDs to grab values with click even on submit to recall API with new query -->
+
+        </div>
+    </div>
+
+    <div id="filter-section" class=" container w-75 justify-content-center">
+        <div class="container justify-content-center">
             <div class="row">
                 <div class="col-md-4">
-                    <form class="form-inline">
+                    <form class="form">
                         <label class="my-1 mr-4" for="recipe-cuisine" style="color: white">Cuisine
                         </label>
                         <select class="custom-select my-1 mr-sm-4" id="recipe-cuisine">
@@ -123,7 +129,7 @@
                     </form>
                 </div>
                 <div class="col-md-4">
-                    <form class="form-inline">
+                    <form class="form">
                         <label class="my-1 mr-4" for="recipe-prep-time" style="color: white">Prep Time
                         </label>
                         <select class="custom-select my-1 mr-sm-4" id="recipe-prep-time">
@@ -135,7 +141,7 @@
                     </form>
                 </div>
                 <div class="col-md-4">
-                    <form class="form-inline">
+                    <form class="form">
                         <label class="my-1 mr-4" for="recipe-calories" style="color: white">Calories
                         </label>
                         <select class="custom-select my-1 mr-sm-4" id="recipe-calories">
@@ -147,7 +153,9 @@
                     </form>
                 </div>
             </div>
-            <!-- checkboxes  -->
+        </div>
+        <!-- checkboxes  -->
+        <div class="container justify-content-center">
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-check-inline mr-3">
@@ -157,8 +165,8 @@
                         </label>
                     </div>
                 </div>
-            </div>
-            <div class="row">
+                <!-- </div> -->
+                <!-- <div class="row"> -->
                 <div class="col-md-4">
                     <div class="form-check-inline mr-3">
                         <input class="form-check-input" type="checkbox" id="vegan-check" value="vegan, ">
@@ -167,8 +175,8 @@
                         </label>
                     </div>
                 </div>
-            </div>
-            <div class="row">
+                <!-- </div> -->
+                <!-- <div class="row"> -->
                 <div class="col-md-4">
                     <div class="form-check-inline mr-3">
                         <input class="form-check-input" type="checkbox" id="gluten-free-check" value="gluten-free, ">
@@ -177,8 +185,11 @@
                         </label>
                     </div>
                 </div>
+                <!-- </div> -->
             </div>
-            <!-- submit button where our function will listen to gather values from above and new api call -->
+        </div>
+        <!-- submit button where our function will listen to gather values from above and new api call -->
+        <div class="container justify-content-center">
             <div class="row my-3">
                 <div class="col">
                     <button type="submit" class="btn btn-dark mb-2" id="submit-recipe-filters">Submit</button>
