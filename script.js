@@ -195,87 +195,87 @@ $("#logout-button").on("click", function (event) {
 // eatin new API call
 // grabbing cuisine
 
-let recipeCuisine;
-let recipePrep;
-let recipeCalories;
+// let recipeCuisine;
+// let recipePrep;
+// let recipeCalories;
 
-$("#recipe-cuisine").on("change", function () {
-    recipeCuisine = this.value;
-    return recipeCuisine;
-});
+// $("#recipe-cuisine").on("change", function () {
+//     recipeCuisine = this.value;
+//     return recipeCuisine;
+// });
 
-$("#recipe-prep-time").on("change", function () {
-    recipePrep = this.value;
-    return recipePrep;
-});
+// $("#recipe-prep-time").on("change", function () {
+//     recipePrep = this.value;
+//     return recipePrep;
+// });
 
-$("#recipe-calories").on("change", function () {
-    recipeCalories = this.value;
-    return recipeCalories;
-});
+// $("#recipe-calories").on("change", function () {
+//     recipeCalories = this.value;
+//     return recipeCalories;
+// });
 
-// close the save button only if searchName and searchCity are truthy
-$("#submit-recipe-filters").on("click", function () {
-    if (recipeCuisine && recipePrep && recipeCalories) {
-        console.log(recipeCuisine);
-        console.log(recipePrep);
-        console.log(recipeCalories);
-        // set variables to local storage
-        localStorage.setItem("recipeCuisine", recipeCuisine);
-        localStorage.setItem("recipePrep", recipePrep);
-        localStorage.setItem("recipeCalories", recipeCalories);
+// // close the save button only if searchName and searchCity are truthy
+// $("#submit-recipe-filters").on("click", function () {
+//     if (recipeCuisine && recipePrep && recipeCalories) {
+//         console.log(recipeCuisine);
+//         console.log(recipePrep);
+//         console.log(recipeCalories);
+//         // set variables to local storage
+//         localStorage.setItem("recipeCuisine", recipeCuisine);
+//         localStorage.setItem("recipePrep", recipePrep);
+//         localStorage.setItem("recipeCalories", recipeCalories);
 
-        $("#recipe-cuisine").val("");
-        $("#recipe-prep-time").val("");
-        $("#recipe-calories").val("");
+//         $("#recipe-cuisine").val("");
+//         $("#recipe-prep-time").val("");
+//         $("#recipe-calories").val("");
 
-        newRecipesDisplay();
-    }
-});
+//         newRecipesDisplay();
+//     }
+// });
 
-function newRecipesDisplay() {
+// function newRecipesDisplay() {
 
-    // retrieve from local storage
-    recipeCuisine = localStorage.getItem("recipeCuisine");
-    recipePrep = localStorage.getItem("recipePrep");
-    recipeCalories = localStorage.getItem("recipeCalories");
+//     // retrieve from local storage
+//     recipeCuisine = localStorage.getItem("recipeCuisine");
+//     recipePrep = localStorage.getItem("recipePrep");
+//     recipeCalories = localStorage.getItem("recipeCalories");
 
-    // run displayRecipes function
-    let search = {
-        name: recipeCuisine,
-        prep: recipePrep,
-        calories: recipeCalories,
-        // health: "alcohol-free",
-    }
+//     // run displayRecipes function
+//     let search = {
+//         name: recipeCuisine,
+//         prep: recipePrep,
+//         calories: recipeCalories,
+//         // health: "alcohol-free",
+//     }
 
-    //for API call
-    let queryURL = `https://api.edamam.com/search?q=${search.name}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=0&to=3&calories=${search.calories}&time=${search.prep}`
-    // note: calories returned in JSON response is yield, need to divide by yield: to get calories per serving - for future calculation calories / yield of the recipe
+//     //for API call
+//     let queryURL = `https://api.edamam.com/search?q=${search.name}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=0&to=3&calories=${search.calories}&time=${search.prep}`
+//     // note: calories returned in JSON response is yield, need to divide by yield: to get calories per serving - for future calculation calories / yield of the recipe
 
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).done(function (response) {
-        console.log(response);
-        $("#recipes-container").empty();
+//     $.ajax({
+//         url: queryURL,
+//         method: "GET"
+//     }).done(function (response) {
+//         console.log(response);
+//         $("#recipes-container").empty();
 
-        // go through results and add attr to display on DOM
-        for (let i = 0; i < response.hits.length; i++) {
-            let image = response.hits[i].recipe.image;
-            let label = response.hits[i].recipe.label;
-            console.log(image);
-            console.log(label);
+//         // go through results and add attr to display on DOM
+//         for (let i = 0; i < response.hits.length; i++) {
+//             let image = response.hits[i].recipe.image;
+//             let label = response.hits[i].recipe.label;
+//             console.log(image);
+//             console.log(label);
 
-            let imageDiv = $("<div>").addClass("recipe-pictures m-2");
-            let recipeImage = $("<img>").attr("src", image);
-            let recipeLabel = $("<p>").text(label).addClass("recipe-label p-2");
-            let favoriteBtn = $("<button>").addClass("favoriteRecipes").attr("id", i);
+//             let imageDiv = $("<div>").addClass("recipe-pictures m-2");
+//             let recipeImage = $("<img>").attr("src", image);
+//             let recipeLabel = $("<p>").text(label).addClass("recipe-label p-2");
+//             let favoriteBtn = $("<button>").addClass("favoriteRecipes").attr("id", i);
 
-            imageDiv.append(recipeImage).append(recipeLabel).append(favoriteBtn);
-            $("#recipes-container").append(imageDiv);
-        }
-    });
-};
+//             imageDiv.append(recipeImage).append(recipeLabel).append(favoriteBtn);
+//             $("#recipes-container").append(imageDiv);
+//         }
+//     });
+// };
 
 // API Calls
 // function to call Edamam API, call is on eatin.html
@@ -504,10 +504,10 @@ $("#submit-restaurant-filters").on("click", function () {
 });
 
 // eatin.html filters below
-// let recipeCuisine = "";
-// let recipePrep = "";
-// let recipeCalories = "";
-// let healthLabel = "";
+let recipeCuisine = "";
+let recipePrep = "";
+let recipeCalories = "";
+let healthLabel = "";
 
 $("#recipe-cuisine").on("change", function () {
     recipeCuisine = this.value;
