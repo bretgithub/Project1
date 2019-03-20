@@ -85,18 +85,48 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 // favorites page
 function displayFavorites() {
-    console.log("localUID", localStorage.getItem("seshID"));
+    // use localStorage to grab uid to pull from firebase
     let localID = localStorage.getItem("seshID");
     // pulls from firebase and grabs the favRecipes and favRestaurants array
-    database.ref(localID).once("value").then(function (snapshot) {
-        console.log(snapshot)
-        console.log("favRecipes", snapshot.val().favRecipes);
-        console.log("favRestaurants", snapshot.val().favRestaurants);
-        console.log("user id", uid)
-        // var favReci = JSON.parse(childSnapshot.val().favRecipes);
-        // var favRest = JSON.parse(childSnapshot.val().favRestaurants);
+    database.ref(localID).once("value").then(function(snapshot) {
+        
+        recipeArr = JSON.parse(snapshot.val().favRecipes);
+        restaurantArr= JSON.parse(snapshot.val().favRestaurants);
+        console.log(recipeArr);
+        console.log(restaurantArr);
 
+        //populate restaurant-row in favorites page
+        for (let i = 0; i < restaurantArr.length; i++) {
+            let cardDiv = $("<div>").addClass("restaurant m-2 p-1 card col-3 animated slideInUp").attr("id", "restaurant_" + i);
+            let restaurantImage = $("<img>").attr("src", restaurantArr[i].image).attr("style", 'width: 100%;height:auto;overflow:auto;').addClass("card-top-img restaurant-img");
+            let cardBlock = $("<div>").addClass("card-block")
+            let restaurantName = $("<h4>").text(restaurantArr[i].name).addClass("restaurant-name p-2");
+            let restaurantRating = $("<li>").text("Rating: " + restaurantArr[i].rating).addClass("restaurant-rating p-2");
+            let restaurantPrice = $("<li>").text("Price: " + restaurantArr[i].price).addClass("restaurant-price p-2");
+            let restaurantReviewCount = $("<li>").text("Number of Reviews: " + restaurantArr[i].reviewCount).addClass("restaurant-review-count p-2");
+            let restaurantPhone = $("<li>").text("Phone Number: " + restaurantArr[i].phone).addClass("restaurant-phone p-2");
+            let restaurantAddress = $("<li>").text("Address: " + restaurantArr[i].address).addClass("restaurant-address p-2");
+            let restaurantCity = $("<li>").text(restaurantArr[i].city).addClass("restaurant-city p-2");
+            // instead of favorite button, add unfavorite button to remove selected from favorites
+            let removeBtn = $("<button>").addClass("removeBtn align-self-end").attr("id", i).text("Remove Favorites");
 
+            cardDiv.append(restaurantImage).append(cardBlock).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity).append(removeBtn);
+            $("#fav-rest-row").append(cardDiv);
+        }
+        
+        // populate recipe-row in favorites page
+        for (let i = 0; i < recipeArr.length; i++) {
+            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated slideInUp");
+            let recipeImage = $("<img>").addClass("card-top-img").attr("src", recipeArr[i].image).attr("style", 'width: 100%;height:auto;overflow:auto;');
+            let cardBlock = $("<div>").addClass("card-block")
+            let recipeLabel = $("<h4>").text(recipeArr[i].name).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
+            let removeBtn = $("<button>").addClass("removeBtn align-self-end").attr("id", i).text("Remove Favorites");
+
+            imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel).append(removeBtn);
+
+            $("#fav-recipe-row").append(imageDiv);
+            $(".card-title").wrap($("<a>").attr("href", recipeArr[i].url)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
+        }   
         // create a row with recipes list in it
         // var reciRow = $("<tr>").append(
         //     $("<td>").text(favReci),
@@ -225,6 +255,8 @@ $("#logout-button").on("click", function (event) {
     console.log("user signed out");
 });
 
+
+// interaction to favorite recipes
 $(document).on("click", ".favoriteRecipes", function () {
 
     console.log("clicked favoriteRecipes");
@@ -235,9 +267,10 @@ $(document).on("click", ".favoriteRecipes", function () {
     // recipe img
     let placeImg = $(`#recipe_${num} > .card-top-img`).attr("src");
     // recipe name
-    let placeName = $(`#recipe_${num} > .recipe-label`).text();
+    let placeName = $(`#recipe_${num} .recipe-label`).text();
     // recipe url
-    let placeUrl = $(`#recipe_${num} > .card-title`).attr("href");
+    let placeUrl = $(`#recipe_${num} #url_${num}`).attr("href");
+    console.log(placeImg, placeName, placeUrl);
 
 
 
@@ -559,7 +592,6 @@ $(document).on("click", ".favoriteRestaurants", function () {
     // first grab the already existing favorite restaurants from firebase
     // this uid should be firebase.auth().currentUser.uid if not replace it
     database.ref(uid).once("value").then(function (snapshot) {
-        console.log(snapshot);
         // this should update the empty arr in js with 
         restaurantArr = JSON.parse(snapshot.val().favRestaurants);
     });
