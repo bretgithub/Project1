@@ -121,6 +121,9 @@ $("#save-button").on("click", function () {
         });
         // hide modal
         $("#exampleModalCenter").modal("hide");
+        $(".indexCard").attr('style', 'display:block;')
+        $(".eat-in-card").addClass("animated bounceInLeft")
+        $(".eat-out-card").addClass("animated bounceInRight")
     }
 });
 
@@ -314,7 +317,7 @@ function displayRecipes() {
             console.log(label);
 
 
-            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3");
+            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated slideInUp");
             let recipeImage = $("<img>").addClass("card-top-img").attr("src", image).attr("style", 'width: 100%;height:auto;overflow:auto;');
 
             let cardBlock = $("<div>").addClass("card-block")
@@ -399,7 +402,7 @@ function displayRestaurants() {
             let businessAddress = response.businesses[i].location.address1;
             let businessCity = response.businesses[i].location.city;
 
-            let imageDiv = $("<div>").addClass("restaurant m-2 p-1 card col-3").attr("id", "restaurant_" + i);
+            let imageDiv = $("<div>").addClass("restaurant m-2 p-1 card col-3 animated slideInUp").attr("id", "restaurant_" + i);
             let restaurantImage = $("<img>").attr("src", businessImage).attr("style", 'width: 100%;height:auto;overflow:auto;').addClass("card-top-img restaurant-img");
             let cardBlock = $("<div>").addClass("card-block")
             let restaurantName = $("<h4>").text(businessName).addClass("restaurant-name p-2");
