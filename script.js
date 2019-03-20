@@ -147,9 +147,13 @@ $("#create-button").on("click", function (event) {
             console.log(data);
             // hide modal if successful
             $("#login-modal").modal("hide");
+            $("#auth-message").text("");
+            $("#userEmail").val("");
+            $("#userPassword").val("");
         }).catch(function (error) {
             // alert user that entry was invalid
             $("#auth-message").html(error.message);
+
         })
     // clear fields
     // $("#userEmail").val("");
@@ -169,6 +173,9 @@ $("#login-button").on("click", function (event) {
         .then(function (data) {
             console.log(data);
             $("#login-modal").modal("hide");
+            $("#auth-message").text("");
+            $("#userEmail").val("");
+            $("#userPassword").val("");
         }).catch(function (error) {
             // alert user entry was invalid
             $("#auth-message").html(error.message);
