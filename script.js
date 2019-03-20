@@ -255,68 +255,6 @@ $("#logout-button").on("click", function (event) {
     console.log("user signed out");
 });
 
-// API Calls
-// function to call Edamam API, call is on eatin.html
-function displayRecipes() {
-
-    // retrieve from local storage
-    searchCity = localStorage.getItem("searchCity");
-    let rand = Math.floor(Math.random() * 50);
-    let otherRand = rand + 3;
-
-    searchCuisine = localStorage.getItem("searchCuisine") || "";
-    console.log(searchCuisine);
-    recipePrep = localStorage.getItem("recipePrep") || "";
-    recipeCalories = localStorage.getItem("recipeCalories") || "";
-    if (isVegetarian || isVegan || isGlutenFree) {
-        healthLabel = (localStorage.getItem("isVegetarian") || "") + (localStorage.getItem("isVegan") || "") + (localStorage.getItem("isGlutenFree") || "");
-        console.log("HealthLabel: " + healthLabel);
-    }
-
-    // run displayRecipes function
-    let search = {
-        searchCuisine: searchCuisine,
-        recipeCalories: recipeCalories,
-        recipePrep: recipePrep,
-        healthLabel: healthLabel,
-    }
-
-    //for API call
-    let queryURL = `https://api.edamam.com/search?q=${search.searchCuisine}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&calories=${search.recipeCalories}&time=${search.recipePrep}&healthLabels=${search.healthLabel}`;
-    // note: calories returned in JSON response is yield, need to divide by yield: to get calories per serving - for future calculation calories / yield of the recipe
-
-    console.log(queryURL)
-
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).done(function (response) {
-        console.log(response);
-        $("#recipes-container").empty();
-
-        // go through results and add attr to display on DOM
-        for (let i = 0; i < response.hits.length; i++) {
-            let image = response.hits[i].recipe.image;
-            let label = response.hits[i].recipe.label;
-            let recipeLink = response.hits[i].recipe.url;
-            // console.log(image);
-            // console.log(label);
-            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated slideInUp").attr("id", "recipe_" + i);
-            let recipeImage = $("<img>").addClass("card-top-img").attr("src", image).attr("style", 'width: 100%;height:auto;overflow:auto;');
-
-            let cardBlock = $("<div>").addClass("card-block")
-            let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;').attr("id", "card-title"+i)
-            let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end").attr("id", i).text("Add to Favorites");
-
-            imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
-
-            $("#recipes-container").append(imageDiv);
-
-            $("#card-title"+i).wrap($("<a>").attr("href", recipeLink).attr("id", "url_"+i)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
-        }
-    });
-};
-
 
 // interaction to favorite recipes
 $(document).on("click", ".favoriteRecipes", function () {
@@ -503,9 +441,9 @@ function displayRestaurants() {
 };
 
 // eatin.html filters below
-let recipePrep = "";
-let recipeCalories = "";
-let healthLabel = "";
+let recipePrep;
+let recipeCalories;
+let healthLabel;
 
 $("#recipe-cuisine").on("change", function () {
     searchCuisine = this.value;
@@ -569,6 +507,67 @@ $("#submit-recipe-filters").on("click", function () {
         alert("You must at least select Cuisine, Prep time, and Calories");
     }
 });
+
+// API Calls
+// function to call Edamam API, call is on eatin.html
+function displayRecipes() {
+
+    // retrieve from local storage
+    searchCity = localStorage.getItem("searchCity");
+    let rand = Math.floor(Math.random() * 50);
+    let otherRand = rand + 3;
+
+    searchCuisine = localStorage.getItem("searchCuisine") || "";
+    console.log(searchCuisine);
+    recipePrep = localStorage.getItem("recipePrep") || "";
+    recipeCalories = localStorage.getItem("recipeCalories") || "";
+    if (isVegetarian || isVegan || isGlutenFree) {
+        healthLabel = (localStorage.getItem("isVegetarian") || "") + (localStorage.getItem("isVegan") || "") + (localStorage.getItem("isGlutenFree") || "");
+        console.log("HealthLabel: " + healthLabel);
+    }
+
+    // run displayRecipes function
+    let search = {
+        searchCuisine: searchCuisine,
+        recipeCalories: recipeCalories,
+        recipePrep: recipePrep,
+        healthLabel: healthLabel,
+    }
+
+    //for API call
+    let queryURL = `https://api.edamam.com/search?q=${search.searchCuisine}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&calories=${search.recipeCalories}&time=${search.recipePrep}&healthLabels=${search.healthLabel}`;
+    // note: calories returned in JSON response is yield, need to divide by yield: to get calories per serving - for future calculation calories / yield of the recipe
+
+    console.log(queryURL)
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).done(function (response) {
+        console.log(response);
+        $("#recipes-container").empty();
+
+        // go through results and add attr to display on DOM
+        for (let i = 0; i < response.hits.length; i++) {
+            let image = response.hits[i].recipe.image;
+            let label = response.hits[i].recipe.label;
+            let recipeLink = response.hits[i].recipe.url;
+            // console.log(image);
+            // console.log(label);
+            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated slideInUp").attr("id", "recipe_" + i);
+            let recipeImage = $("<img>").addClass("card-top-img").attr("src", image).attr("style", 'width: 100%;height:auto;overflow:auto;');
+
+            let cardBlock = $("<div>").addClass("card-block")
+            let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
+            let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end").attr("id", i).text("Add to Favorites");
+
+            imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
+
+            $("#recipes-container").append(imageDiv);
+            $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
+        }
+    });
+};
 
 // new displayRecipes function - only works with local storage and renders old card look - need to update
 
