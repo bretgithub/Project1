@@ -84,9 +84,6 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
 });
 
-<<<<<<< HEAD
-
-
 // favorites page
 function displayFavorites() {
     console.log("localUID", localStorage.getItem("seshID"));
@@ -124,8 +121,6 @@ function displayFavorites() {
 // load emoji/city modal
 // $('#exampleModalCenter').modal('show');
 
-=======
->>>>>>> 99b23c9b7dc73072d0046638e339da74bbdd1b98
 // hides the account info dropdown
 $("#account").hide();
 
@@ -277,11 +272,9 @@ function displayRecipes() {
             // console.log(label);
 
 
-<<<<<<< HEAD
-            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3").attr("id", "recipe_"+i);
-=======
-            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated slideInUp");
->>>>>>> 99b23c9b7dc73072d0046638e339da74bbdd1b98
+
+            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated slideInUp").attr("id", "recipe_"+i);
+
             let recipeImage = $("<img>").addClass("card-top-img").attr("src", image).attr("style", 'width: 100%;height:auto;overflow:auto;');
 
             let cardBlock = $("<div>").addClass("card-block")
