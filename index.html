@@ -2,11 +2,15 @@
 <html lang="en">
 
 <head>
-  <title>Title</title>
+  <title>IN or OUT?</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Working Title</title>
+
+
+  <!-- Google font import -->
+  <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Bowlby+One+SC|Bungee+Inline|Grand+Hotel"
+    rel="stylesheet">
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -183,34 +187,24 @@
   </nav>
   <!-- /Navbar -->
 
-  <!-- Title -->
-  <div class="container" id="body_container">
-    <div class="jumbotron text-center col-md-10 offset-1" id="main-page-jumbo">
-      <h1 class="display-3">In or Out</h1>
-    </div>
-  </div>
-  <!-- /Title -->
-
   <!-- Cards -->
-  <div class="container my-10 col-md-8" id="card_container">
-    <div class="row justify-content-center pb-4">
+  <div class="div m-0 p-0" id="photo-container">
+    <div class="row">
 
-      <div class="card m-3 indexCard col-5 eat-in-card" style="width: 40vw;" id="card1">
-        <img class="card-img-top" src="https://placeimg.com/640/480/tech" alt="Card image cap" id="card1image">
-        <div class="card-body">
-          <p class="card-text">Discover new exciting recipes</p>
-
-          <a href="eatin.html" target=_blank>Eat In</a>
-
-        </div>
+      <div class="div col-6 main-img border-right border-light m-0 p-0" id="eat-in-index">
+        <a href="eatin.html" target=_blank>
+          <img class="index-image" src="images/in photo big.jpg" alt="in image" id="in-image"></img>
+          <h1 class="header-text in-text">IN</h1>
+        </a>
       </div>
 
-      <div class="card m-3 indexCard col-5 eat-out-card" style="width: 40vw;" id="card2">
-        <img class="card-img-top" src="https://placeimg.com/640/480/arch" alt="Card image cap">
-        <div class="card-body">
-          <p class="card-text">Explore resaurants in your area</p>
-          <a href="eatout.html" target=_blank>Eat Out</a>
-        </div>
+
+
+      <div class="div col-6 main-img border-left border-light m-0 p-0" id="eat-out-index">
+        <a href="eatout.html" target=_blank>
+          <img class="index-image" src="images/out photo big.jpeg" alt="out image" id="out-image">
+          <h1 class="header-text out-text">OUT</h1>
+        </a>
       </div>
     </div>
   </div>
@@ -237,7 +231,10 @@
   <!-- linked JS file -->
 
   <script type="text/javascript" src="script.js"></script>
-  <script> $('#exampleModalCenter').modal('show') </script>
+  <!-- modal that is disabled if user clicks outside  -->
+  <script>
+    $('#exampleModalCenter').modal({ backdrop: 'static', keyboard: false })   
+  </script>
 
 </body>
 
