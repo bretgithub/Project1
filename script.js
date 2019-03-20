@@ -89,12 +89,10 @@ function displayFavorites() {
     let localID = localStorage.getItem("seshID");
     // pulls from firebase and grabs the favRecipes and favRestaurants array
     database.ref(localID).once("value").then(function(snapshot) {
-        
         recipeArr = JSON.parse(snapshot.val().favRecipes);
         restaurantArr= JSON.parse(snapshot.val().favRestaurants);
-        console.log(recipeArr);
-        console.log(restaurantArr);
-
+        $("#fav-rest-row").empty();
+        $("#fav-recipe-row").empty();
         //populate restaurant-row in favorites page
         for (let i = 0; i < restaurantArr.length; i++) {
             let cardDiv = $("<div>").addClass("restaurant m-2 p-1 card col-3 animated slideInUp").attr("id", "restaurant_" + i);
@@ -108,7 +106,7 @@ function displayFavorites() {
             let restaurantAddress = $("<li>").text("Address: " + restaurantArr[i].address).addClass("restaurant-address p-2");
             let restaurantCity = $("<li>").text(restaurantArr[i].city).addClass("restaurant-city p-2");
             // instead of favorite button, add unfavorite button to remove selected from favorites
-            let removeBtn = $("<button>").addClass("removeBtn align-self-end").attr("id", i).text("Remove Favorites");
+            let removeBtn = $("<button>").addClass("removeBtn align-self-end").attr("id", "restaurant_"+i).text("Remove Favorites");
 
             cardDiv.append(restaurantImage).append(cardBlock).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity).append(removeBtn);
             $("#fav-rest-row").append(cardDiv);
@@ -120,35 +118,46 @@ function displayFavorites() {
             let recipeImage = $("<img>").addClass("card-top-img").attr("src", recipeArr[i].image).attr("style", 'width: 100%;height:auto;overflow:auto;');
             let cardBlock = $("<div>").addClass("card-block")
             let recipeLabel = $("<h4>").text(recipeArr[i].name).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
-            let removeBtn = $("<button>").addClass("removeBtn align-self-end").attr("id", i).text("Remove Favorites");
+            let removeBtn = $("<button>").addClass("removeBtn align-self-end").attr("id", "recipe_"+i).text("Remove Favorites");
 
             imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel).append(removeBtn);
 
             $("#fav-recipe-row").append(imageDiv);
             $(".card-title").wrap($("<a>").attr("href", recipeArr[i].url)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
-        }   
-        // create a row with recipes list in it
-        // var reciRow = $("<tr>").append(
-        //     $("<td>").text(favReci),
-        // );
-
-        // // Append the new row to the page
-        // $("#fav-recipe-row > tbody").append(reciRow);
-
-        // // create the restaurant
-        // var restRow = $("<tr>").append(
-        //     $("<td>").text(favRest),
-        // );
-
-        //  // Append the new row to the table
-        // $("#fav-recipe-row > tbody").append(restRow);
+        } 
     });
 }
 
 
-
-// load emoji/city modal
-// $('#exampleModalCenter').modal('show');
+// add listner to the removeBtn button
+$(document).on("click", ".removeBtn", function(event) {
+    // this should differentiate between restaurants and recipes
+    let type = this.id.split("_")[0];
+    // this should be the index of the array that we are removing from either restaurantArr or recipesArr
+    let index = this.id.split("_"[1]);
+    let localID = localStorage.getItem("seshID");
+    // grabbing the arrays from firebase
+    database.ref(localID).once("value").then(function(snapshot) {
+        recipeArr = JSON.parse(snapshot.val().favRecipes);
+        restaurantArr= JSON.parse(snapshot.val().favRestaurants);
+    });
+    if (type === "recipe") {
+        // remove the selected favorite card from favorites
+        recipeArr.splice(index, 1);
+        // stringify the array
+        let stringedArr = JSON.stringify(recipeArr);
+        // update the array in firebase data 
+        database.ref(localID).update({ favRecipes: stringedArr });
+    } else if (type === "restaurant") {
+        // remove the selected favorite card from favorites
+        restaurantArr.splice(index, 1);
+        // stringify the array
+        let stringedArr = JSON.stringify(restaurantArr);
+        // update the array in firebase data 
+        database.ref(localID).update({ favRestaurants: stringedArr });
+    }
+    displayFavorites();
+});
 
 // hides the account info dropdown
 $("#account").hide();
