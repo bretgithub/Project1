@@ -14,7 +14,7 @@ firebase.initializeApp(config);
 let database = firebase.database();
 
 // global variables to be set when user selects values in modal
-let searchName;
+let searchCuisine;
 let searchCity;
 let restaurantArr = []; // here is where we'll store the info of favorited restaurants
 let recipeArr = []; // here is where we'll store the info of favorited recipes
@@ -22,8 +22,8 @@ let recipeArr = []; // here is where we'll store the info of favorited recipes
 
 // grabs values from emojis and city and stores them in variables to pass into API call
 $(".radio").on("click", function () {
-    searchName = this.value;
-    return searchName;
+    searchCuisine = this.value;
+    return searchCuisine;
 });
 
 // "change" fires for input, select, textarea - need blank city to force a change to grab value for city
@@ -118,7 +118,6 @@ function displayFavorites() {
         for (let i = 0; i < recipeArr.length; i++) {
             let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated slideInUp");
             let recipeImage = $("<img>").addClass("card-top-img").attr("src", recipeArr[i].image).attr("style", 'width: 100%;height:auto;overflow:auto;');
-
             let cardBlock = $("<div>").addClass("card-block")
             let recipeLabel = $("<h4>").text(recipeArr[i].name).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
             let removeBtn = $("<button>").addClass("removeBtn align-self-end").attr("id", i).text("Remove Favorites");
@@ -132,7 +131,7 @@ function displayFavorites() {
         // var reciRow = $("<tr>").append(
         //     $("<td>").text(favReci),
         // );
-        
+
         // // Append the new row to the page
         // $("#fav-recipe-row > tbody").append(reciRow);
 
@@ -154,28 +153,22 @@ function displayFavorites() {
 // hides the account info dropdown
 $("#account").hide();
 
-// grabs values from emojis and city and stores them in variables to pass into API call
-$(".radio").on("click", function () {
-    searchName = this.value;
-    return searchName;
-});
-
 // save to firebase if logged in else local
 $("#save-button").on("click", function () {
-    if (searchCity && searchName) {
-        console.log(searchName);
+    if (searchCity && searchCuisine) {
+        console.log(searchCuisine);
 
         // if user is signed in save location and cuisine type to firebase
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
                 database.ref(uid).update({
-                    location: searchName,
-                    categories: searchName,
+                    location: searchCuisine,
+                    categories: searchCuisine,
                 });
             }
             // if user is not signed in save data to local storage
             else {
-                localStorage.setItem("searchName", searchName);
+                localStorage.setItem("searchCuisine", searchCuisine);
                 localStorage.setItem("searchCity", searchCity);
             }
 
@@ -183,7 +176,7 @@ $("#save-button").on("click", function () {
         });
         // hide modal
 
-        
+
         $("#exampleModalCenter").modal("hide");
         $(".indexCard").attr('style', 'display:block;')
         $(".eat-in-card").addClass("animated bounceInLeft")
@@ -267,21 +260,29 @@ $("#logout-button").on("click", function (event) {
 function displayRecipes() {
 
     // retrieve from local storage
-    searchName = localStorage.getItem("searchName");
     searchCity = localStorage.getItem("searchCity");
     let rand = Math.floor(Math.random() * 50);
     let otherRand = rand + 3;
 
+    searchCuisine = localStorage.getItem("searchCuisine") || "";
+    console.log(searchCuisine);
+    recipePrep = localStorage.getItem("recipePrep") || "";
+    recipeCalories = localStorage.getItem("recipeCalories") || "";
+    if (isVegetarian || isVegan || isGlutenFree) {
+        healthLabel = (localStorage.getItem("isVegetarian") || "") + (localStorage.getItem("isVegan") || "") + (localStorage.getItem("isGlutenFree") || "");
+        console.log("HealthLabel: " + healthLabel);
+    }
+
     // run displayRecipes function
     let search = {
-        name: searchName,
-        calories: "500-1200",
-        // health: "alcohol-free",
+        searchCuisine: searchCuisine,
+        recipeCalories: recipeCalories,
+        recipePrep: recipePrep,
+        healthLabel: healthLabel,
     }
 
     //for API call
-    let queryURL = `https://api.edamam.com/search?q=${search.name}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&calories=${search.calories}`
-
+    let queryURL = `https://api.edamam.com/search?q=${search.searchCuisine}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&calories=${search.recipeCalories}&time=${search.recipePrep}&healthLabels=${search.healthLabel}`;
     // note: calories returned in JSON response is yield, need to divide by yield: to get calories per serving - for future calculation calories / yield of the recipe
 
     console.log(queryURL)
@@ -300,11 +301,7 @@ function displayRecipes() {
             let recipeLink = response.hits[i].recipe.url;
             // console.log(image);
             // console.log(label);
-
-
-
-            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated slideInUp").attr("id", "recipe_"+i);
-
+            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated slideInUp").attr("id", "recipe_" + i);
             let recipeImage = $("<img>").addClass("card-top-img").attr("src", image).attr("style", 'width: 100%;height:auto;overflow:auto;');
 
             let cardBlock = $("<div>").addClass("card-block")
@@ -314,8 +311,8 @@ function displayRecipes() {
             imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
 
             $("#recipes-container").append(imageDiv);
-            $("#card-title"+i).wrap($("<a>").attr("href", recipeLink).attr("id", "url_"+i)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
 
+            $("#card-title"+i).wrap($("<a>").attr("href", recipeLink).attr("id", "url_"+i)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
         }
     });
 };
@@ -337,7 +334,7 @@ $(document).on("click", ".favoriteRecipes", function () {
     let placeUrl = $(`#recipe_${num} #url_${num}`).attr("href");
     console.log(placeImg, placeName, placeUrl);
 
-    
+
 
     // first grab the already existing favorite recipes from firebase
     // this uid should be firebase.auth().currentUser.uid if not replace it
@@ -364,64 +361,9 @@ $(document).on("click", ".favoriteRecipes", function () {
 
 })
 
-
-
-
-// Restaurant API call
-function displayRestaurants() {
-    // retrieve from local storage
-    searchName = localStorage.getItem("searchName");
-    searchCity = localStorage.getItem("searchCity");
-
-    var settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=" + searchName + "&location=" + searchCity + "&limit=3",
-        "method": "GET",
-        "headers": {
-            // "accept": "application/json",
-            // "Access-Control-Allow-Origin": "*",
-            "Authorization": "Bearer SDAEnMNqSOPl9_I9468qC_1PDuSvS67-h-HCkR6lPtwoYMA1bqU1yVT5pP1SUh_Cr3j4GucEh32EuhxxdUXZn7vBtrJ7V7zaD3ZgWmFIxsIDR0B3BY9ix3QxmeyLXHYx",
-            "cache-control": "no-cache",
-        }
-    }
-
-    $.ajax(settings).done(function (response) {
-        console.log(response);
-        $("#recipes-container").empty();
-        // let businesses = response.businesses;
-        for (let i = 0; i < response.businesses.length; i++) {
-            let businessName = response.businesses[i].name;
-            let businessImage = response.businesses[i].image_url;
-            let businessRating = response.businesses[i].rating;
-            let businessReviewCount = response.businesses[i].review_count;
-            let businessPrice = response.businesses[i].price;
-            let businessPhone = response.businesses[i].phone;
-            let businessAddress = response.businesses[i].location.address1;
-            let businessCity = response.businesses[i].location.city;
-
-            let imageDiv = $("<div>").addClass("restaurant m-2 p-1 card col-3 animated slideInUp").attr("id", "restaurant_" + i);
-            let restaurantImage = $("<img>").attr("src", businessImage).attr("style", 'width: 100%;height:auto;overflow:auto;').addClass("card-top-img restaurant-img");
-            let cardBlock = $("<div>").addClass("card-block")
-            let restaurantName = $("<h4>").text(businessName).addClass("restaurant-name p-2");
-            let restaurantRating = $("<li>").text("Rating: " + businessRating).addClass("restaurant-rating p-2");
-            let restaurantPrice = $("<li>").text("Price: " + businessPrice).addClass("restaurant-price p-2");
-            let restaurantReviewCount = $("<li>").text("Number of Reviews: " + businessReviewCount).addClass("restaurant-review-count p-2");
-            let restaurantPhone = $("<li>").text("Phone Number: " + businessPhone).addClass("restaurant-phone p-2");
-            let restaurantAddress = $("<li>").text("Address: " + businessAddress).addClass("restaurant-address p-2");
-            let restaurantCity = $("<li>").text(businessCity).addClass("restaurant-city p-2");
-            // adds a favorite button to each card. perhaps add to the top right corner of the card
-            let favoriteBtn = $("<button>").addClass("favoriteRestaurants align-self-end").attr("id", i).text("Add to Favorites");
-
-            imageDiv.append(restaurantImage).append(cardBlock).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity).append(favoriteBtn);
-            $("#restaurants-container").append(imageDiv);
-        }
-    });
-};
-
 // for new api calls for eatin.html and eatout.html written as new functions below and listeners for filters
 // eatout.html filters below
-let restaurantCuisine;
+// let restaurantCuisine;
 let restaurantPrice;
 let restaurantRating;
 let isVegetarian = "";
@@ -429,9 +371,9 @@ let isVegan = "";
 let isGlutenFree = "";
 
 $("#restaurant-cuisine").on("change", function () {
-    restaurantCuisine = this.value;
-    console.log("cuisine: " + restaurantCuisine);
-    return restaurantCuisine;
+    searchCuisine = this.value;
+    console.log("cuisine: " + searchCuisine);
+    return searchCuisine;
 });
 
 $("#restaurant-price").on("change", function () {
@@ -472,8 +414,8 @@ $("#gluten-free-check").on("change", function () {
 
 // eatout.html submit button to capture values - yelp is nice and doesn't need all vaues to be valid to have queryURL work
 $("#submit-restaurant-filters").on("click", function () {
-    if (restaurantCuisine || restaurantPrice || restaurantRating || searchCity || isVegetarian) {
-        console.log(restaurantCuisine);
+    if (searchCuisine || restaurantPrice || restaurantRating || searchCity || isVegetarian) {
+        console.log(searchCuisine);
         console.log(restaurantPrice);
         console.log(restaurantRating);
         console.log(searchCity);
@@ -481,7 +423,7 @@ $("#submit-restaurant-filters").on("click", function () {
         console.log(isVegan);
         console.log(isGlutenFree);
         // set variables to local storage
-        localStorage.setItem("restaurantCuisine", restaurantCuisine);
+        localStorage.setItem("searchCuisine", searchCuisine);
         localStorage.setItem("restaurantPrice", restaurantPrice);
         localStorage.setItem("restaurantRating", restaurantRating);
         localStorage.setItem("searchCity", searchCity);
@@ -497,87 +439,18 @@ $("#submit-restaurant-filters").on("click", function () {
         $("#vegan-check").prop("checked", false);
         $("#gluten-free-check").prop("checked", false);
 
-        newDisplayRestaurants();
+        displayRestaurants();
     }
 });
 
-// eatin.html filters below
-let recipeCuisine = "";
-let recipePrep = "";
-let recipeCalories = "";
-let healthLabel = "";
-
-$("#recipe-cuisine").on("change", function () {
-    recipeCuisine = this.value;
-    return recipeCuisine;
-});
-
-$("#recipe-prep-time").on("change", function () {
-    recipePrep = this.value;
-    return recipePrep;
-});
-
-$("#recipe-calories").on("change", function () {
-    recipeCalories = this.value;
-    return recipeCalories;
-});
-
-$("#vegetarian-check").on("change", function () {
-    isVegetarian = this.value;
-    console.log("Is Veggie?" + isVegetarian);
-    return isVegetarian;
-});
-
-$("#vegan-check").on("change", function () {
-    isVegan = this.value;
-    console.log("Is Vegan?" + isVegan);
-    return isVegan;
-});
-
-$("#gluten-free-check").on("change", function () {
-    isGlutenFree = this.value;
-    console.log("Is GF?" + isGlutenFree);
-    return isGlutenFree;
-});
-
-// submit button for eatin.html, at least cuisine, prep, and calories need to be truthy
-$("#submit-recipe-filters").on("click", function () {
-    if (recipeCuisine & recipePrep & recipeCalories || isVegetarian || isVegan || isGlutenFree) {
-        console.log(recipeCuisine);
-        console.log(recipePrep);
-        console.log(recipeCalories);
-        console.log(isVegetarian);
-        console.log(isVegan);
-        console.log(isGlutenFree);
-        // set variables to local storage
-        localStorage.setItem("recipeCuisine", recipeCuisine);
-        localStorage.setItem("recipePrep", recipePrep);
-        localStorage.setItem("recipeCalories", recipeCalories);
-        localStorage.setItem("isVegetarian", isVegetarian);
-        localStorage.setItem("isVegan", isVegan);
-        localStorage.setItem("isGlutenFree", isGlutenFree);
-
-        $("#recipe-cuisine").val("");
-        $("#recipe-prep-time").val("");
-        $("#recipe-calories").val("");
-        $("#vegetarian-check").prop("checked", false);
-        $("#vegan-check").prop("checked", false);
-        $("#gluten-free-check").prop("checked", false);
-
-        newDisplayRecipes();
-    } else {
-        alert("You must at least select Cuisine, Prep time, and Calories");
-    }
-});
-
-// new displayRestaurants function - only works with local storage and renders old card look - need to update
-function newDisplayRestaurants() {
+// Restaurant API call
+function displayRestaurants() {
 
     // retrieve from local storage
-    if (restaurantCuisine & isVegetarian & isVegan & isGlutenFree) {
-        restaurantCuisine = localStorage.getItem("restaurantCuisine") + ", " + localStorage.getItem("isVegetarian") + ", " + localStorage.getItem("isVegan") + ", " + ", " + localStorage.getItem("isGlutenFree");
+    if (searchCuisine & isVegetarian & isVegan & isGlutenFree) {
+        searchCuisine = localStorage.getItem("searchCuisine") + ", " + localStorage.getItem("isVegetarian") + ", " + localStorage.getItem("isVegan") + ", " + ", " + localStorage.getItem("isGlutenFree");
     } else {
-        restaurantCuisine = localStorage.getItem("restaurantCuisine");
+        searchCuisine = localStorage.getItem("searchCuisine");
     }
     restaurantPrice = localStorage.getItem("restaurantPrice");
     restaurantRating = localStorage.getItem("restaurantRating");
@@ -586,7 +459,7 @@ function newDisplayRestaurants() {
     var settings = {
         "async": true,
         "crossDomain": true,
-        "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=" + restaurantCuisine + "&location=" + searchCity + "$price=" + restaurantPrice + "&rating=" + restaurantRating + "&limit=10",
+        "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=" + searchCuisine + "&location=" + searchCity + "$price=" + restaurantPrice + "&rating=" + restaurantRating + "&limit=3",
         "method": "GET",
         "headers": {
             // "accept": "application/json",
@@ -627,63 +500,77 @@ function newDisplayRestaurants() {
             $("#restaurants-container").append(imageDiv);
         }
     });
-}
+};
+
+// eatin.html filters below
+let recipePrep = "";
+let recipeCalories = "";
+let healthLabel = "";
+
+$("#recipe-cuisine").on("change", function () {
+    searchCuisine = this.value;
+    return searchCuisine;
+});
+
+$("#recipe-prep-time").on("change", function () {
+    recipePrep = this.value;
+    return recipePrep;
+});
+
+$("#recipe-calories").on("change", function () {
+    recipeCalories = this.value;
+    return recipeCalories;
+});
+
+$("#vegetarian-check").on("change", function () {
+    isVegetarian = this.value;
+    console.log("Is Veggie?" + isVegetarian);
+    return isVegetarian;
+});
+
+$("#vegan-check").on("change", function () {
+    isVegan = this.value;
+    console.log("Is Vegan?" + isVegan);
+    return isVegan;
+});
+
+$("#gluten-free-check").on("change", function () {
+    isGlutenFree = this.value;
+    console.log("Is GF?" + isGlutenFree);
+    return isGlutenFree;
+});
+
+// submit button for eatin.html, at least cuisine, prep, and calories need to be truthy
+$("#submit-recipe-filters").on("click", function () {
+    if (searchCuisine & recipePrep & recipeCalories || isVegetarian || isVegan || isGlutenFree) {
+        console.log(searchCuisine);
+        console.log(recipePrep);
+        console.log(recipeCalories);
+        console.log(isVegetarian);
+        console.log(isVegan);
+        console.log(isGlutenFree);
+        // set variables to local storage
+        localStorage.setItem("searchCuisine", searchCuisine);
+        localStorage.setItem("recipePrep", recipePrep);
+        localStorage.setItem("recipeCalories", recipeCalories);
+        localStorage.setItem("isVegetarian", isVegetarian);
+        localStorage.setItem("isVegan", isVegan);
+        localStorage.setItem("isGlutenFree", isGlutenFree);
+
+        $("#recipe-cuisine").val("");
+        $("#recipe-prep-time").val("");
+        $("#recipe-calories").val("");
+        $("#vegetarian-check").prop("checked", false);
+        $("#vegan-check").prop("checked", false);
+        $("#gluten-free-check").prop("checked", false);
+
+        displayRecipes();
+    } else {
+        alert("You must at least select Cuisine, Prep time, and Calories");
+    }
+});
 
 // new displayRecipes function - only works with local storage and renders old card look - need to update
-function newDisplayRecipes() {
-
-    // retrieve from local storage
-    recipeCuisine = localStorage.getItem("recipeCuisine") || "";
-    console.log(recipeCuisine);
-    recipePrep = localStorage.getItem("recipePrep");
-    recipeCalories = localStorage.getItem("recipeCalories");
-    if (isVegetarian || isVegan || isGlutenFree) {
-        healthLabel = (localStorage.getItem("isVegetarian") || "") + (localStorage.getItem("isVegan") || "") + (localStorage.getItem("isGlutenFree") || "");
-        console.log("HealthLabel: " + healthLabel);
-    }
-
-    // run displayRecipes function
-    let search = {
-        name: recipeCuisine,
-        prep: recipePrep,
-        calories: recipeCalories,
-        health: healthLabel,
-        // health: "alcohol-free",
-    }
-
-    //for API call
-    let queryURL = `https://api.edamam.com/search?q=${search.name}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=0&to=3&calories=${search.calories}&time=${search.prep}&healthLabels=${search.health}`;
-    // note: calories returned in JSON response is yield, need to divide by yield: to get calories per serving - for future calculation calories / yield of the recipe
-
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).done(function (response) {
-        console.log(response);
-        $("#recipes-container").empty();
-
-        // go through results and add attr to display on DOM
-        for (let i = 0; i < response.hits.length; i++) {
-            let image = response.hits[i].recipe.image;
-            let label = response.hits[i].recipe.label;
-            // console.log(image);
-            // console.log(label);
-
-            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated slideInUp");
-            let recipeImage = $("<img>").addClass("card-top-img").attr("src", image).attr("style", 'width: 100%;height:auto;overflow:auto;');
-
-            let cardBlock = $("<div>").addClass("card-block")
-            let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
-            let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end").attr("id", i).text("Add to Favorites");
-
-            imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
-
-            $("#recipes-container").append(imageDiv);
-            $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
-
-        }
-    });
-};
 
 // enables all favorite buttons to be clicked
 // currently only applicable to restaurants
