@@ -57,6 +57,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         $("#modal-button").hide();
 
         // show account info/setting dropdown in Navbar if logged in
+        $("#account").text(email);
         $("#account").show();
     } else {
         // No user is signed in.
