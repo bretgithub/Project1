@@ -55,6 +55,11 @@ body {
     width: 100%;
 }
 
+#main-page-jumbo {
+    height: 20vh;
+    width: 100%;
+}
+
 .card {
     background-color: rgba(170, 218, 194, 0.45);
 }
