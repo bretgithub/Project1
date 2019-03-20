@@ -49,10 +49,8 @@ firebase.auth().onAuthStateChanged(function (user) {
 
         // store user's email and user ID in firebase database
         // using user ID as key to store all necessary information in that key
-        database.ref(uid).set({
-            email: email,
-            favRestaurants: JSON.stringify(restaurantArr),
-            favRecipes: JSON.stringify(recipeArr)
+        database.ref(uid).update({
+            email: email
         });
 
         // hide the login modal
@@ -103,7 +101,7 @@ $("#save-button").on("click", function () {
         // if user is signed in save location and cuisine type to firebase
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
-                database.ref(uid).set({
+                database.ref(uid).update({
                     location: searchName,
                     categories: searchName,
                 });
