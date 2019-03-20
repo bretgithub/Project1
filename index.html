@@ -13,6 +13,7 @@
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
   <!-- linked CSS file -->
+  <link rel="stylesheet" href="assets/css/animate.css">
   <link rel="stylesheet" href="assets/css/style.css">
 
 
@@ -20,8 +21,8 @@
   <link rel="shortcut icon" type="image/png" href="images/favicon.png" />
 
   <!-- Modal -->
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
+  <div class="modal fade animated bounceInDown" id="exampleModalCenter" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -183,7 +184,7 @@
 
   <!-- Title -->
   <div class="container" id="body_container">
-    <div class="jumbotron text-center col-md-10 offset-1">
+    <div class="jumbotron text-center col-md-10 offset-1" id="main-page-jumbo">
       <h1 class="display-3">In or Out</h1>
     </div>
   </div>
@@ -193,7 +194,7 @@
   <div class="container my-10 col-md-8" id="card_container">
     <div class="row justify-content-center pb-4">
 
-      <div class="card m-3" style="width: 18rem;" id="card1">
+      <div class="card m-3 indexCard col-5 eat-in-card" style="width: 40vw;" id="card1">
         <img class="card-img-top" src="https://placeimg.com/640/480/tech" alt="Card image cap" id="card1image">
         <div class="card-body">
           <p class="card-text">Discover new exciting recipes</p>
@@ -203,7 +204,7 @@
         </div>
       </div>
 
-      <div class="card m-3" style="width: 18rem;" id="card2">
+      <div class="card m-3 indexCard col-5 eat-out-card" style="width: 40vw;" id="card2">
         <img class="card-img-top" src="https://placeimg.com/640/480/arch" alt="Card image cap">
         <div class="card-body">
           <p class="card-text">Explore resaurants in your area</p>
@@ -233,7 +234,9 @@
   <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
 
   <!-- linked JS file -->
+
   <script type="text/javascript" src="script.js"></script>
+  <script> $('#exampleModalCenter').modal('show') </script>
 
 </body>
 

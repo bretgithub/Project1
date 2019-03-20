@@ -13,7 +13,6 @@ firebase.initializeApp(config);
 
 let database = firebase.database();
 
-
 // global variables to be set when user selects values in modal
 let searchName;
 let searchCity;
@@ -37,7 +36,7 @@ $("#select-city").on("change", function () {
 var email, uid;
 firebase.auth().onAuthStateChanged(function (user) {
     // When User is logged in allow the user to change 
-    //
+    // $('#exampleModalCenter').modal('show');
 
     if (user) {
         // User is signed in.
@@ -85,6 +84,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
 });
 
+<<<<<<< HEAD
 
 
 // favorites page
@@ -124,6 +124,8 @@ function displayFavorites() {
 // load emoji/city modal
 // $('#exampleModalCenter').modal('show');
 
+=======
+>>>>>>> 99b23c9b7dc73072d0046638e339da74bbdd1b98
 // hides the account info dropdown
 $("#account").hide();
 
@@ -158,6 +160,9 @@ $("#save-button").on("click", function () {
 
         
         $("#exampleModalCenter").modal("hide");
+        $(".indexCard").attr('style', 'display:block;')
+        $(".eat-in-card").addClass("animated bounceInLeft")
+        $(".eat-out-card").addClass("animated bounceInRight")
     }
 });
 
@@ -181,9 +186,13 @@ $("#create-button").on("click", function (event) {
             console.log(data);
             // hide modal if successful
             $("#login-modal").modal("hide");
+            $("#auth-message").text("");
+            $("#userEmail").val("");
+            $("#userPassword").val("");
         }).catch(function (error) {
             // alert user that entry was invalid
             $("#auth-message").html(error.message);
+
         })
     // clear fields
     // $("#userEmail").val("");
@@ -203,6 +212,9 @@ $("#login-button").on("click", function (event) {
         .then(function (data) {
             console.log(data);
             $("#login-modal").modal("hide");
+            $("#auth-message").text("");
+            $("#userEmail").val("");
+            $("#userPassword").val("");
         }).catch(function (error) {
             // alert user entry was invalid
             $("#auth-message").html(error.message);
@@ -225,7 +237,8 @@ $("#logout-button").on("click", function (event) {
     console.log("user signed out");
 });
 
-// API calls made from modal on index.hmtl
+// API Calls
+// function to call Edamam API, call is on eatin.html
 function displayRecipes() {
 
     // retrieve from local storage
@@ -264,17 +277,22 @@ function displayRecipes() {
             // console.log(label);
 
 
+<<<<<<< HEAD
             let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3").attr("id", "recipe_"+i);
+=======
+            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated slideInUp");
+>>>>>>> 99b23c9b7dc73072d0046638e339da74bbdd1b98
             let recipeImage = $("<img>").addClass("card-top-img").attr("src", image).attr("style", 'width: 100%;height:auto;overflow:auto;');
 
             let cardBlock = $("<div>").addClass("card-block")
             let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
-            let favoriteBtn = $("<button>").addClass("favoriteRecipes").attr("id", i);
+            let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end").attr("id", i).text("Add to Favorites");
 
-            imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel);
+            imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
 
             $("#recipes-container").append(imageDiv);
             $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
+
         }
     });
 };
@@ -318,7 +336,9 @@ $(document).on("click", ".favoriteRecipes", function () {
     // update the array in firebase data 
     database.ref(uid).update({ favRecipes: stringedArr });
 
-});
+})
+
+
 
 
 // Restaurant API call
@@ -354,19 +374,20 @@ function displayRestaurants() {
             let businessAddress = response.businesses[i].location.address1;
             let businessCity = response.businesses[i].location.city;
 
-            let imageDiv = $("<div>").addClass("restaurant m-2").attr("id", "restaurant_" + i);
-            let restaurantImage = $("<img>").attr("src", businessImage).addClass("restaurant-img");
-            let restaurantName = $("<p>").text(businessName).addClass("restaurant-name p-2");
-            let restaurantRating = $("<p>").text(businessRating).addClass("restaurant-rating p-2");
-            let restaurantPrice = $("<p>").text(businessPrice).addClass("restaurant-price p-2");
-            let restaurantReviewCount = $("<p>").text(businessReviewCount).addClass("restaurant-review-count p-2");
-            let restaurantPhone = $("<p>").text(businessPhone).addClass("restaurant-phone p-2");
-            let restaurantAddress = $("<p>").text(businessAddress).addClass("restaurant-address p-2");
-            let restaurantCity = $("<p>").text(businessCity).addClass("restaurant-city p-2");
+            let imageDiv = $("<div>").addClass("restaurant m-2 p-1 card col-3 animated slideInUp").attr("id", "restaurant_" + i);
+            let restaurantImage = $("<img>").attr("src", businessImage).attr("style", 'width: 100%;height:auto;overflow:auto;').addClass("card-top-img restaurant-img");
+            let cardBlock = $("<div>").addClass("card-block")
+            let restaurantName = $("<h4>").text(businessName).addClass("restaurant-name p-2");
+            let restaurantRating = $("<li>").text("Rating: " + businessRating).addClass("restaurant-rating p-2");
+            let restaurantPrice = $("<li>").text("Price: " + businessPrice).addClass("restaurant-price p-2");
+            let restaurantReviewCount = $("<li>").text("Number of Reviews: " + businessReviewCount).addClass("restaurant-review-count p-2");
+            let restaurantPhone = $("<li>").text("Phone Number: " + businessPhone).addClass("restaurant-phone p-2");
+            let restaurantAddress = $("<li>").text("Address: " + businessAddress).addClass("restaurant-address p-2");
+            let restaurantCity = $("<li>").text(businessCity).addClass("restaurant-city p-2");
             // adds a favorite button to each card. perhaps add to the top right corner of the card
-            let favoriteBtn = $("<button>").addClass("favoriteRestaurants").attr("id", i).text("Fav");
+            let favoriteBtn = $("<button>").addClass("favoriteRestaurants align-self-end").attr("id", i).text("Add to Favorites");
 
-            imageDiv.append(restaurantImage).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity).append(favoriteBtn);
+            imageDiv.append(restaurantImage).append(cardBlock).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity).append(favoriteBtn);
             $("#restaurants-container").append(imageDiv);
         }
     });
@@ -454,10 +475,7 @@ $("#submit-restaurant-filters").on("click", function () {
     }
 });
 
-// additional eatin.html filters below
-// eatin new API call
-// grabbing cuisine
-
+// eatin.html filters below
 let recipeCuisine = "";
 let recipePrep = "";
 let recipeCalories = "";
@@ -542,7 +560,7 @@ function newDisplayRestaurants() {
     var settings = {
         "async": true,
         "crossDomain": true,
-        "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=" + restaurantCuisine + "&location=" + searchCity + "$price=" + restaurantPrice + "&rating=" + restaurantRating + "&limit=3",
+        "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=" + restaurantCuisine + "&location=" + searchCity + "$price=" + restaurantPrice + "&rating=" + restaurantRating + "&limit=10",
         "method": "GET",
         "headers": {
             // "accept": "application/json",
@@ -678,6 +696,7 @@ $(document).on("click", ".favoriteRestaurants", function () {
     database.ref(uid).update({ favRestaurants: stringedArr });
 
 })
+
 
 
 
