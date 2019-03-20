@@ -72,3 +72,7 @@ body {
 .navbar {
     background-color: rgb(170, 218, 194) 
 }
+
+#filter-section {
+    background-color: rgba(170, 218, 194);
+}
