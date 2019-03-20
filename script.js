@@ -330,7 +330,7 @@ function displayRecipes() {
     });
 };
 
-$(document).on("click", ".favoriteRecipes", function() {
+$(document).on("click", ".favoriteRecipes", function () {
 
     console.log("clicked favoriteRecipes");
     // get the id of the button first to know which card was favorited
@@ -339,19 +339,19 @@ $(document).on("click", ".favoriteRecipes", function() {
     // grab all the information from cards
     let placeImg = $(`#recipe_${num} > .card-top-img`).attr("src");
     let placeName = $(`#recipe_${num} > .recipe-label`).text();
-    
+
     // first grab the already existing favorite recipes from firebase
     // this uid should be firebase.auth().currentUser.uid if not replace it
-    database.ref(uid).once("value").then(function(snapshot) {
+    database.ref(uid).once("value").then(function (snapshot) {
         // this should update the empty arr in js with 
-        recipeArr = JSON.parse(snapshot.val().favRecipes); 
+        recipeArr = JSON.parse(snapshot.val().favRecipes);
         console.log(recipeArr);
     });
 
     // store the information in an array
     recipeArr.push({
         image: placeImg,
-        name: placeName, 
+        name: placeName,
     });
 
     console.log(recipeArr);
@@ -360,8 +360,8 @@ $(document).on("click", ".favoriteRecipes", function() {
     console.log(stringedArr);
 
     // update the array in firebase data 
-    database.ref(uid).update({favRecipes: stringedArr});
-    
+    database.ref(uid).update({ favRecipes: stringedArr });
+
 })
 
 
@@ -398,7 +398,7 @@ function displayRestaurants() {
             let businessPhone = response.businesses[i].phone;
             let businessAddress = response.businesses[i].location.address1;
             let businessCity = response.businesses[i].location.city;
-    
+
             let imageDiv = $("<div>").addClass("restaurant m-2").attr("id", "restaurant_" + i);
             let restaurantImage = $("<img>").attr("src", businessImage).addClass("restaurant-img");
             let restaurantName = $("<p>").text(businessName).addClass("restaurant-name p-2");
@@ -500,10 +500,10 @@ $("#submit-restaurant-filters").on("click", function () {
 });
 
 // eatin.html filters below
-let recipeCuisine = "";
-let recipePrep = "";
-let recipeCalories = "";
-let healthLabel = "";
+// let recipeCuisine = "";
+// let recipePrep = "";
+// let recipeCalories = "";
+// let healthLabel = "";
 
 $("#recipe-cuisine").on("change", function () {
     recipeCuisine = this.value;
@@ -695,12 +695,8 @@ $(document).on("click", ".favoriteRestaurants", function () {
     // this uid should be firebase.auth().currentUser.uid if not replace it
     database.ref(uid).once("value").then(function (snapshot) {
         // this should update the empty arr in js with 
-<<<<<<< HEAD
         restaurantArr = JSON.parse(snapshot.val().favRestaurants);
-=======
-        restaurantArr = JSON.parse(snapshot.val().favRestaurants); 
         console.log(restaurantArr);
->>>>>>> 6efbe688bf26070bf20a8693c689c4c02b0667f1
     });
 
     // store the information in an array
@@ -720,16 +716,11 @@ $(document).on("click", ".favoriteRestaurants", function () {
     let stringedArr = JSON.stringify(restaurantArr);
     console.log(stringedArr);
 
-<<<<<<< HEAD
-    // update the array in firebase data
-    database.ref(uid).update({ favRestaurants: stringedArr });
-=======
     // update the array in firebase data 
-    database.ref(uid).update({favRestaurants: stringedArr});
-    
-})
->>>>>>> 6efbe688bf26070bf20a8693c689c4c02b0667f1
+    database.ref(uid).update({ favRestaurants: stringedArr });
 
 })
+
+
 
 
