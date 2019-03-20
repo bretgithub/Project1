@@ -1,27 +1,22 @@
 footer {
-    background: #666666;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin-top: 50px;
-    border-top: 10px solid #4aaaa5;
+    background: rgb(170, 218, 194);
+    border-top: 10px solid #bbbab7;
     padding-top: auto;
-    height: 50px;
+    height: 40px;
     color: #ffffff;
     vertical-align: bottom;
+    margin-bottom: 0;
 }
+
+#footer {
+    color: white;
+    /* inherits border from footer above - border-top: 10px solid #4aaaa5; */
+  }
 
 .restDisplay {
     max-height: 150px;
     width: auto;
 }
-
-/* below is specifically for index.html to be changed later when styling is made uniform across pages */
-#footer {
-    color: white;
-    /* inherits border from footer above - border-top: 10px solid #4aaaa5; */
-  }
 
 /* MODAL CSS, lione below puts the text Select City on same line as dropdown to select city */
 select.form-control {
@@ -47,6 +42,19 @@ a:hover {
 
 }
 
-#eatin {
+body {
     background-image: url("../../images/background.png")
+}
+
+.jumbotron {
+    height: 40vh;
+    width: 100%;
+}
+
+.card {
+    background-color: rgba(170, 218, 194, 0.45);
+}
+
+.navbar {
+    background-color: rgb(170, 218, 194) 
 }
