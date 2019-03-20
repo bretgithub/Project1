@@ -86,6 +86,24 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
 });
 
+// favorites firebase database pull -recipes FAVVV
+// function favoritesRecipeDisplay() {
+//     var userId = firebase.auth().currentUser.uid;
+//     return firebase.database().ref('/favRecipes/' + userId).once('value').then(function(snapshot) {
+//     var username = (snapshot.val() && snapshot.val().username)
+//     });
+//     JSON.parse snapshot.val()
+
+//         // go through results and add attr to display on DOM
+//         for (let i = 0; i < response.hits.length; i++) {
+
+//             fav-recipes-container.append(recipeImage).append(recipeLabel).append(favoriteBtn);
+//             $("#fav-recipes-container").append(imageDiv);
+//         }
+//     });
+// };
+
+
 // load emoji/city modal
 // $('#exampleModalCenter').modal('show');
 
