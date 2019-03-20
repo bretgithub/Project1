@@ -131,7 +131,6 @@ function displayFavorites() {
 
 // add listner to the removeBtn button
 $(document).on("click", ".removeBtn", function(event) {
-    console.log("removing favorites", this.id)
     // this should differentiate between restaurants and recipes
     let type = this.id.split("_")[0];
     // this should be the index of the array that we are removing from either restaurantArr or recipesArr
@@ -141,8 +140,6 @@ $(document).on("click", ".removeBtn", function(event) {
     database.ref(localID).once("value").then(function(snapshot) {
         recipeArr = JSON.parse(snapshot.val().favRecipes);
         restaurantArr= JSON.parse(snapshot.val().favRestaurants);
-        console.log("favorited Restaurants", restaurantArr);
-        console.log("favorited recipes", recipeArr);
     });
     if (type === "recipe") {
         // remove the selected favorite card from favorites
@@ -151,7 +148,6 @@ $(document).on("click", ".removeBtn", function(event) {
         let stringedArr = JSON.stringify(recipeArr);
         // update the array in firebase data 
         database.ref(localID).update({ favRecipes: stringedArr });
-        console.log("updated recipeArr firebase",)
     } else if (type === "restaurant") {
         // remove the selected favorite card from favorites
         restaurantArr.splice(index, 1);
@@ -159,15 +155,9 @@ $(document).on("click", ".removeBtn", function(event) {
         let stringedArr = JSON.stringify(restaurantArr);
         // update the array in firebase data 
         database.ref(localID).update({ favRestaurants: stringedArr });
-        console.log("updated restaurantArr firebase",)
     }
-    console.log("running display favorites again");
     displayFavorites();
 });
-
-
-// load emoji/city modal
-// $('#exampleModalCenter').modal('show');
 
 // hides the account info dropdown
 $("#account").hide();
