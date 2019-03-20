@@ -13,6 +13,7 @@ firebase.initializeApp(config);
 
 let database = firebase.database();
 
+
 // global variables to be set when user selects values in modal
 let searchName;
 let searchCity;
@@ -36,7 +37,7 @@ $("#select-city").on("change", function () {
 var email, uid;
 firebase.auth().onAuthStateChanged(function (user) {
     // When User is logged in allow the user to change 
-    // $('#exampleModalCenter').modal('show');
+    //
 
     if (user) {
         // User is signed in.
@@ -74,7 +75,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
             //   use Firebase function to add userEmail/password combo
             firebase.auth().createUserWithEmailAndPassword(signUpEmail, signUpPassword)
-            ;
+                ;
 
 
             $("#userEmail").val("");
@@ -87,7 +88,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 // load emoji/city modal
-// $('#exampleModalCenter').modal('show');
+$('#exampleModalCenter').modal('show');
 
 // hides the account info dropdown
 $("#account").hide();
@@ -188,94 +189,7 @@ $("#logout-button").on("click", function (event) {
     console.log("user signed out");
 });
 
-
-// eatin new API call
-// grabbing cuisine
-
-let recipeCuisine;
-let recipePrep;
-let recipeCalories;
-
-$("#recipe-cuisine").on("change", function () {
-    recipeCuisine = this.value;
-    return recipeCuisine;
-});
-
-$("#recipe-prep-time").on("change", function () {
-    recipePrep = this.value;
-    return recipePrep;
-});
-
-$("#recipe-calories").on("change", function () {
-    recipeCalories = this.value;
-    return recipeCalories;
-});
-
-// close the save button only if searchName and searchCity are truthy
-$("#submit-recipe-filters").on("click", function () {
-    if (recipeCuisine && recipePrep && recipeCalories) {
-        console.log(recipeCuisine);
-        console.log(recipePrep);
-        console.log(recipeCalories);
-        // set variables to local storage
-        localStorage.setItem("recipeCuisine", recipeCuisine);
-        localStorage.setItem("recipePrep", recipePrep);
-        localStorage.setItem("recipeCalories", recipeCalories);
-
-        $("#recipe-cuisine").val("");
-        $("#recipe-prep-time").val("");
-        $("#recipe-calories").val("");
-
-        newRecipesDisplay();
-    }
-});
-
-function newRecipesDisplay() {
-
-    // retrieve from local storage
-    recipeCuisine = localStorage.getItem("recipeCuisine");
-    recipePrep = localStorage.getItem("recipePrep");
-    recipeCalories = localStorage.getItem("recipeCalories");
-
-    // run displayRecipes function
-    let search = {
-        name: recipeCuisine,
-        prep: recipePrep,
-        calories: recipeCalories,
-        // health: "alcohol-free",
-    }
-
-    //for API call
-    let queryURL = `https://api.edamam.com/search?q=${search.name}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=0&to=3&calories=${search.calories}&time=${search.prep}`
-    // note: calories returned in JSON response is yield, need to divide by yield: to get calories per serving - for future calculation calories / yield of the recipe
-
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).done(function (response) {
-        console.log(response);
-        $("#recipes-container").empty();
-
-        // go through results and add attr to display on DOM
-        for (let i = 0; i < response.hits.length; i++) {
-            let image = response.hits[i].recipe.image;
-            let label = response.hits[i].recipe.label;
-            console.log(image);
-            console.log(label);
-
-            let imageDiv = $("<div>").addClass("recipe-pictures m-2");
-            let recipeImage = $("<img>").attr("src", image);
-            let recipeLabel = $("<p>").text(label).addClass("recipe-label p-2");
-            let favoriteBtn = $("<button>").addClass("favoriteRecipes").attr("id", i);
-
-            imageDiv.append(recipeImage).append(recipeLabel).append(favoriteBtn);
-            $("#recipes-container").append(imageDiv);
-        }
-    });
-};
-
-// API Calls
-// function to call Edamam API, call is on eatin.html
+// API calls made from modal on index.hmtl
 function displayRecipes() {
 
     // retrieve from local storage
@@ -322,15 +236,14 @@ function displayRecipes() {
             let favoriteBtn = $("<button>").addClass("favoriteRecipes").attr("id", i);
 
             imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel);
-          
+
             $("#recipes-container").append(imageDiv);
             $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
-
         }
     });
 };
 
-$(document).on("click", ".favoriteRecipes", function() {
+$(document).on("click", ".favoriteRecipes", function () {
 
     console.log("clicked favoriteRecipes");
     // get the id of the button first to know which card was favorited
@@ -339,19 +252,19 @@ $(document).on("click", ".favoriteRecipes", function() {
     // grab all the information from cards
     let placeImg = $(`#recipe_${num} > .card-top-img`).attr("src");
     let placeName = $(`#recipe_${num} > .recipe-label`).text();
-    
+
     // first grab the already existing favorite recipes from firebase
     // this uid should be firebase.auth().currentUser.uid if not replace it
-    database.ref(uid).once("value").then(function(snapshot) {
+    database.ref(uid).once("value").then(function (snapshot) {
         // this should update the empty arr in js with 
-        recipeArr = JSON.parse(snapshot.val().favRecipes); 
+        recipeArr = JSON.parse(snapshot.val().favRecipes);
         console.log(recipeArr);
     });
 
     // store the information in an array
     recipeArr.push({
         image: placeImg,
-        name: placeName, 
+        name: placeName,
     });
 
     console.log(recipeArr);
@@ -360,11 +273,9 @@ $(document).on("click", ".favoriteRecipes", function() {
     console.log(stringedArr);
 
     // update the array in firebase data 
-    database.ref(uid).update({favRecipes: stringedArr});
-    
-})
+    database.ref(uid).update({ favRecipes: stringedArr });
 
-
+});
 
 // Restaurant API call
 function displayRestaurants() {
@@ -398,7 +309,7 @@ function displayRestaurants() {
             let businessPhone = response.businesses[i].phone;
             let businessAddress = response.businesses[i].location.address1;
             let businessCity = response.businesses[i].location.city;
-    
+
             let imageDiv = $("<div>").addClass("restaurant m-2").attr("id", "restaurant_" + i);
             let restaurantImage = $("<img>").attr("src", businessImage).addClass("restaurant-img");
             let restaurantName = $("<p>").text(businessName).addClass("restaurant-name p-2");
@@ -499,7 +410,10 @@ $("#submit-restaurant-filters").on("click", function () {
     }
 });
 
-// eatin.html filters below
+// additional eatin.html filters below
+// eatin new API call
+// grabbing cuisine
+
 let recipeCuisine = "";
 let recipePrep = "";
 let recipeCalories = "";
@@ -675,7 +589,7 @@ function newDisplayRecipes() {
 
 // enables all favorite buttons to be clicked
 // currently only applicable to restaurants
-$(document).on("click", ".favoriteRestaurants", function() {
+$(document).on("click", ".favoriteRestaurants", function () {
 
     console.log("clicked favorite");
     // get the id of the button first to know which card was favorited
@@ -693,21 +607,21 @@ $(document).on("click", ".favoriteRestaurants", function() {
 
     // first grab the already existing favorite restaurants from firebase
     // this uid should be firebase.auth().currentUser.uid if not replace it
-    database.ref(uid).once("value").then(function(snapshot) {
+    database.ref(uid).once("value").then(function (snapshot) {
         // this should update the empty arr in js with 
-        restaurantArr = JSON.parse(snapshot.val().favRestaurants); 
+        restaurantArr = JSON.parse(snapshot.val().favRestaurants);
         console.log(restaurantArr);
     });
 
     // store the information in an array
     restaurantArr.push({
         image: placeImg,
-        name: placeName, 
-        rating: placeRating, 
-        price: placePrice, 
-        reviewCount: placeReviewCnt, 
-        phone: placePhone, 
-        address: placeAddress, 
+        name: placeName,
+        rating: placeRating,
+        price: placePrice,
+        reviewCount: placeReviewCnt,
+        phone: placePhone,
+        address: placeAddress,
         city: placeCity
     });
 
@@ -717,8 +631,8 @@ $(document).on("click", ".favoriteRestaurants", function() {
     console.log(stringedArr);
 
     // update the array in firebase data 
-    database.ref(uid).update({favRestaurants: stringedArr});
-    
+    database.ref(uid).update({ favRestaurants: stringedArr });
+
 })
 
 
