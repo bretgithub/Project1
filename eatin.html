@@ -24,7 +24,7 @@
     <!-- ============================LOGIN & SIGN UP MODALS================================ -->
     <!-- Modal -->
     <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -63,51 +63,41 @@
 <body id="eatin">
 
     <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark py-0">
+    <nav class="navbar navbar-expand-lg navbar-dark py-0">
         <a class="navbar-brand d-flex justify-content-center align-items-center" href="index.html">
-          <img src="images/board logo.png" width="50px" height="50px" class="d-inline-block align-top" alt="Logo Image">
+            <img src="images/board logo.png" width="50px" height="50px" class="d-inline-block align-top"
+                alt="Logo Image">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
-    
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" id="modal-button" href="#">Login/Create Accounts</a>
-            </li>
-    
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="account" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-    
-              </a>
-              <div class="dropdown-menu" id="logged-in-dropdown" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#"></a>
-                <a class="dropdown-item" id="logout-button" href="#">Logout</a>
-                <a class="dropdown-item hidden" id="favorites-button" href="favorites.html">Favorites</a>
-              </div>
-            </li>
-          </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" id="modal-button" href="#">Login/Create Accounts</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="account" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+
+                    </a>
+                    <div class="dropdown-menu" id="logged-in-dropdown" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#"></a>
+                        <a class="dropdown-item" id="logout-button" href="#">Logout</a>
+                        <a class="dropdown-item hidden" id="favorites-button" href="favorites.html">Favorites</a>
+                    </div>
+                </li>
+            </ul>
         </div>
-      </nav>
-      <!-- /Navbar -->
-    
+    </nav>
+    <!-- /Navbar -->
 
-    <!-- display and filter area -->
-    <div class="container w-100 justify-content-center">
-        <!-- image to be different for restaurant  -->
-        <div class="jumbotron p-0 mt-0"
-            style="background-image: url(images/eatin3.png); background-size: cover; background-position: center; opacity: 1">
-            <h1 style="color: white">So you've decided to Eat In!</h1>
-            <!-- drop down param inpute, need unique IDs to grab values with click even on submit to recall API with new query -->
-
-        </div>
-    </div>
-
-    <div id="filter-section" class=" container w-75 justify-content-center">
+    <div id="filter-section" class="container w-75 justify-content-center mt-4">
         <div class="container justify-content-center">
+            <h1 style="color: white">Eat In filters!</h1>
             <div class="row">
                 <div class="col-md-4">
                     <form class="form">
@@ -203,13 +193,6 @@
 
         </div>
     </div>
-
-
-    <footer class="footer text-center">
-        <span id="copyright">copyright ©</span>
-    </footer>
-
-
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
