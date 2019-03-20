@@ -37,7 +37,6 @@ var email, uid;
 firebase.auth().onAuthStateChanged(function (user) {
     // When User is logged in allow the user to change 
     // $('#exampleModalCenter').modal('show');
-
     if (user) {
         // User is signed in.
         email = user.email;
@@ -59,7 +58,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
         // show account info/setting dropdown in Navbar if logged in
         $("#account").show();
-
+        $("")
     } else {
         // No user is signed in.
         console.log("No user signed in");
