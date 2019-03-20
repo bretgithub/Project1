@@ -13,13 +13,19 @@
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
   <!-- linked CSS file -->
+  <link rel="stylesheet" href="assets/css/animate.css">
   <link rel="stylesheet" href="assets/css/style.css">
 
 
+<<<<<<< HEAD
+=======
+  <!-- favicon -->
+  <link rel="shortcut icon" type="image/png" href="images/favicon.png" />
+>>>>>>> 886e4f71a36fab915bfd63db1831e12fb4c3a36e
 
   <!-- Modal -->
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
+  <div class="modal fade animated bounceInDown" id="exampleModalCenter" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -148,9 +154,9 @@
 
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-info py-0">
+  <nav class="navbar navbar-expand-lg navbar-dark py-0">
     <a class="navbar-brand d-flex justify-content-center align-items-center" href="index.html">
-      <img src="images\logoFinal123.png" width="50px" height="50px" class="d-inline-block align-top" alt="Logo Image">
+      <img src="images/board logo.png" width="50px" height="50px" class="d-inline-block align-top" alt="Logo Image">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -168,10 +174,10 @@
             aria-haspopup="true" aria-expanded="false">
 
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <div class="dropdown-menu" id="logged-in-dropdown" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="#"></a>
             <a class="dropdown-item" id="logout-button" href="#">Logout</a>
-            <a class="dropdown-item hidden" id="favorites-button" href="favorite.html">Favorites</a>
+            <a class="dropdown-item hidden" id="favorites-button" href="favorites.html">Favorites</a>
           </div>
         </li>
       </ul>
@@ -181,7 +187,7 @@
 
   <!-- Title -->
   <div class="container" id="body_container">
-    <div class="jumbotron text-center col-md-10 offset-1">
+    <div class="jumbotron text-center col-md-10 offset-1" id="main-page-jumbo">
       <h1 class="display-3">In or Out</h1>
     </div>
   </div>
@@ -191,7 +197,7 @@
   <div class="container my-10 col-md-8" id="card_container">
     <div class="row justify-content-center pb-4">
 
-      <div class="card m-3" style="width: 18rem;" id="card1">
+      <div class="card m-3 indexCard col-5 eat-in-card" style="width: 40vw;" id="card1">
         <img class="card-img-top" src="https://placeimg.com/640/480/tech" alt="Card image cap" id="card1image">
         <div class="card-body">
           <p class="card-text">Discover new exciting recipes</p>
@@ -201,7 +207,7 @@
         </div>
       </div>
 
-      <div class="card m-3" style="width: 18rem;" id="card2">
+      <div class="card m-3 indexCard col-5 eat-out-card" style="width: 40vw;" id="card2">
         <img class="card-img-top" src="https://placeimg.com/640/480/arch" alt="Card image cap">
         <div class="card-body">
           <p class="card-text">Explore resaurants in your area</p>
@@ -212,7 +218,7 @@
   </div>
 
   <!-- Footer -->
-  <footer class="footer fixed-bottom bg-info footer" id="footer">
+  <footer class="footer fixed-bottom" id="footer">
     <div class="container text-center">
       <span class="Copyright">Copyright ©</span>
     </div>
@@ -231,7 +237,9 @@
   <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
 
   <!-- linked JS file -->
+
   <script type="text/javascript" src="script.js"></script>
+  <script> $('#exampleModalCenter').modal('show') </script>
 
 </body>
 
