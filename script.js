@@ -577,17 +577,20 @@ function newDisplayRestaurants() {
             let businessAddress = response.businesses[i].location.address1;
             let businessCity = response.businesses[i].location.city;
 
-            let imageDiv = $("<div>").addClass("restaurant-image m-2");
-            let restaurantImage = $("<img>").attr("src", businessImage);
-            let restaurantName = $("<p>").text(businessName).addClass("restaurant-name p-2");
-            let restaurantRating = $("<p>").text(businessRating).addClass("restaurant-rating p-2");
-            let restaurantPrice = $("<p>").text(businessPrice).addClass("restaurant-price p-2");
-            let restaurantReviewCount = $("<p>").text(businessReviewCount).addClass("restaurant-review-count p-2");
-            let restaurantPhone = $("<p>").text(businessPhone).addClass("restaurant-phone p-2");
-            let restaurantAddress = $("<p>").text(businessAddress).addClass("restaurant-address p-2");
-            let restaurantCity = $("<p>").text(businessCity).addClass("restaurant-city p-2");
+            let imageDiv = $("<div>").addClass("restaurant m-2 p-1 card col-3 animated slideInUp").attr("id", "restaurant_" + i);
+            let restaurantImage = $("<img>").attr("src", businessImage).attr("style", 'width: 100%;height:auto;overflow:auto;').addClass("card-top-img restaurant-img");
+            let cardBlock = $("<div>").addClass("card-block")
+            let restaurantName = $("<h4>").text(businessName).addClass("restaurant-name p-2");
+            let restaurantRating = $("<li>").text("Rating: " + businessRating).addClass("restaurant-rating p-2");
+            let restaurantPrice = $("<li>").text("Price: " + businessPrice).addClass("restaurant-price p-2");
+            let restaurantReviewCount = $("<li>").text("Number of Reviews: " + businessReviewCount).addClass("restaurant-review-count p-2");
+            let restaurantPhone = $("<li>").text("Phone Number: " + businessPhone).addClass("restaurant-phone p-2");
+            let restaurantAddress = $("<li>").text("Address: " + businessAddress).addClass("restaurant-address p-2");
+            let restaurantCity = $("<li>").text(businessCity).addClass("restaurant-city p-2");
+            // adds a favorite button to each card. perhaps add to the top right corner of the card
+            let favoriteBtn = $("<button>").addClass("favoriteRestaurants align-self-end").attr("id", i).text("Add to Favorites");
 
-            imageDiv.append(restaurantImage).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity);
+            imageDiv.append(restaurantImage).append(cardBlock).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity).append(favoriteBtn);
             $("#restaurants-container").append(imageDiv);
         }
     });
@@ -633,11 +636,18 @@ function newDisplayRecipes() {
             // console.log(image);
             // console.log(label);
 
-            let imageDiv = $("<div>").addClass("recipe-pictures m-2");
-            let recipeImage = $("<img>").attr("src", image);
-            let recipeLabel = $("<p>").text(label).addClass("recipe-label p-2");
-            imageDiv.append(recipeImage).append(recipeLabel);
+            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated slideInUp");
+            let recipeImage = $("<img>").addClass("card-top-img").attr("src", image).attr("style", 'width: 100%;height:auto;overflow:auto;');
+
+            let cardBlock = $("<div>").addClass("card-block")
+            let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
+            let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end").attr("id", i).text("Add to Favorites");
+
+            imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
+
             $("#recipes-container").append(imageDiv);
+            $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
+
         }
     });
 };
