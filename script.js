@@ -36,7 +36,7 @@ $("#select-city").on("change", function () {
 var email, uid;
 firebase.auth().onAuthStateChanged(function (user) {
     // When User is logged in allow the user to change 
-    $('#exampleModalCenter').modal('show');
+    // $('#exampleModalCenter').modal('show');
 
     if (user) {
         // User is signed in.
@@ -87,7 +87,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 // load emoji/city modal
-$('#exampleModalCenter').modal('show');
+// $('#exampleModalCenter').modal('show');
 
 // hides the account info dropdown
 $("#account").hide();
@@ -130,28 +130,6 @@ $("#save-button").on("click", function () {
 // load modal on button click 
 $("#modal-button").on("click", function () {
     $("#login-modal").modal("show")
-});
-
-// check if user is logged in
-var email, uid;
-firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-        console.log(user)
-        // User is signed in.
-        email = user.email;
-        uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
-        // this value to authenticate with your backend server, if
-        // you have one. Use User.getToken() instead.
-        console.log(email, uid);
-        console.log("you're logged in");
-        // hide the login modal
-        $("#modal-button").hide();
-        // show account info/setting dropdown in Navbar if logged in
-        $("#account").show();
-    } else {
-        console.log("No user signed in");
-        $("#exampleModalCenter").modal("show")
-    }
 });
 
 // create an account
@@ -287,7 +265,9 @@ function newRecipesDisplay() {
             let imageDiv = $("<div>").addClass("recipe-pictures m-2");
             let recipeImage = $("<img>").attr("src", image);
             let recipeLabel = $("<p>").text(label).addClass("recipe-label p-2");
-            imageDiv.append(recipeImage).append(recipeLabel);
+            let favoriteBtn = $("<button>").addClass("favoriteRecipes").attr("id", i);
+
+            imageDiv.append(recipeImage).append(recipeLabel).append(favoriteBtn);
             $("#recipes-container").append(imageDiv);
         }
     });
@@ -329,19 +309,55 @@ function displayRecipes() {
             console.log(image);
             console.log(label);
 
-            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 col-3");
+            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 col-3").attr("id", "recipe_" + i);
             let recipeImage = $("<img>").addClass("card-top-img mt-2").attr("src", image).attr("style", 'width: 100%;height:auto;');
             let cardBlock = $("<div>").addClass("card-block")
             let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
-            let favoriteBtn = $("<button>").addClass("favorite");
+            let favoriteBtn = $("<button>").addClass("favoriteRecipes").attr("id", i);
 
-            imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel);
-            $("#recipes-container").append(favoriteBtn);
+            imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
+            $("#recipes-container").append(imageDiv);
             $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none; color: black;');
             
         }
     });
 };
+
+$(document).on("click", ".favoriteRecipes", function() {
+
+    console.log("clicked favoriteRecipes");
+    // get the id of the button first to know which card was favorited
+    let num = this.id;
+
+    // grab all the information from cards
+    let placeImg = $(`#recipe_${num} > .card-top-img`).attr("src");
+    let placeName = $(`#recipe_${num} > .recipe-label`).text();
+    
+    // first grab the already existing favorite recipes from firebase
+    // this uid should be firebase.auth().currentUser.uid if not replace it
+    database.ref(uid).once("value").then(function(snapshot) {
+        // this should update the empty arr in js with 
+        recipeArr = JSON.parse(snapshot.val().favRecipes); 
+        console.log(recipeArr);
+    });
+
+    // store the information in an array
+    recipeArr.push({
+        image: placeImg,
+        name: placeName, 
+    });
+
+    console.log(recipeArr);
+    // stringify the array
+    let stringedArr = JSON.stringify(recipeArr);
+    console.log(stringedArr);
+
+    // update the array in firebase data 
+    database.ref(uid).update({favRecipes: stringedArr});
+    
+})
+
+
 
 // Restaurant API call
 function displayRestaurants() {
@@ -386,7 +402,7 @@ function displayRestaurants() {
             let restaurantAddress = $("<p>").text(businessAddress).addClass("restaurant-address p-2");
             let restaurantCity = $("<p>").text(businessCity).addClass("restaurant-city p-2");
             // adds a favorite button to each card. perhaps add to the top right corner of the card
-            let favoriteBtn = $("<button>").addClass("favoriteRestaurants").attr("id", i);
+            let favoriteBtn = $("<button>").addClass("favoriteRestaurants").attr("id", i).text("Fav");
 
 
             imageDiv.append(restaurantImage).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity).append(favoriteBtn);
@@ -399,6 +415,7 @@ function displayRestaurants() {
 // currently only applicable to restaurants
 $(document).on("click", ".favoriteRestaurants", function() {
 
+    console.log("clicked favorite");
     // get the id of the button first to know which card was favorited
     let num = this.id;
 
@@ -417,6 +434,7 @@ $(document).on("click", ".favoriteRestaurants", function() {
     database.ref(uid).once("value").then(function(snapshot) {
         // this should update the empty arr in js with 
         restaurantArr = JSON.parse(snapshot.val().favRestaurants); 
+        console.log(restaurantArr);
     });
 
     // store the information in an array
@@ -431,12 +449,15 @@ $(document).on("click", ".favoriteRestaurants", function() {
         city: placeCity
     });
 
+    console.log(restaurantArr);
     // stringify the array
-    stringedArr = JSON.stringify(restaurantArr);
+    let stringedArr = JSON.stringify(restaurantArr);
+    console.log(stringedArr);
 
-    // update the array in firebase data
+    // update the array in firebase data 
     database.ref(uid).update({favRestaurants: stringedArr});
     
 })
+
 
 
