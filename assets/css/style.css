@@ -60,6 +60,11 @@ body {
     width: 100%;
 }
 
+#logged-in-dropdown {
+    right: 0; 
+    left: auto;
+}
+
 .card {
     background-color: rgba(170, 218, 194, 0.45);
 }
