@@ -50,11 +50,10 @@ firebase.auth().onAuthStateChanged(function (user) {
 
         // store user's email and user ID in firebase database
         // using user ID as key to store all necessary information in that key
-        database.ref(uid).set({
-            email: email,
-            favRestaurants: JSON.stringify(restaurantArr),
-            favRecipes: JSON.stringify(recipeArr)
+        database.ref(uid).update({
+            email: email
         });
+        localStorage.setItem("seshID", uid);
 
         // hide the login modal
         $("#modal-button").hide();
@@ -74,8 +73,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 
             //   use Firebase function to add userEmail/password combo
-            firebase.auth().createUserWithEmailAndPassword(signUpEmail, signUpPassword)
-                ;
+            firebase.auth().createUserWithEmailAndPassword(signUpEmail, signUpPassword);
 
 
             $("#userEmail").val("");
@@ -87,26 +85,44 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
 });
 
-// favorites firebase database pull -recipes FAVVV
-// function favoritesRecipeDisplay() {
-//     var userId = firebase.auth().currentUser.uid;
-//     return firebase.database().ref('/favRecipes/' + userId).once('value').then(function(snapshot) {
-//     var username = (snapshot.val() && snapshot.val().username)
-//     });
-//     JSON.parse snapshot.val()
 
-//         // go through results and add attr to display on DOM
-//         for (let i = 0; i < response.hits.length; i++) {
 
-//             fav-recipes-container.append(recipeImage).append(recipeLabel).append(favoriteBtn);
-//             $("#fav-recipes-container").append(imageDiv);
-//         }
-//     });
-// };
+// favorites page
+function displayFavorites() {
+    console.log("localUID", localStorage.getItem("seshID"));
+    let localID = localStorage.getItem("seshID");
+    // pulls from firebase and grabs the favRecipes and favRestaurants array
+    database.ref(localID).once("value").then(function(snapshot) {
+        console.log(snapshot)
+        console.log("favRecipes", snapshot.val().favRecipes);
+        console.log("favRestaurants", snapshot.val().favRestaurants);
+        console.log("user id", uid)
+        // var favReci = JSON.parse(childSnapshot.val().favRecipes);
+        // var favRest = JSON.parse(childSnapshot.val().favRestaurants);
+    
+
+        // create a row with recipes list in it
+        // var reciRow = $("<tr>").append(
+        //     $("<td>").text(favReci),
+        // );
+        
+        // // Append the new row to the page
+        // $("#fav-recipe-row > tbody").append(reciRow);
+
+        // // create the restaurant
+        // var restRow = $("<tr>").append(
+        //     $("<td>").text(favRest),
+        // );
+
+        //  // Append the new row to the table
+        // $("#fav-recipe-row > tbody").append(restRow);
+    });
+}
+
 
 
 // load emoji/city modal
-$('#exampleModalCenter').modal('show');
+// $('#exampleModalCenter').modal('show');
 
 // hides the account info dropdown
 $("#account").hide();
@@ -125,7 +141,7 @@ $("#save-button").on("click", function () {
         // if user is signed in save location and cuisine type to firebase
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
-                database.ref(uid).set({
+                database.ref(uid).update({
                     location: searchName,
                     categories: searchName,
                 });
@@ -139,6 +155,8 @@ $("#save-button").on("click", function () {
 
         });
         // hide modal
+
+        
         $("#exampleModalCenter").modal("hide");
     }
 });
@@ -242,11 +260,11 @@ function displayRecipes() {
             let image = response.hits[i].recipe.image;
             let label = response.hits[i].recipe.label;
             let recipeLink = response.hits[i].recipe.url;
-            console.log(image);
-            console.log(label);
+            // console.log(image);
+            // console.log(label);
 
 
-            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3");
+            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3").attr("id", "recipe_"+i);
             let recipeImage = $("<img>").addClass("card-top-img").attr("src", image).attr("style", 'width: 100%;height:auto;overflow:auto;');
 
             let cardBlock = $("<div>").addClass("card-block")
@@ -268,21 +286,28 @@ $(document).on("click", ".favoriteRecipes", function () {
     let num = this.id;
 
     // grab all the information from cards
+    // recipe img
     let placeImg = $(`#recipe_${num} > .card-top-img`).attr("src");
+    // recipe name
     let placeName = $(`#recipe_${num} > .recipe-label`).text();
+    // recipe url
+    let placeUrl = $(`#recipe_${num} > .card-title`).attr("href");
+
+    
 
     // first grab the already existing favorite recipes from firebase
     // this uid should be firebase.auth().currentUser.uid if not replace it
     database.ref(uid).once("value").then(function (snapshot) {
         // this should update the empty arr in js with 
         recipeArr = JSON.parse(snapshot.val().favRecipes);
-        console.log(recipeArr);
+        // console.log(recipeArr);
     });
 
     // store the information in an array
     recipeArr.push({
         image: placeImg,
         name: placeName,
+        url: placeUrl
     });
 
     console.log(recipeArr);
@@ -294,6 +319,7 @@ $(document).on("click", ".favoriteRecipes", function () {
     database.ref(uid).update({ favRecipes: stringedArr });
 
 });
+
 
 // Restaurant API call
 function displayRestaurants() {
@@ -593,8 +619,8 @@ function newDisplayRecipes() {
         for (let i = 0; i < response.hits.length; i++) {
             let image = response.hits[i].recipe.image;
             let label = response.hits[i].recipe.label;
-            console.log(image);
-            console.log(label);
+            // console.log(image);
+            // console.log(label);
 
             let imageDiv = $("<div>").addClass("recipe-pictures m-2");
             let recipeImage = $("<img>").attr("src", image);
@@ -626,9 +652,9 @@ $(document).on("click", ".favoriteRestaurants", function () {
     // first grab the already existing favorite restaurants from firebase
     // this uid should be firebase.auth().currentUser.uid if not replace it
     database.ref(uid).once("value").then(function (snapshot) {
+        console.log(snapshot);
         // this should update the empty arr in js with 
         restaurantArr = JSON.parse(snapshot.val().favRestaurants);
-        console.log(restaurantArr);
     });
 
     // store the information in an array
