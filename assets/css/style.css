@@ -51,6 +51,7 @@ body {
 }
 
 .navbar {
+<<<<<<< HEAD
     background-color: rgb(170, 218, 194);
 }
 
@@ -83,4 +84,11 @@ body {
     position:absolute;
     left: 3vw;
     top: 20vw;
+=======
+    background-color: rgb(170, 218, 194) 
+}
+
+#filter-section {
+    background-color: rgba(170, 218, 194);
+>>>>>>> 4e00851448c802612b6836b4eac66da3c884b452
 }
