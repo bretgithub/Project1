@@ -178,9 +178,9 @@ $("#save-button").on("click", function () {
 
 
         $("#exampleModalCenter").modal("hide");
-        $(".indexCard").attr('style', 'display:block;')
-        $(".eat-in-card").addClass("animated bounceInLeft")
-        $(".eat-out-card").addClass("animated bounceInRight")
+        $(".main-img").attr('style', 'display:block;')
+        $("#eat-in-index").addClass("animated bounceInLeft")
+        $("#eat-out-index").addClass("animated bounceInRight")
     }
 });
 
