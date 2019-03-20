@@ -88,20 +88,20 @@ function displayFavorites() {
     console.log("localUID", localStorage.getItem("seshID"));
     let localID = localStorage.getItem("seshID");
     // pulls from firebase and grabs the favRecipes and favRestaurants array
-    database.ref(localID).once("value").then(function(snapshot) {
+    database.ref(localID).once("value").then(function (snapshot) {
         console.log(snapshot)
         console.log("favRecipes", snapshot.val().favRecipes);
         console.log("favRestaurants", snapshot.val().favRestaurants);
         console.log("user id", uid)
         // var favReci = JSON.parse(childSnapshot.val().favRecipes);
         // var favRest = JSON.parse(childSnapshot.val().favRestaurants);
-    
+
 
         // create a row with recipes list in it
         // var reciRow = $("<tr>").append(
         //     $("<td>").text(favReci),
         // );
-        
+
         // // Append the new row to the page
         // $("#fav-recipe-row > tbody").append(reciRow);
 
@@ -152,7 +152,7 @@ $("#save-button").on("click", function () {
         });
         // hide modal
 
-        
+
         $("#exampleModalCenter").modal("hide");
         $(".indexCard").attr('style', 'display:block;')
         $(".eat-in-card").addClass("animated bounceInLeft")
@@ -272,7 +272,7 @@ function displayRecipes() {
 
 
 
-            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated slideInUp").attr("id", "recipe_"+i);
+            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated slideInUp").attr("id", "recipe_" + i);
 
             let recipeImage = $("<img>").addClass("card-top-img").attr("src", image).attr("style", 'width: 100%;height:auto;overflow:auto;');
 
@@ -303,7 +303,7 @@ $(document).on("click", ".favoriteRecipes", function () {
     // recipe url
     let placeUrl = $(`#recipe_${num} > .card-title`).attr("href");
 
-    
+
 
     // first grab the already existing favorite recipes from firebase
     // this uid should be firebase.auth().currentUser.uid if not replace it
@@ -516,7 +516,7 @@ $("#submit-recipe-filters").on("click", function () {
         console.log(isVegan);
         console.log(isGlutenFree);
         // set variables to local storage
-        localStorage.setItem("recipeCuisine", recipeCuisine);
+        localStorage.setItem("searchName", recipeCuisine);
         localStorage.setItem("recipePrep", recipePrep);
         localStorage.setItem("recipeCalories", recipeCalories);
         localStorage.setItem("isVegetarian", isVegetarian);
@@ -552,7 +552,7 @@ function newDisplayRestaurants() {
     var settings = {
         "async": true,
         "crossDomain": true,
-        "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=" + restaurantCuisine + "&location=" + searchCity + "$price=" + restaurantPrice + "&rating=" + restaurantRating + "&limit=10",
+        "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=" + restaurantCuisine + "&location=" + searchCity + "$price=" + restaurantPrice + "&rating=" + restaurantRating + "&limit=3",
         "method": "GET",
         "headers": {
             // "accept": "application/json",
@@ -598,8 +598,12 @@ function newDisplayRestaurants() {
 // new displayRecipes function - only works with local storage and renders old card look - need to update
 function newDisplayRecipes() {
 
+    //random results
+    let rand = Math.floor(Math.random() * 50);
+    let otherRand = rand + 3;
+
     // retrieve from local storage
-    recipeCuisine = localStorage.getItem("recipeCuisine") || "";
+    recipeCuisine = localStorage.getItem("searchName") || "";
     console.log(recipeCuisine);
     recipePrep = localStorage.getItem("recipePrep");
     recipeCalories = localStorage.getItem("recipeCalories");
@@ -618,7 +622,7 @@ function newDisplayRecipes() {
     }
 
     //for API call
-    let queryURL = `https://api.edamam.com/search?q=${search.name}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=0&to=3&calories=${search.calories}&time=${search.prep}&healthLabels=${search.health}`;
+    let queryURL = `https://api.edamam.com/search?q=${search.name}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&${rand}&to=${otherRand}&calories=${search.calories}&time=${search.prep}&healthLabels=${search.health}`;
     // note: calories returned in JSON response is yield, need to divide by yield: to get calories per serving - for future calculation calories / yield of the recipe
 
     $.ajax({
@@ -632,6 +636,7 @@ function newDisplayRecipes() {
         for (let i = 0; i < response.hits.length; i++) {
             let image = response.hits[i].recipe.image;
             let label = response.hits[i].recipe.label;
+            let recipeLink = response.hits[i].recipe.url;
             // console.log(image);
             // console.log(label);
 
