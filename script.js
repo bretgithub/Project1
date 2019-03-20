@@ -58,7 +58,6 @@ firebase.auth().onAuthStateChanged(function (user) {
 
         // show account info/setting dropdown in Navbar if logged in
         $("#account").show();
-        $("")
     } else {
         // No user is signed in.
         console.log("No user signed in");
@@ -189,7 +188,7 @@ $("#save-button").on("click", function () {
 
 // load modal on button click 
 $("#modal-button").on("click", function () {
-    $("#login-modal").modal("show")
+    $("#login-modal").modal("show");
 });
 
 // create an account
