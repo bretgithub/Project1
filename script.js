@@ -49,10 +49,8 @@ firebase.auth().onAuthStateChanged(function (user) {
 
         // store user's email and user ID in firebase database
         // using user ID as key to store all necessary information in that key
-        database.ref(uid).set({
-            email: email,
-            favRestaurants: JSON.stringify(restaurantArr),
-            favRecipes: JSON.stringify(recipeArr)
+        database.ref(uid).update({
+            email: email
         });
 
         // hide the login modal
@@ -103,7 +101,7 @@ $("#save-button").on("click", function () {
         // if user is signed in save location and cuisine type to firebase
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
-                database.ref(uid).set({
+                database.ref(uid).update({
                     location: searchName,
                     categories: searchName,
                 });
@@ -144,9 +142,13 @@ $("#create-button").on("click", function (event) {
             console.log(data);
             // hide modal if successful
             $("#login-modal").modal("hide");
+            $("#auth-message").text("");
+            $("#userEmail").val("");
+            $("#userPassword").val("");
         }).catch(function (error) {
             // alert user that entry was invalid
             $("#auth-message").html(error.message);
+
         })
     // clear fields
     // $("#userEmail").val("");
@@ -166,6 +168,9 @@ $("#login-button").on("click", function (event) {
         .then(function (data) {
             console.log(data);
             $("#login-modal").modal("hide");
+            $("#auth-message").text("");
+            $("#userEmail").val("");
+            $("#userPassword").val("");
         }).catch(function (error) {
             // alert user entry was invalid
             $("#auth-message").html(error.message);
