@@ -99,6 +99,10 @@ body {
     display:block;
 }
 
+.header-text:hover + .intro-text{
+    display:block;
+}
+
 #filter-section {
     background-color: rgba(170, 218, 194);
 }
