@@ -315,6 +315,8 @@ let restaurantRating;
 let isVegetarian = "";
 let isVegan = "";
 let isGlutenFree = "";
+let tempArr = [];
+let dietaryArray = [];
 
 $("#restaurant-cuisine").on("change", function () {
     searchCuisine = this.value;
@@ -340,78 +342,103 @@ $("#restaurant-city").on("change", function () {
     return searchCity;
 });
 
-$("#vegetarian-check").on("change", function () {
-    isVegetarian = this.value;
-    console.log("Is Veggie?" + isVegetarian);
-    return isVegetarian;
-});
+$(".dietary").click(function () {
+    tempArr = dietaryArray;
+    checkedValue = $(this).val();
+    if ($(this).prop("checked")) {
+        dietaryArray.push(checkedValue);
+        tempArr = dietaryArray;
+    } else {
+        $.each(dietaryArray, function (i) {
+            if (tempArr[i] === checkedValue) {
+                tempArr.splice(i, 1);
+            }
+        });
+        dietaryArray = tempArr;
+    }
 
-$("#vegan-check").on("change", function () {
-    isVegan = this.value;
-    console.log("Is Vegan?" + isVegan);
-    return isVegan;
-});
-
-$("#gluten-free-check").on("change", function () {
-    isGlutenFree = this.value;
-    console.log("Is GF?" + isGlutenFree);
-    return isGlutenFree;
+    let checkboxValue = "";
+    $.each(dietaryArray, function (i) {
+        if (checkboxValue === "") {
+            checkboxValue = dietaryArray[i];
+        } else {
+            checkboxValue = checkboxValue + "," + dietaryArray[i];
+        }
+    });
+    console.log(checkboxValue);
 });
 
 // eatout.html submit button to capture values - yelp is nice and doesn't need all vaues to be valid to have queryURL work
 $("#submit-restaurant-filters").on("click", function () {
-    if (searchCuisine || restaurantPrice || restaurantRating || searchCity || isVegetarian) {
+    if ((searchCuisine && searchCity) && (restaurantPrice || restaurantRating || dietaryArray)) {
         console.log(searchCuisine);
+        console.log(searchCity);
         console.log(restaurantPrice);
         console.log(restaurantRating);
-        console.log(searchCity);
-        console.log(isVegetarian);
-        console.log(isVegan);
-        console.log(isGlutenFree);
+        console.log(dietaryArray);
         // set variables to local storage
         localStorage.setItem("searchCuisine", searchCuisine);
+        localStorage.setItem("searchCity", searchCity);
         localStorage.setItem("restaurantPrice", restaurantPrice);
         localStorage.setItem("restaurantRating", restaurantRating);
-        localStorage.setItem("searchCity", searchCity);
-        localStorage.setItem("isVegetarian", isVegetarian);
-        localStorage.setItem("isVegan", isVegan);
-        localStorage.setItem("isGlutenFree", isGlutenFree);
+        localStorage.setItem("dietaryPreferences", dietaryArray);
 
         $("#restaurant-cuisine").val("");
         $("#restaurant-price").val("");
         $("#restaurant-rating").val("");
         $("#restaurant-city").val("");
-        $("#vegetarian-check").prop("checked", false);
-        $("#vegan-check").prop("checked", false);
-        $("#gluten-free-check").prop("checked", false);
+        $(".dietary").prop("checked", false);
 
         displayRestaurants();
+        // clear variables and localStorage
+        dietaryArray = [];
+        searchCuisine = null;
+        searchCity = null;
+        restaurantPrice = null
+        restaurantRating = null;
+        localStorage.clear();
+    } else {
+        alert("You must at least select a Cuisine and City");
     }
 });
+
 
 // Restaurant API call
 function displayRestaurants() {
 
-    // retrieve from local storage
-    if (searchCuisine & isVegetarian & isVegan & isGlutenFree) {
-        searchCuisine = localStorage.getItem("searchCuisine") + ", " + localStorage.getItem("isVegetarian") + ", " + localStorage.getItem("isVegan") + ", " + ", " + localStorage.getItem("isGlutenFree");
+    if (searchCuisine && searchCity && dietaryArray) {
+        searchCuisine = localStorage.getItem("searchCuisine");
+        searchCity = localStorage.getItem("searchCity");
+        dietaryArray = localStorage.getItem("dietaryPreferences");
+        searchCuisine = searchCuisine + "," + dietaryArray;
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=" + searchCuisine + "&location=" + searchCity + "&limit=3",
+            "method": "GET",
+            "headers": {
+                // "accept": "application/json",
+                // "Access-Control-Allow-Origin": "*",
+                "Authorization": "Bearer SDAEnMNqSOPl9_I9468qC_1PDuSvS67-h-HCkR6lPtwoYMA1bqU1yVT5pP1SUh_Cr3j4GucEh32EuhxxdUXZn7vBtrJ7V7zaD3ZgWmFIxsIDR0B3BY9ix3QxmeyLXHYx",
+                "cache-control": "no-cache",
+            }
+        }
     } else {
         searchCuisine = localStorage.getItem("searchCuisine");
-    }
-    restaurantPrice = localStorage.getItem("restaurantPrice");
-    restaurantRating = localStorage.getItem("restaurantRating");
-    searchCity = localStorage.getItem("searchCity");
-
-    var settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=" + searchCuisine + "&location=" + searchCity + "$price=" + restaurantPrice + "&rating=" + restaurantRating + "&limit=3",
-        "method": "GET",
-        "headers": {
-            // "accept": "application/json",
-            // "Access-Control-Allow-Origin": "*",
-            "Authorization": "Bearer SDAEnMNqSOPl9_I9468qC_1PDuSvS67-h-HCkR6lPtwoYMA1bqU1yVT5pP1SUh_Cr3j4GucEh32EuhxxdUXZn7vBtrJ7V7zaD3ZgWmFIxsIDR0B3BY9ix3QxmeyLXHYx",
-            "cache-control": "no-cache",
+        searchCity = localStorage.getItem("searchCity");
+        restaurantPrice = localStorage.getItem("restaurantPrice");
+        restaurantRating = localStorage.getItem("restaurantRating");
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=" + searchCuisine + "&location=" + searchCity + "$price=" + restaurantPrice + "&rating=" + restaurantRating + "&limit=3",
+            "method": "GET",
+            "headers": {
+                // "accept": "application/json",
+                // "Access-Control-Allow-Origin": "*",
+                "Authorization": "Bearer SDAEnMNqSOPl9_I9468qC_1PDuSvS67-h-HCkR6lPtwoYMA1bqU1yVT5pP1SUh_Cr3j4GucEh32EuhxxdUXZn7vBtrJ7V7zaD3ZgWmFIxsIDR0B3BY9ix3QxmeyLXHYx",
+                "cache-control": "no-cache",
+            }
         }
     }
 
@@ -451,9 +478,7 @@ function displayRestaurants() {
 // eatin.html filters below
 let recipePrep;
 let recipeCalories;
-let dietaryArray = [];
 let checkedValue;
-let tempArr = [];
 
 $("#recipe-cuisine").on("change", function () {
     searchCuisine = this.value;
@@ -468,32 +493,6 @@ $("#recipe-prep-time").on("change", function () {
 $("#recipe-calories").on("change", function () {
     recipeCalories = this.value;
     return recipeCalories;
-});
-
-$(".dietary").click(function () {
-    tempArr = dietaryArray;
-    checkedValue = $(this).val();
-    if ($(this).prop("checked")) {
-        dietaryArray.push(checkedValue);
-        tempArr = dietaryArray;
-    } else {
-        $.each(dietaryArray, function (i) {
-            if (tempArr[i] === checkedValue) {
-                tempArr.splice(i, 1);
-            }
-        });
-        dietaryArray = tempArr;
-    }
-
-    let checkboxValue = "";
-    $.each(dietaryArray, function (i) {
-        if (checkboxValue === "") {
-            checkboxValue = dietaryArray[i];
-        } else {
-            checkboxValue = checkboxValue + "," + dietaryArray[i];
-        }
-    });
-    console.log(checkboxValue);
 });
 
 // submit button for eatin.html, at least cuisine must be selected
@@ -549,10 +548,12 @@ function displayRecipes() {
         recipeCalories = localStorage.getItem("recipeCalories");
         queryURL = `https://api.edamam.com/search?q=${searchCuisine}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&time=${recipePrep}}&calories=${recipeCalories}`;
 
+        // doesn't make call gives bad request error 
+
     } else if (recipePrep && dietaryArray) {
         recipePrep = localStorage.getItem("recipePrep");
         dietaryArray = localStorage.getItem("dietaryPreferences");
-        queryURL = `https://api.edamam.com/search?q=${searchCuisine}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&time=${recipePrep}}&healthLabel=${dietaryArray}`;
+        queryURL = `https://api.edamam.com/search?q=${searchCuisine}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&time=${recipePrep}&healthLabel=${dietaryArray}`;
 
     } else if (recipeCalories && dietaryArray) {
         recipeCalories = localStorage.getItem("recipeCalories");
@@ -562,7 +563,7 @@ function displayRecipes() {
         // doesn't make call gives bad request error 
     } else if (recipePrep) {
         recipePrep = localStorage.getItem("recipePrep");
-        queryURL = `https://api.edamam.com/search?q=${searchCuisine}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&time=${recipePrep}`;
+        queryURL = `https://api.edamam.com/search?q=${searchCuisine}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&time=${recipePrep}&from=${rand}&to=${otherRand}`;
 
     } else if (recipeCalories) {
         recipePrep = localStorage.getItem("recipeCalories");
@@ -577,7 +578,6 @@ function displayRecipes() {
     }
 
     console.log("QUERY URL: " + queryURL);
-    console.log("recipe prepp: " + recipePrep);
 
     $.ajax({
         url: queryURL,
