@@ -514,13 +514,14 @@ $("#submit-recipe-filters").on("click", function () {
         $("#recipe-prep-time").val("");
         $("#recipe-calories").val("");
         $(".dietary").prop("checked", false);
-        // dietaryArray = [];
 
         displayRecipes();
+        // clear variables and localStorage
         dietaryArray = [];
         searchCuisine = null;
         recipePrep = null
         recipeCalories = null;
+        localStorage.clear();
     } else {
         alert("You must at least select a Cuisine");
     }
@@ -536,6 +537,7 @@ function displayRecipes() {
     let queryURL;
     searchCuisine = localStorage.getItem("searchCuisine");
 
+    // cases for when filters are applied to queryURL, return valid URL and results
     if (recipePrep && recipeCalories && dietaryArray) {
         recipePrep = localStorage.getItem("recipePrep");
         recipeCalories = localStorage.getItem("recipeCalories");
@@ -605,8 +607,6 @@ function displayRecipes() {
         }
     });
 };
-
-// new displayRecipes function - only works with local storage and renders old card look - need to update
 
 // enables all favorite buttons to be clicked
 // currently only applicable to restaurants
