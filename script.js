@@ -121,13 +121,13 @@ function displayFavorites() {
             let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated flipInY text-center position-relative d-flex justify-contents-around");
             let recipeImage = $("<img>").addClass("card-top-img").attr("src", recipeArr[i].image).attr("style", 'width: 100%;height:auto;overflow:auto;');
             let cardBlock = $("<div>").addClass("card-block")
-            let recipeLabel = $("<h6>").text(recipeArr[i].name).addClass("card-title recipe-label p-2 mb-5").attr("style", 'overflow:hidden;text-overflow: ellipsis;').attr("id", "card-title"+i);
+            let recipeLabel = $("<h6>").text(recipeArr[i].name).addClass("card-title recipe-label p-2 mb-5").attr("style", 'overflow:hidden;text-overflow: ellipsis;').attr("id", "card-title" + i);
             let removeBtn = $("<button>").addClass("removeBtn m-1 btn btn-dark d-inline").attr("id", "recipe_" + i).text("Remove").attr("style", "position:absolute; bottom:0px; right:auto; left:auto;");
 
             imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel).append(removeBtn);
 
             $("#fav-recipe-row").append(imageDiv);
-            $("#card-title"+i).wrap($("<a>").attr("href", recipeArr[i].url)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
+            $("#card-title" + i).wrap($("<a>").attr("href", recipeArr[i].url)).attr("style", 'text-decoration: none;color:white;overflow: hidden;text-overflow: ellipsis;');
         }
     });
 }
@@ -460,8 +460,8 @@ function displayRestaurants() {
             let restaurantImage = $("<img>").attr("src", businessImage).attr("style", 'width: 100%;height:auto;overflow:auto;').addClass("card-top-img restaurant-img");
             let cardBlock = $("<div>").addClass("card-block")
             let restaurantName = $("<h4>").text(businessName).addClass("card-title restaurant-name p-2");
-            let restaurantRating = $("<li>").text("Rating: " + businessRating).addClass("restaurant-rating p-2");
-            let restaurantPrice = $("<li>").text("Price: " + businessPrice).addClass("restaurant-price p-2");
+            let restaurantRating = $("<li>").text("Rating: " + businessRating).addClass("restaurant-rating p-2 text-light");
+            let restaurantPrice = $("<li>").text("Price: " + businessPrice).addClass("restaurant-price p-2 text-light");
             // adds a favorite button to each card. perhaps add to the top right corner of the card
             let favoriteBtn = $("<button>").addClass("favoriteRestaurants align-self-end btn btn-dark").attr("id", i).text("Add to Favorites");
 
@@ -473,7 +473,7 @@ function displayRestaurants() {
             }
 
             $("#restaurants-container").append(imageDiv);
-            $(".card-title").wrap($("<a>").attr("href", businessURL)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
+            $(".card-title").wrap($("<a>").attr("href", businessURL)).attr("style", 'text-decoration: none;color:white;overflow: hidden;text-overflow: ellipsis;');
         }
     });
 };
@@ -607,7 +607,7 @@ function displayRecipes() {
             let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
             let prepTime = $("<li>").text("Prep time (in minutes): " + recipePrepTime).addClass("recipe-prep-time p-2");
             let calories = $("<li>").text("Calories per serving: " + caloriesPerServing).addClass("recipe-calories p-2");
-            let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end btn-success").attr("id", i).text("Add to Favorites");
+            let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end btn-dark").attr("id", i).text("Add to Favorites");
             // only append favorite button if user is logged in
             if (login) {
                 imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
@@ -615,7 +615,7 @@ function displayRecipes() {
                 imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel).append(prepTime).append(calories);
             }
             $("#recipes-container").append(imageDiv);
-            $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
+            $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none;color:white;overflow: hidden;text-overflow: ellipsis;');
         }
     });
 };
