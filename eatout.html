@@ -17,8 +17,8 @@
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" href="assets/css/style.css">
 
-    <!-- ============================LOGIN & SIGN UP MODALS================================ -->
-    <!-- Modal -->
+    <!-- LOGIN & SIGN UP MODALS -->
+    <!-- modal -->
     <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -33,31 +33,28 @@
                         <input type="email" class="form-control" id="userEmail" aria-describedby="emailHelp"
                             placeholder="example@gmail.com">
                     </div>
-                    <!--this is the area for password text-->
+                    <!-- this is the area for password text -->
                     <div class="form-group">
                         <label for="examplePassword">Password</label>
                         <input type="password" class="form-control pwd" id="userPassword" placeholder="password">
                     </div>
                 </div>
-
                 <br>
-
                 <div style="text-align: center; color: red" id="auth-message"></div>
-                <!-- Modal footer -->
+                <!-- modal footer -->
                 <div class="modal-footer">
-                    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
                     <button type="button" class="btn btn-primary" id="login-button">Login</button>
                     <button type="button" class="btn btn-primary" id="create-button">Create New Account</button>
                 </div>
-                <!-- /Modal footer -->
+                <!-- /modal footer -->
             </div>
         </div>
     </div>
-    <!-- /Modal -->
+    <!-- /modal -->
 </head>
 
 <body>
-    <!-- Navbar -->
+    <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark py-0">
         <a class="navbar-brand d-flex justify-content-center align-items-center" href="index.html">
             <img src="images/board logo.png" width="50px" height="50px" class="d-inline-block align-top"
@@ -88,13 +85,14 @@
             </ul>
         </div>
     </nav>
-    <!-- /Navbar -->
+    <!-- /navbar -->
 
-    <!-- drop down param inpute, need unique IDs to grab values with click even on submit to recall API with new query -->
+    <!-- filter section for customized API call -->
     <div id="filter-section" class="container w-75 justify-content-center mt-4">
         <div class="container justify-content-center">
             <h1 style="color: white">Eat Out filters!</h1>
             <div class="row">
+                <!-- cusine -->
                 <div class="col-md-3">
                     <form class="form">
                         <label class="my-1 mr-4" for="restaurant-cuisine" style="color: white">Cuisine
@@ -114,6 +112,7 @@
                         </select>
                     </form>
                 </div>
+                <!-- city -->
                 <div class="col-md-3">
                     <form class="form">
                         <label class="my-1 mr-4" for="restaurant-city" style="color: white">City
@@ -128,6 +127,7 @@
                         </select>
                     </form>
                 </div>
+                <!-- price range -->
                 <div class="col-md-3">
                     <form class="form">
                         <label class="my-1 mr-4" for="restaurant-price" style="color: white">Price Range
@@ -141,6 +141,7 @@
                         </select>
                     </form>
                 </div>
+                <!-- rating -->
                 <div class="col-md-3">
                     <form class="form">
                         <label class="my-1 mr-4" for="restaurant-rating" style="color: white">Rating
@@ -153,12 +154,12 @@
                         </select>
                     </form>
                 </div>
-<!--            /rating      -->
             </div>
         </div>
-
+        <!-- checboxes  -->
         <div class="container justify-content-center">
             <div class="row">
+                <!-- vegetarian -->
                 <div class="col-md-4">
                     <div class="form-check-inline mr-3">
                         <input class="form-check-input dietary" type="checkbox" id="dietary" name="dietary"
@@ -168,7 +169,7 @@
                         </label>
                     </div>
                 </div>
-<!--                /vegetarian -->
+                <!-- vegan -->
                 <div class="col-md-4">
                     <div class="form-check-inline mr-3">
                         <input class="form-check-input dietary" type="checkbox" id="dietary" name="dietary"
@@ -178,7 +179,7 @@
                         </label>
                     </div>
                 </div>
-                <!-- /vegan-->
+                <!-- gluten-free -->
                 <div class="col-md-4">
                     <div class="form-check-inline mr-3">
                         <input class="form-check-input dietary" type="checkbox" id="dietary" name="dietary"
@@ -188,18 +189,19 @@
                         </label>
                     </div>
                 </div>
-<!--           /gluten-free       -->
             </div>
         </div>
-       
-        <!-- submit button where our function will listen to gather values from above and new api call -->
+
+        <!-- submit button where our function will listen to gather values from above for new API call -->
         <div class="row my-3">
             <div class="col">
                 <button type="submit" class="btn btn-dark mb-2" id="submit-restaurant-filters">Submit</button>
             </div>
         </div>
     </div>
+    <!-- /filter section -->
 
+    <!-- display results -->
     <div class="container">
         <div class="row">
             <div class="row justify-content-center" id="restaurants-container">
@@ -216,7 +218,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    
+
     <!-- firebase line-->
     <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
 

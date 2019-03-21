@@ -2,17 +2,12 @@
 <html lang="en">
 
 <head>
-  <title>IN or OUT?</title>
-  <!-- Required meta tags -->
+  <title>Favorites</title>
+  <!-- required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-
-  <!-- Google font import -->
-  <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Bowlby+One+SC|Bungee+Inline|Grand+Hotel|Maven+Pro"
-    rel="stylesheet">
-
-  <!-- Bootstrap CSS -->
+  <!-- bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -20,11 +15,10 @@
   <link rel="stylesheet" href="assets/css/animate.css">
   <link rel="stylesheet" href="assets/css/style.css">
 
-
   <!-- favicon -->
   <link rel="shortcut icon" type="image/png" href="images/favicon.png" />
 
-  <!-- Modal -->
+  <!-- modal -->
   <div class="modal fade animated bounceInDown" id="exampleModalCenter" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -35,7 +29,7 @@
 
         <div class="modal-body">
           <div class="row" id="pick-emoji">
-            <!-- Sushi/Asian -->
+            <!-- sushi -->
             <div class="col-sm" id="sushi-emoji">
               <img src="images/sushi2.png" width="75%">
               <div class="form-check">
@@ -43,7 +37,7 @@
                   value="sushi" aria-label="sushi-radio">
               </div>
             </div>
-            <!-- Cocktail/Beer/Wine -->
+            <!-- cocktail/beer/wine -->
             <div class="col-sm" id="cocktail-emoji">
               <img src="images/cocktail2.png" width="75%">
               <div class="form-check">
@@ -51,7 +45,7 @@
                   value="cocktail" aria-label="cocktail-radio">
               </div>
             </div>
-            <!-- Cake/Dessert -->
+            <!-- dessert -->
             <div class="col-sm" id="cake-emoji">
               <img src="images/cake2.png" width="75%">
               <div class="form-check">
@@ -59,7 +53,7 @@
                   value="dessert" aria-label="dessert-radio">
               </div>
             </div>
-            <!-- Pasta/Italian -->
+            <!-- italian -->
             <div class="col-sm" id="pasta-emoji">
               <img src="images/pasta2.png" width="75%">
               <div class="form-check">
@@ -67,7 +61,7 @@
                   value="italian" aria-label="italian-radio">
               </div>
             </div>
-            <!-- Salad/Healthy -->
+            <!-- salad -->
             <div class="col-sm" id="salad-emoji">
               <img src="images/salad2.png" width="75%">
               <div class="form-check">
@@ -77,9 +71,9 @@
             </div>
           </div>
           </form>
-          <!-- /Emoji select -->
+          <!-- /emoji select -->
           <hr>
-          <!-- City select -->
+          <!-- city select -->
           <form>
             <div class="row" id="city-select">
               <div class="form-group">
@@ -96,24 +90,24 @@
                 </span>
               </div>
           </form>
-          <!-- /City select -->
+          <!-- /city select -->
         </div>
-        <!-- /Modal body -->
+        <!-- /modal body -->
         <br>
-        <!-- Modal footer -->
+        <!-- modal footer -->
         <div class="modal-footer">
           <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
           <button type="button" class="btn btn-primary" id="save-button">Save</button>
         </div>
-        <!-- /Modal footer -->
+        <!-- /modal footer -->
       </div>
     </div>
   </div>
   </div>
-  <!-- /Modal -->
+  <!-- /modal -->
 
-  <!-- ============================LOGIN & SIGN UP MODALS================================ -->
-  <!-- Modal -->
+  <!-- LOGIN & SIGN UP MODALS -->
+  <!-- modal -->
   <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -128,7 +122,7 @@
             <input type="email" class="form-control" id="userEmail" aria-describedby="emailHelp"
               placeholder="example@gmail.com">
           </div>
-          <!--this is the area for password text-->
+          <!-- this is the area for password text -->
           <div class="form-group">
             <label for="examplePassword">Password</label>
             <input type="password" class="form-control pwd" id="userPassword" placeholder="password">
@@ -138,21 +132,20 @@
         <br>
 
         <div style="text-align: center; color: red" id="auth-message"></div>
-        <!-- Modal footer -->
+        <!-- modal footer -->
         <div class="modal-footer">
-          <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
           <button type="button" class="btn btn-primary" id="login-button">Login</button>
           <button type="button" class="btn btn-primary" id="create-button">Create New Account</button>
         </div>
-        <!-- /Modal footer -->
+        <!-- /modal footer -->
       </div>
     </div>
   </div>
-  <!-- /Modal -->
+  <!-- /modal -->
 </head>
 
 <body>
-  <!-- Navbar -->
+  <!-- navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark py-0 border-bottom border-light">
     <a class="navbar-brand d-flex justify-content-center align-items-center" href="index.html">
       <img src="images/board logo.png" width="50px" height="50px" class="d-inline-block align-top" alt="Logo Image">
@@ -182,12 +175,12 @@
       </ul>
     </div>
   </nav>
-  <!-- /Navbar -->
+  <!-- /navbar -->
 
-  <!-- Cards -->
+  <!-- cards -->
   <div class="div m-0 p-0 overflow-hidden" id="photo-container">
     <div class="row">
-
+      <!-- eat in -->
       <div class="div col-6 main-img border-right border-light m-0 p-0" id="eat-in-index">
         <a href="eatin.html" target=_blank>
           <img class="index-image" src="images/INphotoBIG.jpg" alt="in image" id="in-image"></img>
@@ -198,9 +191,7 @@
           <h1 class="header-text in-text">IN</h1>
         </a>
       </div>
-
-
-
+      <!-- eat out -->
       <div class="div col-6 main-img border-left border-light m-0 p-0 out-div" id="eat-out-index">
         <a href="eatout.html" target=_blank>
           <img class="index-image" src="images/OUTphotoBIG.jpg" alt="out image" id="out-image">
@@ -212,23 +203,23 @@
           <h1 class="header-text out-text">OUT</h1>
         </a>
       </div>
-
     </div>
   </div>
 
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
     crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+
   <!-- firebase line-->
   <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
 
   <!-- linked JS file -->
-
   <script type="text/javascript" src="script.js"></script>
   <!-- modal that is disabled if user clicks outside  -->
   <script>
