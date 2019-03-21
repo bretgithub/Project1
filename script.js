@@ -99,35 +99,35 @@ function displayFavorites() {
         $("#fav-recipe-row").empty();
         //populate restaurant-row in favorites page
         for (let i = 0; i < restaurantArr.length; i++) {
-            let cardDiv = $("<div>").addClass("restaurant m-2 p-1 card col-3 animated flipInY").attr("id", "restaurant_" + i);
+            let cardDiv = $("<div>").addClass("restaurant m-2 p-1 card col-3 animated flipInY text-center position-relative d-flex justify-contents-around").attr("id", "restaurant_" + i);
             let restaurantImage = $("<img>").attr("src", restaurantArr[i].image).attr("style", 'width: 100%;height:auto;overflow:auto;').addClass("card-top-img restaurant-img");
             let cardBlock = $("<div>").addClass("card-block")
-            let restaurantName = $("<h4>").text(restaurantArr[i].name).addClass("restaurant-name p-2");
+            let restaurantName = $("<h4>").text(restaurantArr[i].name).addClass("restaurant-name p-2 mb-5");
             let restaurantRating = $("<li>").text("Rating: " + restaurantArr[i].rating).addClass("restaurant-rating p-2");
             let restaurantPrice = $("<li>").text("Price: " + restaurantArr[i].price).addClass("restaurant-price p-2");
             let restaurantReviewCount = $("<li>").text("Number of Reviews: " + restaurantArr[i].reviewCount).addClass("restaurant-review-count p-2");
-            let restaurantPhone = $("<li>").text("Phone Number: " + restaurantArr[i].phone).addClass("restaurant-phone p-2");
-            let restaurantAddress = $("<li>").text("Address: " + restaurantArr[i].address).addClass("restaurant-address p-2");
+            let restaurantPhone = $("<li>").text(restaurantArr[i].phone).addClass("restaurant-phone p-2");
+            let restaurantAddress = $("<li>").text(restaurantArr[i].address).addClass("restaurant-address p-2 mb-5");
             let restaurantCity = $("<li>").text(restaurantArr[i].city).addClass("restaurant-city p-2");
             // instead of favorite button, add unfavorite button to remove selected from favorites
-            let removeBtn = $("<button>").addClass("removeBtn align-self-end").attr("id", "restaurant_" + i).text("Remove Favorites");
+            let removeBtn = $("<button>").addClass("removeBtn m-1 btn btn-dark d-inline").attr("id", "restaurant_" + i).text("Remove").attr("style", "position:absolute; bottom:0px; right:auto; left:auto;");
 
-            cardDiv.append(restaurantImage).append(cardBlock).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity).append(removeBtn);
+            cardDiv.append(restaurantImage).append(cardBlock).append(restaurantName).append(removeBtn);
             $("#fav-rest-row").append(cardDiv);
         }
 
         // populate recipe-row in favorites page
         for (let i = 0; i < recipeArr.length; i++) {
-            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated animated flipInY");
+            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated flipInY text-center position-relative d-flex justify-contents-around");
             let recipeImage = $("<img>").addClass("card-top-img").attr("src", recipeArr[i].image).attr("style", 'width: 100%;height:auto;overflow:auto;');
             let cardBlock = $("<div>").addClass("card-block")
-            let recipeLabel = $("<h4>").text(recipeArr[i].name).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
-            let removeBtn = $("<button>").addClass("removeBtn align-self-end").attr("id", "recipe_" + i).text("Remove Favorites");
+            let recipeLabel = $("<h6>").text(recipeArr[i].name).addClass("card-title recipe-label p-2 mb-5").attr("style", 'overflow:hidden;text-overflow: ellipsis;').attr("id", "card-title"+i);
+            let removeBtn = $("<button>").addClass("removeBtn m-1 btn btn-dark d-inline").attr("id", "recipe_" + i).text("Remove").attr("style", "position:absolute; bottom:0px; right:auto; left:auto;");
 
             imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel).append(removeBtn);
 
             $("#fav-recipe-row").append(imageDiv);
-            $(".card-title").wrap($("<a>").attr("href", recipeArr[i].url)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
+            $("#card-title"+i).wrap($("<a>").attr("href", recipeArr[i].url)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
         }
     });
 }
@@ -266,74 +266,6 @@ $("#logout-button").on("click", function (event) {
     $("#modal-button").show();
     console.log("user signed out");
 });
-
-// API Calls
-// function to call Edamam API, call is on eatin.html
-function displayRecipes() {
-
-    // retrieve from local storage
-    searchCity = localStorage.getItem("searchCity");
-    let rand = Math.floor(Math.random() * 50);
-    let otherRand = rand + 3;
-
-    searchCuisine = localStorage.getItem("searchCuisine") || "";
-    console.log(searchCuisine);
-    recipePrep = localStorage.getItem("recipePrep") || "";
-    recipeCalories = localStorage.getItem("recipeCalories") || "";
-    if (isVegetarian || isVegan || isGlutenFree) {
-        healthLabel = (localStorage.getItem("isVegetarian") || "") + (localStorage.getItem("isVegan") || "") + (localStorage.getItem("isGlutenFree") || "");
-        console.log("HealthLabel: " + healthLabel);
-    }
-
-    // run displayRecipes function
-    let search = {
-        searchCuisine: searchCuisine,
-        recipeCalories: recipeCalories,
-        recipePrep: recipePrep,
-        healthLabel: healthLabel,
-    }
-
-    //for API call
-    let queryURL = `https://api.edamam.com/search?q=${search.searchCuisine}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&calories=${search.recipeCalories}&time=${search.recipePrep}&healthLabels=${search.healthLabel}`;
-    // note: calories returned in JSON response is yield, need to divide by yield: to get calories per serving - for future calculation calories / yield of the recipe
-
-    console.log(queryURL)
-
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).done(function (response) {
-        console.log(response);
-        $("#recipes-container").empty();
-
-        // go through results and add attr to display on DOM
-        for (let i = 0; i < response.hits.length; i++) {
-            let image = response.hits[i].recipe.image;
-            let label = response.hits[i].recipe.label;
-            let recipeLink = response.hits[i].recipe.url;
-            // console.log(image);
-            // console.log(label);
-            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated slideInUp").attr("id", "recipe_" + i);
-            let recipeImage = $("<img>").addClass("card-top-img").attr("src", image).attr("style", 'width: 100%;height:auto;overflow:auto;');
-
-            let cardBlock = $("<div>").addClass("card-block")
-            let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;').attr("id", "card-title"+i)
-            let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end").attr("id", i).text("Add to Favorites");
-            // only append favorite button if user is logged in
-            if (login) {
-                imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
-            } else {
-                imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
-            }
-            
-
-            $("#recipes-container").append(imageDiv);
-
-            $("#card-title"+i).wrap($("<a>").attr("href", recipeLink).attr("id", "url_"+i)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
-        }
-    });
-};
-
 
 // interaction to favorite recipes
 $(document).on("click", ".favoriteRecipes", function () {
@@ -538,7 +470,8 @@ function displayRestaurants() {
             let restaurantAddress = $("<li>").text("Address: " + businessAddress).addClass("restaurant-address p-2");
             let restaurantCity = $("<li>").text(businessCity).addClass("restaurant-city p-2");
             // adds a favorite button to each card. perhaps add to the top right corner of the card
-            let favoriteBtn = $("<button>").addClass("favoriteRestaurants align-self-end").attr("id", i).text("Add to Favorites");
+            let favoriteBtn = $("<button>").addClass("favoriteRestaurants align-self-end btn btn-dark").attr("id", i).text("Add to Favorites");
+
             // only append favorite button if user is logged in
             if (login) {
                 imageDiv.append(restaurantImage).append(cardBlock).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity).append(favoriteBtn);
@@ -674,12 +607,12 @@ function displayRecipes() {
 
             let cardBlock = $("<div>").addClass("card-block")
             let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
-            let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end").attr("id", i).text("Add to Favorites");
+            let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end btn btn-dark").attr("id", i).text("Add to Favorites");
             // only append favorite button if user is logged in
             if (login) {
-                imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
-            } else {
                 imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
+            } else {
+                imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel);
             }
             $("#recipes-container").append(imageDiv);
             $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');

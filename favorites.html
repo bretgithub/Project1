@@ -66,38 +66,36 @@
             </ul>
         </div>
     </nav>
-        <!-- /Navbar -->
-    
-    <!-- /Favorites heading -->
- <div class="row-fluid">
-    <div class="container-fluid justify-content-center"style="background-image: url(images/favoritetagbar.jpg); background-size: cover; opacity: 1">
-        <div class="row">
-            <h1 style="color: white">Favorites<hr></h1>
-        </div>
-    </div>
+    <!-- /Navbar -->
 
-<!-- recipe heading -->
-    <div class="container-fluid justify-content-center"style="background-image: url(images/a74.jpg); background-size: cover; opacity: 1">
+    <!-- recipe heading -->
+    <div class="container-fluid justify-content-around" style="background-image: url('images/favpgbg1.jpg'); background-size: 100%; opacity: 1">
         <div class="row">
-            <h1 style="color: white">Recipes<hr></h1>
+            <div class="col p-2">
+                <div class="row">
+                    <div class="col">
+                        <div style="position: sticky; top: 0; z-index:999; background: rgba(0, 0, 0, 0.5);" class="jumbotron text-center">
+                            <h1 style="color: white;">Recipes</h1> 
+                        </div>
+                        <div class="row justify-content-center overflow-hidden" id="fav-recipe-row">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col p-2">
+                <div class="row">
+                    <div class="col">
+                        <div style="position: sticky; top: 0; z-index:999; background: rgba(0, 0, 0, 0.5);" class="jumbotron text-center">
+                            <h1 style="color: white;">Restaurant</h1> 
+                        </div>
+
+                        <div class="row justify-content-center overflow-hidden" id="fav-rest-row">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>     
-    </div>
-
-    <div class="container">
-        <div class="row justify-content-center" id="fav-recipe-row">
-        </div>
-    </div>  
-
-  <!-- restaurant heading -->
-    <div class="container-fluid justify-content-center"style="background-image: url(images/C8C8BG.jpg); background-size: cover; opacity: 1">
-        <div class="row">
-             <h1 style="color: white">Restaurant<hr></h1>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="row justify-content-center" id="fav-rest-row">
-        </div>
     </div>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
