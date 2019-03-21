@@ -453,33 +453,27 @@ function displayRestaurants() {
             let businessName = response.businesses[i].name;
             let businessImage = response.businesses[i].image_url;
             let businessRating = response.businesses[i].rating;
-            let businessReviewCount = response.businesses[i].review_count;
             let businessPrice = response.businesses[i].price;
-            let businessPhone = response.businesses[i].phone;
-            let businessAddress = response.businesses[i].location.address1;
-            let businessCity = response.businesses[i].location.city;
+            let businessURL = response.businesses[i].url
 
             let imageDiv = $("<div>").addClass("restaurant m-2 p-1 card col-3 animated slideInUp").attr("id", "restaurant_" + i);
             let restaurantImage = $("<img>").attr("src", businessImage).attr("style", 'width: 100%;height:auto;overflow:auto;').addClass("card-top-img restaurant-img");
             let cardBlock = $("<div>").addClass("card-block")
-            let restaurantName = $("<h4>").text(businessName).addClass("restaurant-name p-2");
+            let restaurantName = $("<h4>").text(businessName).addClass("card-title restaurant-name p-2");
             let restaurantRating = $("<li>").text("Rating: " + businessRating).addClass("restaurant-rating p-2");
             let restaurantPrice = $("<li>").text("Price: " + businessPrice).addClass("restaurant-price p-2");
-            let restaurantReviewCount = $("<li>").text("Number of Reviews: " + businessReviewCount).addClass("restaurant-review-count p-2");
-            let restaurantPhone = $("<li>").text("Phone Number: " + businessPhone).addClass("restaurant-phone p-2");
-            let restaurantAddress = $("<li>").text("Address: " + businessAddress).addClass("restaurant-address p-2");
-            let restaurantCity = $("<li>").text(businessCity).addClass("restaurant-city p-2");
             // adds a favorite button to each card. perhaps add to the top right corner of the card
             let favoriteBtn = $("<button>").addClass("favoriteRestaurants align-self-end btn btn-dark").attr("id", i).text("Add to Favorites");
 
             // only append favorite button if user is logged in
             if (login) {
-                imageDiv.append(restaurantImage).append(cardBlock).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity).append(favoriteBtn);
+                imageDiv.append(restaurantImage).append(cardBlock).append(restaurantName).append(restaurantRating).append(restaurantPrice).append(favoriteBtn);
             } else {
-                imageDiv.append(restaurantImage).append(cardBlock).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity);
+                imageDiv.append(restaurantImage).append(cardBlock).append(restaurantName).append(restaurantRating).append(restaurantPrice);
             }
-            
+
             $("#restaurants-container").append(imageDiv);
+            $(".card-title").wrap($("<a>").attr("href", businessURL)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
         }
     });
 };
@@ -600,6 +594,10 @@ function displayRecipes() {
             let image = response.hits[i].recipe.image;
             let label = response.hits[i].recipe.label;
             let recipeLink = response.hits[i].recipe.url;
+            let recipePrepTime = response.hits[i].recipe.totalTime;
+            let totalCalories = response.hits[i].recipe.calories;
+            let totalYield = response.hits[i].recipe.yield;
+            let caloriesPerServing = Math.floor(totalCalories / totalYield);
             // console.log(image);
             // console.log(label);
             let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated slideInUp").attr("id", "recipe_" + i);
@@ -607,12 +605,14 @@ function displayRecipes() {
 
             let cardBlock = $("<div>").addClass("card-block")
             let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
-            let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end btn btn-dark").attr("id", i).text("Add to Favorites");
+            let prepTime = $("<li>").text("Prep time (in minutes): " + recipePrepTime).addClass("recipe-prep-time p-2");
+            let calories = $("<li>").text("Calories per serving: " + caloriesPerServing).addClass("recipe-calories p-2");
+            let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end btn-success").attr("id", i).text("Add to Favorites");
             // only append favorite button if user is logged in
             if (login) {
-                imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
+                imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
             } else {
-                imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel);
+                imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel).append(prepTime).append(calories);
             }
             $("#recipes-container").append(imageDiv);
             $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
