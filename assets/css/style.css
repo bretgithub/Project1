@@ -69,20 +69,19 @@ body {
     z-index: 10;
     color: white;
     font-family: 'Bowlby One SC', cursive;
-    font-size: 5rem;
-   
+    font-size: 6rem;
 }
 
 .in-text {
     position:absolute;
-    right: 3vw;
+    right: 2vw;
     top: 20vw;
 }
 
 .out-text {
     position:absolute;
-    left: 3vw;
-    top: 20vw;
+    left: 2vw;
+    bottom: 20vw;
 }
 
 .intro-text {
@@ -95,12 +94,19 @@ body {
     font-size: 16pt;
     display:none;
 }
-.index-image:hover + .intro-text{
-    display:block;
+
+#in-intro-text {
+    position: absolute;
+    top: 5vw;
+    left: 2vw;
 }
 
-.header-text:hover + .intro-text{
-    display:block;
+#eat-in-index:hover #in-intro-text{
+    display: block;
+}
+
+#eat-out-index:hover #out-intro-text{
+    display: block;
 }
 
 #filter-section {
