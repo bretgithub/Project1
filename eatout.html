@@ -16,11 +16,11 @@
 
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    
+
     <!-- ============================LOGIN & SIGN UP MODALS================================ -->
     <!-- Modal -->
     <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -60,90 +60,74 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark py-0">
         <a class="navbar-brand d-flex justify-content-center align-items-center" href="index.html">
-          <img src="images/board logo.png" width="50px" height="50px" class="d-inline-block align-top" alt="Logo Image">
+            <img src="images/board logo.png" width="50px" height="50px" class="d-inline-block align-top"
+                alt="Logo Image">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
-    
+
+        <div id="eatin-link">
+            <a class="nav-link" href="eatin.html">Eat In <span class="sr-only"></span></a>
+          </div>
+      
+          <div id="eatout-link">
+            <a class="nav-link" href="eatout.html">Eat Out<span class="sr-only"></span></a>
+          </div>
+      
+          <div id= "mood-change">
+            <a class="nav-link" href="#">Mood Change <span class="sr-only"></span></a>
+          </div>
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" id="modal-button" href="#">Login/Create Accounts</a>
-            </li>
-    
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="account" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-    
-              </a>
-              <div class="dropdown-menu" id="logged-in-dropdown" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#"></a>
-                <a class="dropdown-item" id="logout-button" href="#">Logout</a>
-                <a class="dropdown-item hidden" id="favorites-button" href="favorites.html">Favorites</a>
-              </div>
-            </li>
-          </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" id="modal-button" href="#">Login/Create Accounts</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="account" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+
+                    </a>
+                    <div class="dropdown-menu" id="logged-in-dropdown" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#"></a>
+                        <a class="dropdown-item" id="logout-button" href="#">Logout</a>
+                        <a class="dropdown-item hidden" id="favorites-button" href="favorites.html">Favorites</a>
+                    </div>
+                </li>
+            </ul>
         </div>
     </nav>
     <!-- /Navbar -->
-    
 
-    <!-- display and filter area -->
-    <div class="container">
-        <!-- image to be different for restaurant  -->
-        <div class="jumbotron py-4"
-            style="background-image: url(images/eatin3.png); background-size: 100%; background-position: center; opacity: 1">
-            <h1 style="color: white">So you've decided to Eat Out!</h1>
-            <!-- drop down param inpute, need unique IDs to grab values with click even on submit to recall API with new query -->
+    <!-- drop down param inpute, need unique IDs to grab values with click even on submit to recall API with new query -->
+    <div id="filter-section" class="container w-75 justify-content-center mt-4">
+        <div class="container justify-content-center">
+            <h1 style="color: white">Eat Out filters!</h1>
             <div class="row">
-                <div class="col-md-4">
-                    <form class="form-inline">
+                <div class="col-md-3">
+                    <form class="form">
                         <label class="my-1 mr-4" for="restaurant-cuisine" style="color: white">Cuisine
                         </label>
                         <select class="custom-select my-1 mr-sm-4" id="restaurant-cuisine">
                             <option value="" disabled selected>Choose...</option>
-                            <option value="middle eastern, ">Middle Eastern</option>
-                            <option value="sushi, ">Sushi</option>
-                            <option value="asian, ">Asian</option>
-                            <option value="african, ">African</option>
-                            <option value="persian, ">Persian</option>
-                            <option value="comfort, ">Comfort</option>
-                            <option value="dessert, ">Dessert</option>
-                            <option value="cocktails, ">Cocktails</option>
-                            <option value="latin american, ">Latin American</option>
-                            <option value="salad, ">Healthy</option>
+                            <option value="middle eastern">Middle Eastern</option>
+                            <option value="sushi">Sushi</option>
+                            <option value="asian">Asian</option>
+                            <option value="african">African</option>
+                            <option value="persian">Persian</option>
+                            <option value="comfort">Comfort</option>
+                            <option value="dessert">Dessert</option>
+                            <option value="cocktails">Cocktails</option>
+                            <option value="latin american">Latin American</option>
+                            <option value="salad">Healthy</option>
                         </select>
                     </form>
                 </div>
-                <div class="col-md-4">
-                    <form class="form-inline">
-                        <label class="my-1 mr-4" for="restaurant-price" style="color: white">Price Range
-                        </label>
-                        <select class="custom-select my-1 mr-sm-4" id="restaurant-price">
-                            <option value="" disabled selected>Choose...</option>
-                            <option value="1" id="cheap"> $ </option>
-                            <option value="1,2" id="reasonable"> $$ </option>
-                            <option value="1,2,3" id="moderate"> $$$ </option>
-                            <option value="1,2,3,4" id="expensive"> $$$$ </option>
-                        </select>
-                    </form>
-                </div>
-                <div class="col-md-4">
-                    <form class="form-inline">
-                        <label class="my-1 mr-4" for="restaurant-rating" style="color: white">Rating
-                        </label>
-                        <select class="custom-select my-1 mr-sm-4" id="restaurant-rating">
-                            <option value="" disabled selected>Choose...</option>
-                            <option value="1 - 2.9">Decent</option>
-                            <option value="3 - 3.9">Good</option>
-                            <option value="4 - 5">Exceptional</option>
-                        </select>
-                    </form>
-                </div>
-                <div class="col-md-4">
-                    <form class="form-inline">
+                <div class="col-md-3">
+                    <form class="form">
                         <label class="my-1 mr-4" for="restaurant-city" style="color: white">City
                         </label>
                         <select class="custom-select my-1 mr-sm-4" id="restaurant-city">
@@ -156,43 +140,68 @@
                         </select>
                     </form>
                 </div>
-            </div>
-            <!-- checkboxes -->
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-check-inline mr-3">
-                        <input class="form-check-input" type="checkbox" id="vegetarian-check" value="vegetarian">
-                        <label class="form-check-label" for="vegetarian-check" style="color: white">
-                            Vegetarian
+                <div class="col-md-3">
+                    <form class="form">
+                        <label class="my-1 mr-4" for="restaurant-price" style="color: white">Price Range
                         </label>
-                    </div>
+                        <select class="custom-select my-1 mr-sm-4" id="restaurant-price">
+                            <option value="" disabled selected>Choose...</option>
+                            <option value="1" id="cheap"> $ </option>
+                            <option value="1,2" id="reasonable"> $$ </option>
+                            <option value="1,2,3" id="moderate"> $$$ </option>
+                            <option value="1,2,3,4" id="expensive"> $$$$ </option>
+                        </select>
+                    </form>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-check-inline mr-3">
-                        <input class="form-check-input" type="checkbox" id="vegan-check" value="vegan">
-                        <label class="form-check-label" for="vegan-check" style="color: white">
-                            Vegan
+                <div class="col-md-3">
+                    <form class="form">
+                        <label class="my-1 mr-4" for="restaurant-rating" style="color: white">Rating
                         </label>
-                    </div>
+                        <select class="custom-select my-1 mr-sm-4" id="restaurant-rating">
+                            <option value="" disabled selected>Choose...</option>
+                            <option value="1 - 2.9">Decent</option>
+                            <option value="3 - 3.9">Good</option>
+                            <option value="4 - 5">Exceptional</option>
+                        </select>
+                    </form>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-check-inline mr-3">
-                        <input class="form-check-input" type="checkbox" id="gluten-free-check" value="gluten-free">
-                        <label class="form-check-label" for="guten-free-check" style="color: white">
-                            Gluten Free
-                        </label>
-                    </div>
+        </div>
+        <!-- checkboxes -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-check-inline mr-3">
+                    <input class="form-check-input dietary" type="checkbox" id="vegetarian-check" value="vegetarian">
+                    <label class="form-check-label" for="vegetarian-check" style="color: white">
+                        Vegetarian
+                    </label>
                 </div>
             </div>
-            <!-- submit button where our function will listen to gather values from above and new api call -->
-            <div class="row my-3">
-                <div class="col">
-                    <button type="submit" class="btn btn-dark mb-2" id="submit-restaurant-filters">Submit</button>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-check-inline mr-3">
+                    <input class="form-check-input dietary" type="checkbox" id="vegan-check" value="vegan">
+                    <label class="form-check-label" for="vegan-check" style="color: white">
+                        Vegan
+                    </label>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-check-inline mr-3">
+                    <input class="form-check-input dietary" type="checkbox" id="gluten-free-check" value="gluten-free">
+                    <label class="form-check-label" for="guten-free-check" style="color: white">
+                        Gluten Free
+                    </label>
+                </div>
+            </div>
+        </div>
+        <!-- submit button where our function will listen to gather values from above and new api call -->
+        <div class="row my-3">
+            <div class="col">
+                <button type="submit" class="btn btn-dark mb-2" id="submit-restaurant-filters">Submit</button>
             </div>
         </div>
     </div>
@@ -204,12 +213,6 @@
             </div>
         </div>
     </div>
-
-
-    <!-- footer -->
-    <footer class="footer">
-        <p id="copyright">copyright ©</p>
-    </footer>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>

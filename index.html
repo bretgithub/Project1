@@ -2,11 +2,15 @@
 <html lang="en">
 
 <head>
-  <title>Title</title>
+  <title>IN or OUT?</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Working Title</title>
+
+
+  <!-- Google font import -->
+  <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Bowlby+One+SC|Bungee+Inline|Grand+Hotel|Maven+Pro"
+    rel="stylesheet">
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -109,42 +113,42 @@
   <!-- /Modal -->
 
   <!-- ============================LOGIN & SIGN UP MODALS================================ -->
-    <!-- Modal -->
-    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  <!-- Modal -->
+  <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Login or Sign Up</h5>
-                </div>
-
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Sign Up</label>
-                        <input type="email" class="form-control" id="userEmail" aria-describedby="emailHelp"
-                            placeholder="example@gmail.com">
-                    </div>
-                    <!--this is the area for password text-->
-                    <div class="form-group">
-                        <label for="examplePassword">Password</label>
-                        <input type="password" class="form-control pwd" id="userPassword" placeholder="password">
-                    </div>
-                </div>
-
-                <br>
-
-                <div style="text-align: center; color: red" id="auth-message"></div>
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                    <button type="button" class="btn btn-primary" id="login-button">Login</button>
-                    <button type="button" class="btn btn-primary" id="create-button">Create New Account</button>
-                </div>
-                <!-- /Modal footer -->
-            </div>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Login or Sign Up</h5>
         </div>
+
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Sign Up</label>
+            <input type="email" class="form-control" id="userEmail" aria-describedby="emailHelp"
+              placeholder="example@gmail.com">
+          </div>
+          <!--this is the area for password text-->
+          <div class="form-group">
+            <label for="examplePassword">Password</label>
+            <input type="password" class="form-control pwd" id="userPassword" placeholder="password">
+          </div>
+        </div>
+
+        <br>
+
+        <div style="text-align: center; color: red" id="auth-message"></div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+          <button type="button" class="btn btn-primary" id="login-button">Login</button>
+          <button type="button" class="btn btn-primary" id="create-button">Create New Account</button>
+        </div>
+        <!-- /Modal footer -->
+      </div>
     </div>
-    <!-- /Modal -->
+  </div>
+  <!-- /Modal -->
 </head>
 
 <body>
@@ -157,6 +161,18 @@
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
+    <div id="eatin-link">
+      <a class="nav-link" href="eatin.html">Eat In <span class="sr-only"></span></a>
+    </div>
+
+    <div id="eatout-link">
+      <a class="nav-link" href="eatout.html">Eat Out<span class="sr-only"></span></a>
+    </div>
+
+    <div id= "mood-change">
+      <a class="nav-link" href="#">Mood Change <span class="sr-only"></span></a>
+    </div>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
@@ -180,45 +196,30 @@
   </nav>
   <!-- /Navbar -->
 
-  <!-- Title -->
-  <div class="container" id="body_container">
-    <div class="jumbotron text-center col-md-10 offset-1" id="main-page-jumbo">
-      <h1 class="display-3">In or Out</h1>
-    </div>
-  </div>
-  <!-- /Title -->
-
   <!-- Cards -->
-  <div class="container my-10 col-md-8" id="card_container">
-    <div class="row justify-content-center pb-4">
+  <div class="div m-0 p-0 overflow-hidden" id="photo-container">
+    <div class="row">
 
-      <div class="card m-3 indexCard col-5 eat-in-card" style="width: 40vw;" id="card1">
-        <img class="card-img-top" src="https://placeimg.com/640/480/tech" alt="Card image cap" id="card1image">
-        <div class="card-body">
-          <p class="card-text">Discover new exciting recipes</p>
-
-          <a href="eatin.html" target=_blank>Eat In</a>
-
-        </div>
+      <div class="div col-6 main-img border-right border-light m-0 p-0" id="eat-in-index">
+        <a href="eatin.html" target=_blank>
+          <img class="index-image" src="images/in photo big.jpg" alt="in image" id="in-image"></img>
+          <p1 class="intro-text animated fadeIn" id="in-intro-text">Sometimes the atmosphere that comes with a home cooked meal is irreplaceable. Feel free to leave yourself a generous tip.</p1>
+          <h1 class="header-text in-text">IN</h1>
+        </a>
       </div>
 
-      <div class="card m-3 indexCard col-5 eat-out-card" style="width: 40vw;" id="card2">
-        <img class="card-img-top" src="https://placeimg.com/640/480/arch" alt="Card image cap">
-        <div class="card-body">
-          <p class="card-text">Explore resaurants in your area</p>
-          <a href="eatout.html" target=_blank>Eat Out</a>
-        </div>
+
+
+      <div class="div col-6 main-img border-left border-light m-0 p-0" id="eat-out-index">
+        <a href="eatout.html" target=_blank>
+          <img class="index-image" src="images/out photo big.jpeg" alt="out image" id="out-image">
+
+          <p1 class="intro-text animated fadeIn " id="out-intro-text">“Let food be your medicine,” - Hippocrates. The perfect remedy for any empty stomach is good friends and good food. See what restaurants near you match your mood!</p1>
+          <h1 class="header-text out-text">OUT</h1>
+        </a>
       </div>
     </div>
   </div>
-
-  <!-- Footer -->
-  <footer class="footer fixed-bottom" id="footer">
-    <div class="container text-center">
-      <span class="Copyright">Copyright ©</span>
-    </div>
-  </footer>
-  <!-- Footer -->
 
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
