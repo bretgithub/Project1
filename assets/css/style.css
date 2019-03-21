@@ -113,7 +113,6 @@ body {
     background-color: rgba(88, 88, 88, .8);
 }
 
-<<<<<<< HEAD
 #eatin-link{
     color: white;
 }
@@ -130,13 +129,10 @@ body {
 
 .nav-link{
     color: white;
-=======
+}
+
 #favorites {
     background-image: url(../../images/favpgbg1.jpg);
     background-size: cover;
-<<<<<<< HEAD
 }
-=======
->>>>>>> 3635cb7d5bdd60660b987d5b1d78efd254537668
-}
->>>>>>> 37d40ac7be7bf17d61e9433b3aee3d01b21b6afb
+
