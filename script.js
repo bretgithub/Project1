@@ -88,9 +88,9 @@ function displayFavorites() {
     // use localStorage to grab uid to pull from firebase
     let localID = localStorage.getItem("seshID");
     // pulls from firebase and grabs the favRecipes and favRestaurants array
-    database.ref(localID).once("value").then(function(snapshot) {
+    database.ref(localID).once("value").then(function (snapshot) {
         recipeArr = JSON.parse(snapshot.val().favRecipes);
-        restaurantArr= JSON.parse(snapshot.val().favRestaurants);
+        restaurantArr = JSON.parse(snapshot.val().favRestaurants);
         $("#fav-rest-row").empty();
         $("#fav-recipe-row").empty();
         //populate restaurant-row in favorites page
@@ -106,40 +106,40 @@ function displayFavorites() {
             let restaurantAddress = $("<li>").text("Address: " + restaurantArr[i].address).addClass("restaurant-address p-2");
             let restaurantCity = $("<li>").text(restaurantArr[i].city).addClass("restaurant-city p-2");
             // instead of favorite button, add unfavorite button to remove selected from favorites
-            let removeBtn = $("<button>").addClass("removeBtn align-self-end").attr("id", "restaurant_"+i).text("Remove Favorites");
+            let removeBtn = $("<button>").addClass("removeBtn align-self-end").attr("id", "restaurant_" + i).text("Remove Favorites");
 
             cardDiv.append(restaurantImage).append(cardBlock).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity).append(removeBtn);
             $("#fav-rest-row").append(cardDiv);
         }
-        
+
         // populate recipe-row in favorites page
         for (let i = 0; i < recipeArr.length; i++) {
             let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated slideInUp");
             let recipeImage = $("<img>").addClass("card-top-img").attr("src", recipeArr[i].image).attr("style", 'width: 100%;height:auto;overflow:auto;');
             let cardBlock = $("<div>").addClass("card-block")
             let recipeLabel = $("<h4>").text(recipeArr[i].name).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
-            let removeBtn = $("<button>").addClass("removeBtn align-self-end").attr("id", "recipe_"+i).text("Remove Favorites");
+            let removeBtn = $("<button>").addClass("removeBtn align-self-end").attr("id", "recipe_" + i).text("Remove Favorites");
 
             imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel).append(removeBtn);
 
             $("#fav-recipe-row").append(imageDiv);
             $(".card-title").wrap($("<a>").attr("href", recipeArr[i].url)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
-        } 
+        }
     });
 }
 
 
 // add listner to the removeBtn button
-$(document).on("click", ".removeBtn", function(event) {
+$(document).on("click", ".removeBtn", function (event) {
     // this should differentiate between restaurants and recipes
     let type = this.id.split("_")[0];
     // this should be the index of the array that we are removing from either restaurantArr or recipesArr
     let index = this.id.split("_"[1]);
     let localID = localStorage.getItem("seshID");
     // grabbing the arrays from firebase
-    database.ref(localID).once("value").then(function(snapshot) {
+    database.ref(localID).once("value").then(function (snapshot) {
         recipeArr = JSON.parse(snapshot.val().favRecipes);
-        restaurantArr= JSON.parse(snapshot.val().favRestaurants);
+        restaurantArr = JSON.parse(snapshot.val().favRestaurants);
     });
     if (type === "recipe") {
         // remove the selected favorite card from favorites
@@ -184,7 +184,6 @@ $("#save-button").on("click", function () {
 
         });
         // hide modal
-
 
         $("#exampleModalCenter").modal("hide");
         $(".main-img").attr('style', 'display:block;')
@@ -452,7 +451,9 @@ function displayRestaurants() {
 // eatin.html filters below
 let recipePrep;
 let recipeCalories;
-let healthLabel;
+let dietaryArray = [];
+let checkedValue;
+let tempArr = [];
 
 $("#recipe-cuisine").on("change", function () {
     searchCuisine = this.value;
@@ -469,51 +470,59 @@ $("#recipe-calories").on("change", function () {
     return recipeCalories;
 });
 
-$("#vegetarian-check").on("change", function () {
-    isVegetarian = this.value;
-    console.log("Is Veggie?" + isVegetarian);
-    return isVegetarian;
+$(".dietary").click(function () {
+    tempArr = dietaryArray;
+    checkedValue = $(this).val();
+    if ($(this).prop("checked")) {
+        dietaryArray.push(checkedValue);
+        tempArr = dietaryArray;
+    } else {
+        $.each(dietaryArray, function (i) {
+            if (tempArr[i] === checkedValue) {
+                tempArr.splice(i, 1);
+            }
+        });
+        dietaryArray = tempArr;
+    }
+
+    let checkboxValue = "";
+    $.each(dietaryArray, function (i) {
+        if (checkboxValue === "") {
+            checkboxValue = dietaryArray[i];
+        } else {
+            checkboxValue = checkboxValue + "," + dietaryArray[i];
+        }
+    });
+    console.log(checkboxValue);
 });
 
-$("#vegan-check").on("change", function () {
-    isVegan = this.value;
-    console.log("Is Vegan?" + isVegan);
-    return isVegan;
-});
-
-$("#gluten-free-check").on("change", function () {
-    isGlutenFree = this.value;
-    console.log("Is GF?" + isGlutenFree);
-    return isGlutenFree;
-});
-
-// submit button for eatin.html, at least cuisine, prep, and calories need to be truthy
+// submit button for eatin.html, at least cuisine must be selected
 $("#submit-recipe-filters").on("click", function () {
-    if (searchCuisine & recipePrep & recipeCalories || isVegetarian || isVegan || isGlutenFree) {
+    // doesn't work, takes it even if not selected
+    if ((searchCuisine) && (recipePrep || recipeCalories || dietaryArray)) {
         console.log(searchCuisine);
         console.log(recipePrep);
         console.log(recipeCalories);
-        console.log(isVegetarian);
-        console.log(isVegan);
-        console.log(isGlutenFree);
+        console.log(dietaryArray);
         // set variables to local storage
         localStorage.setItem("searchCuisine", searchCuisine);
         localStorage.setItem("recipePrep", recipePrep);
         localStorage.setItem("recipeCalories", recipeCalories);
-        localStorage.setItem("isVegetarian", isVegetarian);
-        localStorage.setItem("isVegan", isVegan);
-        localStorage.setItem("isGlutenFree", isGlutenFree);
+        localStorage.setItem("dietaryPreferences", dietaryArray);
 
         $("#recipe-cuisine").val("");
         $("#recipe-prep-time").val("");
         $("#recipe-calories").val("");
-        $("#vegetarian-check").prop("checked", false);
-        $("#vegan-check").prop("checked", false);
-        $("#gluten-free-check").prop("checked", false);
+        $(".dietary").prop("checked", false);
+        // dietaryArray = [];
 
         displayRecipes();
+        dietaryArray = [];
+        searchCuisine = null;
+        recipePrep = null
+        recipeCalories = null;
     } else {
-        alert("You must at least select Cuisine, Prep time, and Calories");
+        alert("You must at least select a Cuisine");
     }
 });
 
@@ -522,32 +531,51 @@ $("#submit-recipe-filters").on("click", function () {
 function displayRecipes() {
 
     // retrieve from local storage
-    searchCity = localStorage.getItem("searchCity");
     let rand = Math.floor(Math.random() * 50);
     let otherRand = rand + 3;
+    let queryURL;
+    searchCuisine = localStorage.getItem("searchCuisine");
 
-    searchCuisine = localStorage.getItem("searchCuisine") || "";
-    console.log(searchCuisine);
-    recipePrep = localStorage.getItem("recipePrep") || "";
-    recipeCalories = localStorage.getItem("recipeCalories") || "";
-    if (isVegetarian || isVegan || isGlutenFree) {
-        healthLabel = (localStorage.getItem("isVegetarian") || "") + (localStorage.getItem("isVegan") || "") + (localStorage.getItem("isGlutenFree") || "");
-        console.log("HealthLabel: " + healthLabel);
+    if (recipePrep && recipeCalories && dietaryArray) {
+        recipePrep = localStorage.getItem("recipePrep");
+        recipeCalories = localStorage.getItem("recipeCalories");
+        dietaryArray = localStorage.getItem("dietaryPreferences");
+        queryURL = `https://api.edamam.com/search?q=${searchCuisine}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&time=${recipePrep}&calories=${recipeCalories}&healthLabel=${dietaryArray}`;
+
+    } else if (recipePrep && recipeCalories) {
+        recipePrep = localStorage.getItem("recipePrep");
+        recipeCalories = localStorage.getItem("recipeCalories");
+        queryURL = `https://api.edamam.com/search?q=${searchCuisine}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&time=${recipePrep}}&calories=${recipeCalories}`;
+
+    } else if (recipePrep && dietaryArray) {
+        recipePrep = localStorage.getItem("recipePrep");
+        dietaryArray = localStorage.getItem("dietaryPreferences");
+        queryURL = `https://api.edamam.com/search?q=${searchCuisine}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&time=${recipePrep}}&healthLabel=${dietaryArray}`;
+
+    } else if (recipeCalories && dietaryArray) {
+        recipeCalories = localStorage.getItem("recipeCalories");
+        dietaryArray = localStorage.getItem("dietaryPreferences");
+        queryURL = `https://api.edamam.com/search?q=${searchCuisine}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&calories=${recipeCalories}&healthLabel=${dietaryArray}`;
+
+        // doesn't make call gives bad request error 
+    } else if (recipePrep) {
+        recipePrep = localStorage.getItem("recipePrep");
+        queryURL = `https://api.edamam.com/search?q=${searchCuisine}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&time=${recipePrep}`;
+
+    } else if (recipeCalories) {
+        recipePrep = localStorage.getItem("recipeCalories");
+        queryURL = `https://api.edamam.com/search?q=${searchCuisine}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&calories=${recipeCalories}`;
+
+    } else if (dietaryArray) {
+        recipePrep = localStorage.getItem("dietaryPreferences");
+        queryURL = `https://api.edamam.com/search?q=${searchCuisine}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&healthLabel=${dietaryArray}`;
+
+    } else {
+        queryURL = `https://api.edamam.com/search?q=${searchCuisine}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}`;
     }
 
-    // run displayRecipes function
-    let search = {
-        searchCuisine: searchCuisine,
-        recipeCalories: recipeCalories,
-        recipePrep: recipePrep,
-        healthLabel: healthLabel,
-    }
-
-    //for API call
-    let queryURL = `https://api.edamam.com/search?q=${search.searchCuisine}&app_id=879f0751&app_key=35a16e4121fe17352894abf6ad14d421&from=${rand}&to=${otherRand}&calories=${search.recipeCalories}&time=${search.recipePrep}&healthLabels=${search.healthLabel}`;
-    // note: calories returned in JSON response is yield, need to divide by yield: to get calories per serving - for future calculation calories / yield of the recipe
-
-    console.log(queryURL)
+    console.log("QUERY URL: " + queryURL);
+    console.log("recipe prepp: " + recipePrep);
 
     $.ajax({
         url: queryURL,

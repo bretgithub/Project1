@@ -105,16 +105,16 @@
                         </label>
                         <select class="custom-select my-1 mr-sm-4" id="recipe-cuisine">
                             <option value="" disabled selected>Choose...</option>
-                            <option value="middle-eastern, ">Middle Eastern</option>
-                            <option value="sushi, ">Sushi</option>
-                            <option value="asian, ">Asian</option>
-                            <option value="african, ">African</option>
-                            <option value="persian, ">Persian</option>
-                            <option value="comfort, ">Comfort</option>
-                            <option value="dessert, ">Dessert</option>
-                            <option value="cocktails, ">Cocktails</option>
-                            <option value="latin-american, ">Latin American</option>
-                            <option value="salad, ">Healthy</option>
+                            <option value="middle-eastern">Middle Eastern</option>
+                            <option value="sushi">Sushi</option>
+                            <option value="asian">Asian</option>
+                            <option value="african">African</option>
+                            <option value="persian">Persian</option>
+                            <option value="comfort">Comfort</option>
+                            <option value="dessert">Dessert</option>
+                            <option value="cocktails">Cocktails</option>
+                            <option value="latin-american">Latin American</option>
+                            <option value="salad">Healthy</option>
                         </select>
                     </form>
                 </div>
@@ -144,12 +144,13 @@
                 </div>
             </div>
         </div>
-        <!-- checkboxes  -->
+
         <div class="container justify-content-center">
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-check-inline mr-3">
-                        <input class="form-check-input" type="checkbox" id="vegetarian-check" value="vegetarian, ">
+                        <input class="form-check-input dietary" type="checkbox" id="dietary" name="dietary"
+                            value="vegetarian" unchecked>
                         <label class="form-check-label" for="vegetarian-check" style="color: white">
                             Vegetarian
                         </label>
@@ -159,7 +160,8 @@
                 <!-- <div class="row"> -->
                 <div class="col-md-4">
                     <div class="form-check-inline mr-3">
-                        <input class="form-check-input" type="checkbox" id="vegan-check" value="vegan, ">
+                        <input class="form-check-input dietary" type="checkbox" id="dietary" name="dietary"
+                            value="vegan" unchecked>
                         <label class="form-check-label" for="vegan-check" style="color: white">
                             Vegan
                         </label>
@@ -169,7 +171,8 @@
                 <!-- <div class="row"> -->
                 <div class="col-md-4">
                     <div class="form-check-inline mr-3">
-                        <input class="form-check-input" type="checkbox" id="gluten-free-check" value="gluten-free, ">
+                        <input class="form-check-input dietary" type="checkbox" id="dietary" name="dietary"
+                            value="gluten-free" unckecked>
                         <label class="form-check-label" for="guten-free-check" style="color: white">
                             Gluten Free
                         </label>
