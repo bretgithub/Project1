@@ -431,8 +431,8 @@ function displayRestaurants() {
             let restaurantImage = $("<img>").attr("src", businessImage).attr("style", 'width: 100%;height:auto;overflow:auto;').addClass("card-top-img restaurant-img");
             let cardBlock = $("<div>").addClass("card-block")
             let restaurantName = $("<h4>").text(businessName).addClass("card-title restaurant-name p-2");
-            let restaurantRating = $("<li>").text("Rating: " + businessRating).addClass("restaurant-rating p-2");
-            let restaurantPrice = $("<li>").text("Price: " + businessPrice).addClass("restaurant-price p-2");
+            let restaurantRating = $("<li>").text("Rating: " + businessRating).addClass("restaurant-rating p-2 text-light");
+            let restaurantPrice = $("<li>").text("Price: " + businessPrice).addClass("restaurant-price p-2 text-light");
             // adds a favorite button to each card. perhaps add to the top right corner of the card
             let favoriteBtn = $("<button>").addClass("favoriteRestaurants align-self-end btn btn-dark").attr("id", i).text("Add to Favorites");
 
@@ -444,7 +444,7 @@ function displayRestaurants() {
             }
             // display in container and wrap link to open URL
             $("#restaurants-container").append(imageDiv);
-            $(".card-title").wrap($("<a>").attr("href", businessURL)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
+            $(".card-title").wrap($("<a>").attr("href", businessURL)).attr("style", 'text-decoration: none;color:white;overflow: hidden;text-overflow: ellipsis;');
         }
     });
 };
@@ -581,7 +581,7 @@ function displayRecipes() {
             let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
             let prepTime = $("<li>").text("Prep time (in minutes): " + recipePrepTime).addClass("recipe-prep-time p-2");
             let calories = $("<li>").text("Calories per serving: " + caloriesPerServing).addClass("recipe-calories p-2");
-            let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end btn-success").attr("id", i).text("Add to Favorites");
+            let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end btn-dark").attr("id", i).text("Add to Favorites");
             // only append favorite button if user is logged in
             if (login) {
                 imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
@@ -591,7 +591,7 @@ function displayRecipes() {
 
             // display in container and wrap link to open URL
             $("#recipes-container").append(imageDiv);
-            $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
+            $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none;color:white;overflow: hidden;text-overflow: ellipsis;');
         }
     });
 };
