@@ -102,7 +102,7 @@ function displayFavorites() {
             let cardDiv = $("<div>").addClass("restaurant m-2 p-1 card col-3 animated flipInY text-center position-relative d-flex justify-contents-around").attr("id", "restaurant_" + i);
             let restaurantImage = $("<img>").attr("src", restaurantArr[i].image).attr("style", 'width: 100%;height:auto;overflow:auto;').addClass("card-top-img restaurant-img");
             let cardBlock = $("<div>").addClass("card-block")
-            let restaurantName = $("<h6>").text(restaurantArr[i].name).addClass("restaurant-name p-2");
+            let restaurantName = $("<h4>").text(restaurantArr[i].name).addClass("restaurant-name p-2 mb-5");
             let restaurantRating = $("<li>").text("Rating: " + restaurantArr[i].rating).addClass("restaurant-rating p-2");
             let restaurantPrice = $("<li>").text("Price: " + restaurantArr[i].price).addClass("restaurant-price p-2");
             let restaurantReviewCount = $("<li>").text("Number of Reviews: " + restaurantArr[i].reviewCount).addClass("restaurant-review-count p-2");
@@ -110,9 +110,9 @@ function displayFavorites() {
             let restaurantAddress = $("<li>").text(restaurantArr[i].address).addClass("restaurant-address p-2 mb-5");
             let restaurantCity = $("<li>").text(restaurantArr[i].city).addClass("restaurant-city p-2");
             // instead of favorite button, add unfavorite button to remove selected from favorites
-            let removeBtn = $("<button>").addClass("removeBtn m-1 btn-danger d-inline").attr("id", "restaurant_" + i).text("Remove").attr("style", "position:absolute; bottom:0px;right:auto;left:auto;");
+            let removeBtn = $("<button>").addClass("removeBtn m-1 btn btn-dark d-inline").attr("id", "restaurant_" + i).text("Remove").attr("style", "position:absolute; bottom:0px; right:auto; left:auto;");
 
-            cardDiv.append(restaurantImage).append(cardBlock).append(restaurantName).append(restaurantPhone).append(restaurantAddress).append(removeBtn);
+            cardDiv.append(restaurantImage).append(cardBlock).append(restaurantName).append(removeBtn);
             $("#fav-rest-row").append(cardDiv);
         }
 
@@ -122,7 +122,7 @@ function displayFavorites() {
             let recipeImage = $("<img>").addClass("card-top-img").attr("src", recipeArr[i].image).attr("style", 'width: 100%;height:auto;overflow:auto;');
             let cardBlock = $("<div>").addClass("card-block")
             let recipeLabel = $("<h6>").text(recipeArr[i].name).addClass("card-title recipe-label p-2 mb-5").attr("style", 'overflow:hidden;text-overflow: ellipsis;').attr("id", "card-title"+i);
-            let removeBtn = $("<button>").addClass("removeBtn m-1 btn-danger d-inline").attr("id", "recipe_" + i).text("Remove").attr("style", "position:absolute; bottom:0px; right:auto;left:auto;");
+            let removeBtn = $("<button>").addClass("removeBtn m-1 btn btn-dark d-inline").attr("id", "recipe_" + i).text("Remove").attr("style", "position:absolute; bottom:0px; right:auto; left:auto;");
 
             imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel).append(removeBtn);
 
@@ -318,7 +318,7 @@ function displayRecipes() {
 
             let cardBlock = $("<div>").addClass("card-block")
             let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;').attr("id", "card-title"+i)
-            let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end").attr("id", i).text("Add to Favorites");
+            let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end btn btn-dark").attr("id", i).text("Add to Favorites");
             // only append favorite button if user is logged in
             if (login) {
                 imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
@@ -538,7 +538,7 @@ function displayRestaurants() {
             let restaurantAddress = $("<li>").text("Address: " + businessAddress).addClass("restaurant-address p-2");
             let restaurantCity = $("<li>").text(businessCity).addClass("restaurant-city p-2");
             // adds a favorite button to each card. perhaps add to the top right corner of the card
-            let favoriteBtn = $("<button>").addClass("favoriteRestaurants align-self-end").attr("id", i).text("Add to Favorites");
+            let favoriteBtn = $("<button>").addClass("favoriteRestaurants align-self-end btn btn-dark").attr("id", i).text("Add to Favorites");
             // only append favorite button if user is logged in
             if (login) {
                 imageDiv.append(restaurantImage).append(cardBlock).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity).append(favoriteBtn);
@@ -674,7 +674,7 @@ function displayRecipes() {
 
             let cardBlock = $("<div>").addClass("card-block")
             let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
-            let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end").attr("id", i).text("Add to Favorites");
+            let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end btn btn-dark").attr("id", i).text("Add to Favorites");
             // only append favorite button if user is logged in
             if (login) {
                 imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
