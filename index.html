@@ -170,8 +170,8 @@
       <a class="nav-link" href="eatout.html">Eat Out<span class="sr-only"></span></a>
     </div>
 
-    <div id= "mood-change">
-      <a class="nav-link" href="#">Mood Change <span class="sr-only"></span></a>
+    <div id="mood-change">
+      <a class="nav-link" href="#">Mood Change<span class="sr-only"></span></a>
     </div>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -237,7 +237,13 @@
   <script type="text/javascript" src="script.js"></script>
   <script>
     // $('#exampleModalCenter').modal('show')
-    $('#exampleModalCenter').modal({backdrop: 'static', keyboard: false})   </script>
+    $("#mood-change").on('click', function() {
+      $('#exampleModalCenter').modal({backdrop: 'static', keyboard: false})
+    });  
+
+    $('#exampleModalCenter').modal({backdrop: 'static', keyboard: false})
+    
+  </script>
    
 </body>
 
