@@ -16,6 +16,7 @@ let database = firebase.database();
 // global variables to be set when user selects values in modal
 let searchCuisine;
 let searchCity;
+let login = false;
 let restaurantArr = []; // here is where we'll store the info of favorited restaurants
 let recipeArr = []; // here is where we'll store the info of favorited recipes
 
@@ -40,11 +41,13 @@ firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         // User is signed in.
         email = user.email;
+        // set login to true
+        login = true;
         uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
         // this value to authenticate with your backend server, if
         // you have one. Use User.getToken() instead.
         console.log(email, uid);
-        console.log("you're logged in");
+        console.log("you're logged in", login);
 
         // store user's email and user ID in firebase database
         // using user ID as key to store all necessary information in that key
@@ -61,7 +64,8 @@ firebase.auth().onAuthStateChanged(function (user) {
         $("#account").show();
     } else {
         // No user is signed in.
-        console.log("No user signed in");
+        login = false;
+        console.log("No user signed in", login);
         $("#create-button").on("click", function (event) {
             event.preventDefault();
 
@@ -95,7 +99,7 @@ function displayFavorites() {
         $("#fav-recipe-row").empty();
         //populate restaurant-row in favorites page
         for (let i = 0; i < restaurantArr.length; i++) {
-            let cardDiv = $("<div>").addClass("restaurant m-2 p-1 card col-3 animated slideInUp").attr("id", "restaurant_" + i);
+            let cardDiv = $("<div>").addClass("restaurant m-2 p-1 card col-3 animated flipInY").attr("id", "restaurant_" + i);
             let restaurantImage = $("<img>").attr("src", restaurantArr[i].image).attr("style", 'width: 100%;height:auto;overflow:auto;').addClass("card-top-img restaurant-img");
             let cardBlock = $("<div>").addClass("card-block")
             let restaurantName = $("<h4>").text(restaurantArr[i].name).addClass("restaurant-name p-2");
@@ -114,7 +118,7 @@ function displayFavorites() {
         
         // populate recipe-row in favorites page
         for (let i = 0; i < recipeArr.length; i++) {
-            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated slideInUp");
+            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated animated flipInY");
             let recipeImage = $("<img>").addClass("card-top-img").attr("src", recipeArr[i].image).attr("style", 'width: 100%;height:auto;overflow:auto;');
             let cardBlock = $("<div>").addClass("card-block")
             let recipeLabel = $("<h4>").text(recipeArr[i].name).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
@@ -316,8 +320,13 @@ function displayRecipes() {
             let cardBlock = $("<div>").addClass("card-block")
             let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;').attr("id", "card-title"+i)
             let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end").attr("id", i).text("Add to Favorites");
-
-            imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
+            // only append favorite button if user is logged in
+            if (login) {
+                imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
+            } else {
+                imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
+            }
+            
 
             $("#recipes-container").append(imageDiv);
 
@@ -504,8 +513,13 @@ function displayRestaurants() {
             let restaurantCity = $("<li>").text(businessCity).addClass("restaurant-city p-2");
             // adds a favorite button to each card. perhaps add to the top right corner of the card
             let favoriteBtn = $("<button>").addClass("favoriteRestaurants align-self-end").attr("id", i).text("Add to Favorites");
-
-            imageDiv.append(restaurantImage).append(cardBlock).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity).append(favoriteBtn);
+            // only append favorite button if user is logged in
+            if (login) {
+                imageDiv.append(restaurantImage).append(cardBlock).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity).append(favoriteBtn);
+            } else {
+                imageDiv.append(restaurantImage).append(cardBlock).append(restaurantName).append(restaurantRating).append(restaurantReviewCount).append(restaurantPrice).append(restaurantPhone).append(restaurantAddress).append(restaurantCity);
+            }
+            
             $("#restaurants-container").append(imageDiv);
         }
     });
@@ -584,8 +598,6 @@ $("#submit-recipe-filters").on("click", function () {
 // enables all favorite buttons to be clicked
 // currently only applicable to restaurants
 $(document).on("click", ".favoriteRestaurants", function () {
-
-    console.log("clicked favorite");
     // get the id of the button first to know which card was favorited
     let num = this.id;
 
@@ -618,15 +630,12 @@ $(document).on("click", ".favoriteRestaurants", function () {
         city: placeCity
     });
 
-    console.log(restaurantArr);
     // stringify the array
     let stringedArr = JSON.stringify(restaurantArr);
-    console.log(stringedArr);
 
     // update the array in firebase data 
     database.ref(uid).update({ favRestaurants: stringedArr });
-
-})
+});
 
 
 
