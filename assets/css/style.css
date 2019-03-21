@@ -33,7 +33,7 @@ a:hover {
 }
 
 body {
-    background-image: url("../../images/background.png")
+    background-image: url("../../images/background.JPG")
 }
 
 #main-page-jumbo {
@@ -69,20 +69,19 @@ body {
     z-index: 10;
     color: white;
     font-family: 'Bowlby One SC', cursive;
-    font-size: 5rem;
-   
+    font-size: 6rem;
 }
 
 .in-text {
     position:absolute;
-    right: 3vw;
+    right: 2vw;
     top: 20vw;
 }
 
 .out-text {
     position:absolute;
-    left: 3vw;
-    top: 20vw;
+    left: 2vw;
+    bottom: 20vw;
 }
 
 .intro-text {
@@ -95,14 +94,26 @@ body {
     font-size: 16pt;
     display:none;
 }
-.index-image:hover + .intro-text{
-    display:block;
+
+#in-intro-text {
+    position: absolute;
+    top: 5vw;
+    left: 2vw;
+}
+
+#eat-in-index:hover #in-intro-text{
+    display: block;
+}
+
+#eat-out-index:hover #out-intro-text{
+    display: block;
 }
 
 #filter-section {
     background-color: rgba(170, 218, 194);
 }
 
+<<<<<<< HEAD
 #eatin-link{
     color: white;
 }
@@ -119,4 +130,9 @@ body {
 
 .nav-link{
     color: white;
+=======
+#favorites {
+    background-image: url(../../images/favpgbg1.jpg);
+    background-size: cover;
+>>>>>>> 3635cb7d5bdd60660b987d5b1d78efd254537668
 }
