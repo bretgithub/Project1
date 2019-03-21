@@ -113,7 +113,26 @@ body {
     background-color: rgba(170, 218, 194);
 }
 
+<<<<<<< HEAD
+#eatin-link{
+    color: white;
+}
+
+#eatout-link{
+    text-decoration: none;
+    color: white;
+}
+
+#mood-change{
+    text-decoration: none;
+    color: white;
+}
+
+.nav-link{
+    color: white;
+=======
 #favorites {
     background-image: url(../../images/favpgbg1.jpg);
     background-size: cover;
+>>>>>>> 3635cb7d5bdd60660b987d5b1d78efd254537668
 }

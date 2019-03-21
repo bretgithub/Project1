@@ -19,11 +19,101 @@
     <!-- linked CSS file -->
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" href="assets/css/style.css">
+<<<<<<< HEAD
+    
+    <!-- Modal  -->
+    <div class="modal fade animated bounceInDown" id="exampleModalCenter" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">What are you feeling today?</h5>
+                </div>
 
+                <div class="modal-body">
+                    <div class="row" id="pick-emoji">
+                        <!-- Sushi/Asian -->
+                        <div class="col-sm" id="sushi-emoji">
+                            <img src="images/sushi2.png" width="75%">
+                            <div class="form-check">
+                            <input class="form-check-input position-static radio" type="radio" name="blankRadio" id="sushi-radio"
+                                value="sushi" aria-label="sushi-radio">
+                            </div>
+                        </div>
+                        <!-- Cocktail/Beer/Wine -->
+                        <div class="col-sm" id="cocktail-emoji">
+                            <img src="images/cocktail2.png" width="75%">
+                            <div class="form-check">
+                            <input class="form-check-input position-static radio" type="radio" name="blankRadio" id="cocktail-radio"
+                                value="cocktail" aria-label="cocktail-radio">
+                            </div>
+                        </div>
+                        <!-- Cake/Dessert -->
+                        <div class="col-sm" id="cake-emoji">
+                            <img src="images/cake2.png" width="75%">
+                            <div class="form-check">
+                            <input class="form-check-input position-static radio" type="radio" name="blankRadio" id="dessert-radio"
+                                value="dessert" aria-label="dessert-radio">
+                            </div>
+                        </div>
+                        <!-- Pasta/Italian -->
+                        <div class="col-sm" id="pasta-emoji">
+                            <img src="images/pasta2.png" width="75%">
+                            <div class="form-check">
+                            <input class="form-check-input position-static radio" type="radio" name="blankRadio" id="italian-radio"
+                                value="italian" aria-label="italian-radio">
+                            </div>
+                        </div>
+                        <!-- Salad/Healthy -->
+                        <div class="col-sm" id="salad-emoji">
+                            <img src="images/salad2.png" width="75%">
+                            <div class="form-check">
+                            <input class="form-check-input position-static radio" type="radio" name="blankRadio" id="salad-radio"
+                                value="salad" aria-label="salad-radio">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- /Emoji select -->
+                <hr>
+                <!-- City select -->
+                <form>
+                <div class="row" id="city-select">
+                    <div class="form-group">
+                    <span class="select-city" style="white-space: nowrap">
+                        <label for="select-city">City</label>
+                        <select class="form-control w-75" id="select-city">
+                        <option value="" disabled selected>City Select</option>
+                        <option>Seattle, WA</option>
+                        <option>San Francisco, CA</option>
+                        <option>Portland, OR</option>
+                        <option>New York, NY</option>
+                        <option>Chicago, IL</option>
+                        </select>
+                    </span>
+                    </div>
+                </form>
+                <!-- /City select -->
+            </div>
+            <!-- /Modal body -->
+            <br>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                <button type="button" class="btn btn-primary" id="save-button">Save</button>
+            </div>
+            <!-- /Modal footer -->
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- /Modal -->
+=======
+
+>>>>>>> 3635cb7d5bdd60660b987d5b1d78efd254537668
 </head>
 
 <body id="favorites">
-
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark py-0">
         <a class="navbar-brand d-flex justify-content-center align-items-center" href="index.html">
@@ -34,6 +124,18 @@
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
+        <div id="eatin-link">
+            <a class="nav-link" href="eatin.html">Eat In <span class="sr-only"></span></a>
+          </div>
+      
+          <div id="eatout-link">
+            <a class="nav-link" href="eatout.html">Eat Out<span class="sr-only"></span></a>
+          </div>
+      
+          <div id= "mood-change">
+            <a class="nav-link" href="#">Mood Change <span class="sr-only"></span></a>
+          </div>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
@@ -89,24 +191,26 @@
         </div>
     </div>
 
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <!-- jQuery -->
+     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"></script>
     <!-- firebase line-->
     <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  
     <!-- Optional JavaScript -->
-    <script src="script.js"></script>
+    <script type="text/javascript" src="script.js"></script>
     <script>
         displayFavorites();
+        $("#mood-change").on('click', function() {
+            $('#exampleModalCenter').modal({backdrop: 'static', keyboard: false});
+            console.log("clicking emoji modal");
+        }); 
     </script>
-
 </body>
 
 </html>
