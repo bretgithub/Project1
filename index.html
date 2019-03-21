@@ -20,7 +20,7 @@
   <!-- favicon -->
   <link rel="shortcut icon" type="image/png" href="images/favicon.png" />
 
-  <!-- Modal -->
+  <!-- Modal  -->
   <div class="modal fade animated bounceInDown" id="exampleModalCenter" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -234,8 +234,10 @@
   <!-- linked JS file -->
 
   <script type="text/javascript" src="script.js"></script>
-  <script> $('#exampleModalCenter').modal('show') </script>
-
+  <script>
+    // $('#exampleModalCenter').modal('show')
+    $('#exampleModalCenter').modal({backdrop: 'static', keyboard: false})   </script>
+   
 </body>
 
 </html>
