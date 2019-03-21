@@ -33,7 +33,7 @@ a:hover {
 }
 
 body {
-    background-image: url("../../images/background.png")
+    background-image: url("../../images/background.JPG")
 }
 
 #main-page-jumbo {
@@ -111,4 +111,9 @@ body {
 
 #filter-section {
     background-color: rgba(170, 218, 194);
+}
+
+#favorites {
+    background-image: url(../../images/favpgbg1.jpg);
+    background-size: cover;
 }
