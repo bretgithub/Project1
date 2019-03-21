@@ -594,6 +594,10 @@ function displayRecipes() {
             let image = response.hits[i].recipe.image;
             let label = response.hits[i].recipe.label;
             let recipeLink = response.hits[i].recipe.url;
+            let recipePrepTime = response.hits[i].recipe.totalTime;
+            let totalCalories = response.hits[i].recipe.calories;
+            let totalYield = response.hits[i].recipe.yield;
+            let caloriesPerServing = Math.floor(totalCalories / totalYield);
             // console.log(image);
             // console.log(label);
             let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated slideInUp").attr("id", "recipe_" + i);
@@ -601,12 +605,14 @@ function displayRecipes() {
 
             let cardBlock = $("<div>").addClass("card-block")
             let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
+            let prepTime = $("<li>").text("Prep time (in minutes): " + recipePrepTime).addClass("recipe-prep-time p-2");
+            let calories = $("<li>").text("Calories per serving: " + caloriesPerServing).addClass("recipe-calories p-2");
             let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end btn-success").attr("id", i).text("Add to Favorites");
             // only append favorite button if user is logged in
             if (login) {
                 imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
             } else {
-                imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
+                imageDiv.append(recipeImage).append(cardBlock).append(recipeLabel).append(prepTime).append(calories);
             }
             $("#recipes-container").append(imageDiv);
             $(".card-title").wrap($("<a>").attr("href", recipeLink)).attr("style", 'text-decoration: none;color:black;overflow: hidden;text-overflow: ellipsis;');
