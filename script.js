@@ -579,8 +579,8 @@ function displayRecipes() {
             // customize results 
             let cardBlock = $("<div>").addClass("card-block")
             let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
-            let prepTime = $("<li>").text("Prep time (in minutes): " + recipePrepTime).addClass("recipe-prep-time p-2");
-            let calories = $("<li>").text("Calories per serving: " + caloriesPerServing).addClass("recipe-calories p-2");
+            let prepTime = $("<li>").text("Prep time (in minutes): " + recipePrepTime).addClass("recipe-prep-time p-2 text-light");
+            let calories = $("<li>").text("Calories per serving: " + caloriesPerServing).addClass("recipe-calories p-2 text-light");
             let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end btn-dark").attr("id", i).text("Add to Favorites");
             // only append favorite button if user is logged in
             if (login) {
