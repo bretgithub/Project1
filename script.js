@@ -315,7 +315,7 @@ $("#logout-button").on("click", function (event) {
 
 // interaction to favorite recipes
 $(document).on("click", ".favoriteRecipes", function () {
-    $(this).removeClass("btn-dark").addClass("btn-light").attr("disabled", true);
+    
     // get the id of the button first to know which card was favorited
     let num = this.id;
     // grab all the information from cards
@@ -345,6 +345,7 @@ $(document).on("click", ".favoriteRecipes", function () {
     console.log(stringedArr);
     // update the array in firebase data 
     database.ref(uid).update({ favRecipes: stringedArr });
+    $(this).removeClass("btn-dark").addClass("btn-light").attr("disabled", true);
 });
 
 // for custom API calls on eatin.html and eatout.html
@@ -643,7 +644,7 @@ function displayRecipes() {
             let recipeLabel = $("<h4>").text(label).addClass("card-title recipe-label p-2").attr("style", 'overflow:hidden;text-overflow: ellipsis;')
             let prepTime = $("<li>").text("Prep time (in minutes): " + recipePrepTime).addClass("recipe-prep-time p-2 text-light");
             let calories = $("<li>").text("Calories per serving: " + caloriesPerServing).addClass("recipe-calories p-2 text-light mb-3");
-            let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end btn-dark").attr("id", i).text("Add to Favorites").attr("disable", false);
+            let favoriteBtn = $("<button>").addClass("favoriteRecipes align-self-end btn btn-dark").attr("id", i).text("Add to Favorites").attr("disable", false);
             // only append favorite button if user is logged in
             if (login) {
                 imageDiv.append(favoriteBtn).append(recipeImage).append(cardBlock).append(recipeLabel).append(favoriteBtn);
