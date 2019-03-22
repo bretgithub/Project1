@@ -461,7 +461,7 @@ function displayRestaurants() {
             let cardBlock = $("<div>").addClass("card-block")
             let restaurantName = $("<h4>").text(businessName).addClass("card-title restaurant-name p-2");
             let restaurantRating = $("<li>").text("Rating: " + businessRating).addClass("restaurant-rating p-2");
-            let restaurantPrice = $("<li>").text("Price: " + businessPrice).addClass("restaurant-price p-2");
+            let restaurantPrice = $("<li>").text("Price: " + businessPrice).addClass("restaurant-price p-2 mb-5");
             // adds a favorite button to each card. perhaps add to the top right corner of the card
             let favoriteBtn = $("<button>").addClass("favoriteRestaurants align-self-end btn btn-dark").attr("id", i).text("Add to Favorites");
 
