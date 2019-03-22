@@ -102,7 +102,7 @@ function displayFavorites() {
         $("#fav-recipe-row").empty();
         // populate restaurant-row in favorites page
         for (let i = 0; i < restaurantArr.length; i++) {
-            let cardDiv = $("<div>").addClass("restaurant m-2 p-1 card col-3 animated flipInY text-center position-relative d-flex justify-contents-around").attr("id", "restaurant_" + i);
+            let cardDiv = $("<div>").addClass("restaurant m-2 p-1 card col-md-3 animated flipInY text-center position-relative d-flex justify-contents-around").attr("id", "restaurant_" + i);
             let restaurantImage = $("<img>").attr("src", restaurantArr[i].image).attr("style", 'width: 100%;height:auto;overflow:auto;').addClass("card-top-img restaurant-img");
             let cardBlock = $("<div>").addClass("card-block")
             let restaurantName = $("<h4>").text(restaurantArr[i].name).addClass("restaurant-name p-2 mb-5");
@@ -117,7 +117,7 @@ function displayFavorites() {
 
         // populate recipe-row in favorites page
         for (let i = 0; i < recipeArr.length; i++) {
-            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated flipInY text-center position-relative d-flex justify-contents-around");
+            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-md-3 animated flipInY text-center position-relative d-flex justify-contents-around");
             let recipeImage = $("<img>").addClass("card-top-img").attr("src", recipeArr[i].image).attr("style", 'width: 100%;height:auto;overflow:auto;');
             let cardBlock = $("<div>").addClass("card-block")
             let recipeLabel = $("<h6>").text(recipeArr[i].name).addClass("card-title recipe-label p-2 mb-5").attr("style", 'overflow:hidden;text-overflow: ellipsis;').attr("id", "card-title" + i);
@@ -488,7 +488,7 @@ function displayRestaurants() {
             let businessPrice = response.businesses[i].price;
             let businessURL = response.businesses[i].url
             // customize results 
-            let imageDiv = $("<div>").addClass("restaurant m-2 p-1 card col-3 animated slideInUp").attr("id", "restaurant_" + i);
+            let imageDiv = $("<div>").addClass("restaurant m-2 p-1 card col-md-3 animated slideInUp").attr("id", "restaurant_" + i);
             let restaurantImage = $("<img>").attr("src", businessImage).attr("style", 'width: 100%;height:auto;overflow:auto;').addClass("card-top-img restaurant-img");
             let cardBlock = $("<div>").addClass("card-block")
             let restaurantName = $("<h4>").text(businessName).addClass("card-title restaurant-name p-2");
@@ -634,7 +634,7 @@ function displayRecipes() {
             let totalCalories = response.hits[i].recipe.calories;
             let totalYield = response.hits[i].recipe.yield;
             let caloriesPerServing = Math.floor(totalCalories / totalYield);
-            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-3 animated slideInUp").attr("id", "recipe_" + i);
+            let imageDiv = $("<div>").addClass("card recipe-pictures m-2 p-1 col-md-3 animated slideInUp").attr("id", "recipe_" + i);
             let recipeImage = $("<img>").addClass("card-top-img").attr("src", image).attr("style", 'width: 100%;height:auto;overflow:auto;');
 
             // customize results 
