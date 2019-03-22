@@ -47,7 +47,7 @@ body {
 }
 
 .card {
-    background-color: rgba(170, 218, 194, 0.7);
+    background-color: rgba(88, 88, 88, 0.7);
 }
 
 .navbar {
@@ -69,19 +69,25 @@ body {
     z-index: 10;
     color: white;
     font-family: 'Bowlby One SC', cursive;
-    font-size: 6rem;
+    font-size: 96px;
 }
+@media only screen and (max-width: 601px) {
+    .header-text {
+      font-size: 48px;
+    }
+  }
+
 
 .in-text {
     position:absolute;
     right: 2vw;
-    top: 20vw;
+    top: 23vw;
 }
 
 .out-text {
     position:absolute;
     left: 2vw;
-    bottom: 20vw;
+    bottom: 23vw;
 }
 
 .intro-text {
@@ -110,7 +116,7 @@ body {
 }
 
 #filter-section {
-    background-color: rgba(170, 218, 194);
+    background-color: rgba(88, 88, 88, .8);
 }
 
 #eatin-link{
@@ -130,3 +136,9 @@ body {
 .nav-link{
     color: white;
 }
+
+#favorites {
+    background-image: url('../../images/wood.jpg');
+    background-size: cover;
+}
+

@@ -3,115 +3,113 @@
 
 <head>
     <title>Eat In</title>
-    <!-- Required meta tags -->
+    <!-- required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- favicon -->
     <link rel="shortcut icon" type="image/png" href="images/favicon.png" />
 
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!-- firebase line-->
-    <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
+    <!-- Google fonts link -->
+    <link href="https://fonts.googleapis.com/css?family=Bowlby+One+SC|Maven+Pro" rel="stylesheet">
 
-    <!-- Bootstrap CSS -->
+    <!-- bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" href="assets/css/style.css">
 
-    <!-- Modal  -->
+    <!-- emoji modal  -->
     <div class="modal fade animated bounceInDown" id="exampleModalCenter" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">What are you feeling today?</h5>
-        </div>
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Which of these emojis gives you the feels?</h5>
+                </div>
 
-        <div class="modal-body">
-        <div class="row" id="pick-emoji">
-            <!-- Sushi/Asian -->
-            <div class="col-sm" id="sushi-emoji">
-            <img src="images/sushi2.png" width="75%">
-            <div class="form-check">
-                <input class="form-check-input position-static radio" type="radio" name="blankRadio" id="sushi-radio"
-                value="sushi" aria-label="sushi-radio">
-            </div>
-            </div>
-            <!-- Cocktail/Beer/Wine -->
-            <div class="col-sm" id="cocktail-emoji">
-            <img src="images/cocktail2.png" width="75%">
-            <div class="form-check">
-                <input class="form-check-input position-static radio" type="radio" name="blankRadio" id="cocktail-radio"
-                value="cocktail" aria-label="cocktail-radio">
-            </div>
-            </div>
-            <!-- Cake/Dessert -->
-            <div class="col-sm" id="cake-emoji">
-            <img src="images/cake2.png" width="75%">
-            <div class="form-check">
-                <input class="form-check-input position-static radio" type="radio" name="blankRadio" id="dessert-radio"
-                value="dessert" aria-label="dessert-radio">
-            </div>
-            </div>
-            <!-- Pasta/Italian -->
-            <div class="col-sm" id="pasta-emoji">
-            <img src="images/pasta2.png" width="75%">
-            <div class="form-check">
-                <input class="form-check-input position-static radio" type="radio" name="blankRadio" id="italian-radio"
-                value="italian" aria-label="italian-radio">
-            </div>
-            </div>
-            <!-- Salad/Healthy -->
-            <div class="col-sm" id="salad-emoji">
-            <img src="images/salad2.png" width="75%">
-            <div class="form-check">
-                <input class="form-check-input position-static radio" type="radio" name="blankRadio" id="salad-radio"
-                value="salad" aria-label="salad-radio">
-            </div>
+                <div class="modal-body">
+                    <div class="row" id="pick-emoji">
+                        <!-- sushi -->
+                        <div class="col-sm" id="sushi-emoji">
+                            <img src="images/sushi2.png" width="75%">
+                            <div class="form-check emoji">
+                                <input class="form-check-input position-static radio" type="radio" name="blankRadio"
+                                    id="sushi-radio" value="sushi" aria-label="sushi-radio">
+                            </div>
+                        </div>
+                        <!-- cocktail -->
+                        <div class="col-sm" id="cocktail-emoji">
+                            <img src="images/cocktail2.png" width="75%">
+                            <div class="form-check emoji">
+                                <input class="form-check-input position-static radio" type="radio" name="blankRadio"
+                                    id="cocktail-radio" value="cocktail" aria-label="cocktail-radio">
+                            </div>
+                        </div>
+                        <!-- dessert -->
+                        <div class="col-sm" id="cake-emoji">
+                            <img src="images/cake2.png" width="75%">
+                            <div class="form-check emoji">
+                                <input class="form-check-input position-static radio" type="radio" name="blankRadio"
+                                    id="dessert-radio" value="dessert" aria-label="dessert-radio">
+                            </div>
+                        </div>
+                        <!-- italian -->
+                        <div class="col-sm" id="pasta-emoji">
+                            <img src="images/pasta2.png" width="75%">
+                            <div class="form-check emoji">
+                                <input class="form-check-input position-static radio" type="radio" name="blankRadio"
+                                    id="italian-radio" value="italian" aria-label="italian-radio">
+                            </div>
+                        </div>
+                        <!-- salad -->
+                        <div class="col-sm" id="salad-emoji">
+                            <img src="images/salad2.png" width="75%">
+                            <div class="form-check emoji">
+                                <input class="form-check-input position-static radio" type="radio" name="blankRadio"
+                                    id="salad-radio" value="salad" aria-label="salad-radio">
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                    <!-- /emoji select -->
+                    <hr>
+                    <!-- city select -->
+                    <form>
+                        <div class="row" id="city-select">
+                            <div class="form-group">
+                                <span class="select-city" style="white-space: nowrap">
+                                    <label for="select-city">City</label>
+                                    <select class="form-control w-75" id="select-city">
+                                        <option value="" disabled selected>City Select</option>
+                                        <option>Seattle, WA</option>
+                                        <option>San Francisco, CA</option>
+                                        <option>Portland, OR</option>
+                                        <option>New York, NY</option>
+                                        <option>Chicago, IL</option>
+                                    </select>
+                                </span>
+                            </div>
+                    </form>
+                    <!-- /city select -->
+                </div>
+                <!-- /modal body -->
+                <br>
+                <!-- modal footer -->
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                    <button type="button" class="btn btn-primary" id="save-button-recipes">Save</button>
+                </div>
+                <!-- /modal footer -->
             </div>
         </div>
-        </form>
-        <!-- /Emoji select -->
-        <hr>
-        <!-- City select -->
-        <form>
-            <div class="row" id="city-select">
-            <div class="form-group">
-                <span class="select-city" style="white-space: nowrap">
-                <label for="select-city">City</label>
-                <select class="form-control w-75" id="select-city">
-                    <option value="" disabled selected>City Select</option>
-                    <option>Seattle, WA</option>
-                    <option>San Francisco, CA</option>
-                    <option>Portland, OR</option>
-                    <option>New York, NY</option>
-                    <option>Chicago, IL</option>
-                </select>
-                </span>
-            </div>
-        </form>
-        <!-- /City select -->
-        </div>
-        <!-- /Modal body -->
-        <br>
-        <!-- Modal footer -->
-        <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-        <button type="button" class="btn btn-primary" id="save-button">Save</button>
-        </div>
-        <!-- /Modal footer -->
     </div>
     </div>
-    </div>
-    </div>
-    <!-- /Modal -->
+    <!-- /modal -->
 
-    <!-- ============================LOGIN & SIGN UP MODALS================================ -->
-    <!-- Modal -->
+    <!-- LOGIN & SIGN UP MODALS -->
+    <!-- modal -->
     <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -126,32 +124,29 @@
                         <input type="email" class="form-control" id="userEmail" aria-describedby="emailHelp"
                             placeholder="example@gmail.com">
                     </div>
-                    <!--this is the area for password text-->
+                    <!-- this is the area for password text -->
                     <div class="form-group">
                         <label for="examplePassword">Password</label>
                         <input type="password" class="form-control pwd" id="userPassword" placeholder="password">
                     </div>
                 </div>
-
                 <br>
-
                 <div style="text-align: center; color: red" id="auth-message"></div>
-                <!-- Modal footer -->
+                <!-- modal footer -->
                 <div class="modal-footer">
-                    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
                     <button type="button" class="btn btn-primary" id="login-button">Login</button>
                     <button type="button" class="btn btn-primary" id="create-button">Create New Account</button>
                 </div>
-                <!-- /Modal footer -->
+                <!-- /modal footer -->
             </div>
         </div>
     </div>
-    <!-- /Modal -->
+    <!-- /modal -->
 </head>
 
 <body id="eatin">
 
-    <!-- Navbar -->
+    <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark py-0">
         <a class="navbar-brand d-flex justify-content-center align-items-center" href="index.html">
             <img src="images/board logo.png" width="50px" height="50px" class="d-inline-block align-top"
@@ -164,15 +159,11 @@
 
         <div id="eatin-link">
             <a class="nav-link" href="eatin.html">Eat In <span class="sr-only"></span></a>
-          </div>
-      
-          <div id="eatout-link">
+        </div>
+
+        <div id="eatout-link">
             <a class="nav-link" href="eatout.html">Eat Out<span class="sr-only"></span></a>
-          </div>
-      
-          <div id= "mood-change">
-            <a class="nav-link" href="#">Mood Change <span class="sr-only"></span></a>
-          </div>
+        </div>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
@@ -194,12 +185,14 @@
             </ul>
         </div>
     </nav>
-    <!-- /Navbar -->
+    <!-- /navbar -->
 
+    <!-- filter section for customized API call -->
     <div id="filter-section" class="container w-75 justify-content-center mt-4">
         <div class="container justify-content-center">
             <h1 style="color: white">Eat In filters!</h1>
             <div class="row">
+                <!-- cuisine -->
                 <div class="col-md-4">
                     <form class="form">
                         <label class="my-1 mr-4" for="recipe-cuisine" style="color: white">Cuisine
@@ -219,6 +212,7 @@
                         </select>
                     </form>
                 </div>
+                <!-- prep time -->
                 <div class="col-md-4">
                     <form class="form">
                         <label class="my-1 mr-4" for="recipe-prep-time" style="color: white">Prep Time
@@ -231,6 +225,7 @@
                         </select>
                     </form>
                 </div>
+                <!-- calories -->
                 <div class="col-md-4">
                     <form class="form">
                         <label class="my-1 mr-4" for="recipe-calories" style="color: white">Calories
@@ -245,8 +240,9 @@
                 </div>
             </div>
         </div>
-
+        <!-- checboxes -->
         <div class="container justify-content-center">
+            <!-- vegetarain -->
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-check-inline mr-3">
@@ -257,6 +253,9 @@
                         </label>
                     </div>
                 </div>
+            </div>
+            <!-- vegan -->
+            <div class="row">
                 <div class="col-md-4">
                     <div class="form-check-inline mr-3">
                         <input class="form-check-input dietary" type="checkbox" id="dietary" name="dietary"
@@ -266,6 +265,9 @@
                         </label>
                     </div>
                 </div>
+            </div>
+            <!-- gluten-free -->
+            <div class="row">
                 <div class="col-md-4">
                     <div class="form-check-inline mr-3">
                         <input class="form-check-input dietary" type="checkbox" id="dietary" name="dietary"
@@ -275,10 +277,10 @@
                         </label>
                     </div>
                 </div>
-                <!-- </div> -->
             </div>
         </div>
-        <!-- submit button where our function will listen to gather values from above and new api call -->
+
+        <!-- submit button where our function will listen to gather values from above for new API call -->
         <div class="container justify-content-center">
             <div class="row my-3">
                 <div class="col">
@@ -287,7 +289,9 @@
             </div>
         </div>
     </div>
+    <!-- /filter section -->
 
+    <!-- display results -->
     <div class="container w-100 justify-content-center">
         <div class="row justify-content-center" id="recipes-container">
 
@@ -296,23 +300,20 @@
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+
     <!-- firebase line-->
     <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
 
     <!-- linked JS file -->
-   
     <script type="text/javascript" src="script.js"></script>
-    <script> 
-    $("#mood-change").on('click', function() {
-            $('#exampleModalCenter').modal({backdrop: 'static', keyboard: false});
-            console.log("clicking emoji modal");
-        });
+    <script>
         displayRecipes();
 
     </script>
