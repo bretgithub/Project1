@@ -169,7 +169,6 @@ $("#account").hide();
 $("#save-button").on("click", function () {
     if (searchCity && searchCuisine) {
         console.log(searchCuisine);
-
         // if user is signed in save location and cuisine type to firebase
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
@@ -189,6 +188,68 @@ $("#save-button").on("click", function () {
         $(".main-img").attr('style', 'display:block;')
         $("#eat-in-index").addClass("animated bounceInLeft")
         $("#eat-out-index").addClass("animated bounceInRight")
+    }
+});
+
+// specific to eatout page, to change emojis and call the Yelp API
+$("#save-button-restaurants").on("click", function () {
+    if (searchCity && searchCuisine) {
+        console.log(searchCuisine);
+        // if user is signed in save location and cuisine type to firebase
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                database.ref(uid).update({
+                    location: searchCuisine,
+                    categories: searchCuisine,
+                });
+            }
+            // if user is not signed in save data to local storage
+            else {
+                localStorage.setItem("searchCuisine", searchCuisine);
+                localStorage.setItem("searchCity", searchCity);
+            }
+            $("#select-city").val("");
+            displayRestaurants();
+            dietaryArray = [];
+            searchCuisine = null;
+            searchCity = null;
+            restaurantPrice = null
+            restaurantRating = null;
+            localStorage.clear();
+        });
+        // hide modal
+        $("#exampleModalCenter").modal("hide");
+    }
+});
+
+// specific to eatin page, to change emojis and call the Edamam API
+$("#save-button-recipes").on("click", function () {
+    if (searchCity && searchCuisine) {
+        console.log(searchCuisine);
+        // if user is signed in save location and cuisine type to firebase
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                database.ref(uid).update({
+                    location: searchCuisine,
+                    categories: searchCuisine,
+                });
+            }
+            // if user is not signed in save data to local storage
+            else {
+                localStorage.setItem("searchCuisine", searchCuisine);
+                localStorage.setItem("searchCity", searchCity);
+            }
+            $("#select-city").val("");
+            displayRecipes();
+            dietaryArray = [];
+            searchCuisine = null;
+            searchCity = null;
+            restaurantPrice = null
+            restaurantRating = null;
+            localStorage.clear();
+        });
+        // hide modal
+        $("#exampleModalCenter").modal("hide");
     }
 });
 
