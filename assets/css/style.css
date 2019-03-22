@@ -69,19 +69,25 @@ body {
     z-index: 10;
     color: white;
     font-family: 'Bowlby One SC', cursive;
-    font-size: 6rem;
+    font-size: 96px;
 }
+@media only screen and (max-width: 601px) {
+    .header-text {
+      font-size: 48px;
+    }
+  }
+
 
 .in-text {
     position:absolute;
     right: 2vw;
-    top: 20vw;
+    top: 23vw;
 }
 
 .out-text {
     position:absolute;
     left: 2vw;
-    bottom: 20vw;
+    bottom: 23vw;
 }
 
 .intro-text {
@@ -132,7 +138,7 @@ body {
 }
 
 #favorites {
-    background-image: url(../../images/favpgbg1.jpg);
+    background-image: url('../../images/wood.jpg');
     background-size: cover;
 }
 
