@@ -491,7 +491,7 @@ function displayRestaurants() {
             let imageDiv = $("<div>").addClass("restaurant m-2 p-1 card col-md-3 animated slideInUp").attr("id", "restaurant_" + i);
             let restaurantImage = $("<img>").attr("src", businessImage).attr("style", 'width: 100%;height:auto;overflow:auto;').addClass("card-top-img restaurant-img");
             let cardBlock = $("<div>").addClass("card-block")
-            let restaurantName = $("<h4>").text(businessName).addClass("card-title restaurant-name p-2");
+            let restaurantName = $("<h4>").text(businessName).addClass("card-title restaurant-name p-2").attr("id", "card-title"+i);
             let restaurantRating = $("<li>").text("Rating: " + businessRating).addClass("restaurant-rating p-2 text-light");
             let restaurantPrice = $("<li>").text("Price: " + businessPrice).addClass("restaurant-price p-2 text-light mb-5");
             // adds a favorite button to each card. perhaps add to the top right corner of the card
@@ -505,7 +505,7 @@ function displayRestaurants() {
             }
             // display in container and wrap link to open URL
             $("#restaurants-container").append(imageDiv);
-            $(".card-title").wrap($("<a>").attr("href", businessURL)).attr("style", 'text-decoration: none;color:white;overflow: hidden;text-overflow: ellipsis;');
+            $("#card-title"+i).wrap($("<a>").attr("href", businessURL)).attr("style", 'text-decoration: none;color:white;overflow: hidden;text-overflow: ellipsis;');
         }
     });
 };
