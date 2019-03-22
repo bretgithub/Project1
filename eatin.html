@@ -26,7 +26,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">What are you feeling today?</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Which of these emojis gives you the feels?</h5>
                 </div>
 
                 <div class="modal-body">
@@ -34,7 +34,7 @@
                         <!-- sushi -->
                         <div class="col-sm" id="sushi-emoji">
                             <img src="images/sushi2.png" width="75%">
-                            <div class="form-check">
+                            <div class="form-check emoji">
                                 <input class="form-check-input position-static radio" type="radio" name="blankRadio"
                                     id="sushi-radio" value="sushi" aria-label="sushi-radio">
                             </div>
@@ -42,7 +42,7 @@
                         <!-- cocktail -->
                         <div class="col-sm" id="cocktail-emoji">
                             <img src="images/cocktail2.png" width="75%">
-                            <div class="form-check">
+                            <div class="form-check emoji">
                                 <input class="form-check-input position-static radio" type="radio" name="blankRadio"
                                     id="cocktail-radio" value="cocktail" aria-label="cocktail-radio">
                             </div>
@@ -50,7 +50,7 @@
                         <!-- dessert -->
                         <div class="col-sm" id="cake-emoji">
                             <img src="images/cake2.png" width="75%">
-                            <div class="form-check">
+                            <div class="form-check emoji">
                                 <input class="form-check-input position-static radio" type="radio" name="blankRadio"
                                     id="dessert-radio" value="dessert" aria-label="dessert-radio">
                             </div>
@@ -58,7 +58,7 @@
                         <!-- italian -->
                         <div class="col-sm" id="pasta-emoji">
                             <img src="images/pasta2.png" width="75%">
-                            <div class="form-check">
+                            <div class="form-check emoji">
                                 <input class="form-check-input position-static radio" type="radio" name="blankRadio"
                                     id="italian-radio" value="italian" aria-label="italian-radio">
                             </div>
@@ -66,7 +66,7 @@
                         <!-- salad -->
                         <div class="col-sm" id="salad-emoji">
                             <img src="images/salad2.png" width="75%">
-                            <div class="form-check">
+                            <div class="form-check emoji">
                                 <input class="form-check-input position-static radio" type="radio" name="blankRadio"
                                     id="salad-radio" value="salad" aria-label="salad-radio">
                             </div>
@@ -99,7 +99,7 @@
                 <!-- modal footer -->
                 <div class="modal-footer">
                     <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                    <button type="button" class="btn btn-primary" id="save-button">Save</button>
+                    <button type="button" class="btn btn-primary" id="save-button-recipes">Save</button>
                 </div>
                 <!-- /modal footer -->
             </div>
@@ -166,7 +166,7 @@
         </div>
 
         <div id="mood-change">
-            <a class="nav-link" href="#">Mood Change <span class="sr-only"></span></a>
+            <a class="nav-link" href="#">Emoji Change <span class="sr-only"></span></a>
         </div>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -257,7 +257,9 @@
                         </label>
                     </div>
                 </div>
-                <!-- vegan -->
+            </div>
+            <!-- vegan -->
+            <div class="row">
                 <div class="col-md-4">
                     <div class="form-check-inline mr-3">
                         <input class="form-check-input dietary" type="checkbox" id="dietary" name="dietary"
@@ -267,7 +269,9 @@
                         </label>
                     </div>
                 </div>
-                <!-- gluten-free -->
+            </div>
+            <!-- gluten-free -->
+            <div class="row">
                 <div class="col-md-4">
                     <div class="form-check-inline mr-3">
                         <input class="form-check-input dietary" type="checkbox" id="dietary" name="dietary"
