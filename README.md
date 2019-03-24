@@ -4,7 +4,7 @@
 Our first project was to use two APIs and display data in a meaningful way to solve a problem. The assignment also required us to use a CSS library we had not used before, Bootstrap JS, and have a repeating element like a table or cards. 
 
 ## Use Case
-Our team decided to solve the problem of not knowing where to eat out or cook at home. People have too many options at their fingertips and quickly run into a core principle outlined in The Paradox of Choice, spending too much time with too much information and therefoe either not making a decision at al or not making the best decision with given information. 
+Our team decided to solve the problem of not knowing whether to eat out or cook at home. People have too many options at their fingertips and quickly run into a core principle outlined in The Paradox of Choice, spending too much time with too much information and therefoe either not making a decision at all or not making the best decision with given information. 
 
 We went with the idea of creating a platform that gave the user a small subset of what is available given their search parameters for eating in or eating out and the ability to bring more options in if they were not satisfied with the initial results but keeping it to an easy to digest number of 3 resuts at a time. 
 
@@ -30,7 +30,7 @@ On either page, results are displayed and the user can customize their search fu
 
 If the user wanted to create an account, they could then add favorites, and view a favorites page
 
-We went through a few iterations with our design, deciding on a clean full page image for the landing page and simple background and dynamically created cards on each of the subsequent pages with muted colors that carried a minimalist and coherent theme throughout the app. The animate
+We went through a few iterations with our design, deciding on a clean full page image for the landing page and simple background and dynamically created cards on each of the subsequent pages with muted colors that carried a minimalist and coherent theme throughout the app.
 
 ## Roadmap
 While we added everything from our must haves and extra styling we wanted to further develop the user stories and add the functionality outlined below:
