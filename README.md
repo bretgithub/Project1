@@ -1,4 +1,6 @@
-# Project1 APIs
+# Project1 APIs 
+
+Link: https://willcoe.github.io/Project1/
 
 ## Outline
 Our first project was to use two APIs and display data in a meaningful way to solve a problem. The assignment also required us to use a CSS library we had not used before, Bootstrap JS, and have a repeating element like a table or cards. 
